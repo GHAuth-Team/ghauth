@@ -1,0 +1,58 @@
+doctype
+html
+    head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0")
+        link(rel="icon", href="/favicon.ico", type="image/x-icon")
+        link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
+        block pagevar
+        block title
+            title #{pagename} | #{config.sitename}
+        block styles
+            link(rel="stylesheet", href="/css/bootstrap.min.css")
+            link(rel="stylesheet", href="/css/toastr.css")
+            link(rel="stylesheet", href="/css/style.css")
+    body
+        .main-container
+            header
+                nav.navbar.navbar-light.navbar-expand.bg-light.justify-content-between
+                    a.navbar-brand.mb-0.h1(href="/")
+                        img.d-inline-block.align-top(src="/images/logo.svg" width="30" height="30" alt="")/
+                        span.navbar-brand-text  #{config.sitename}
+                    div
+                        if user.isLoggedIn
+                            span.navbar-text 好久不见，
+                            if user.isBanned
+                                span.badge.badge-pill.badge-danger 封禁中
+                            else if user.isAdmin
+                                span.badge.badge-pill.badge-info 管理员
+                            else
+                                span.badge.badge-pill.badge-success 玩家
+                            |
+                            |
+                            span.navbar-text #{user.playername}
+                            span.navbar-text ！
+                            a.navbar-text(href="/logout" style="color:rgba(255,22,22,0.32);") 登出
+                        else
+                            ul.navbar-nav
+                                li.nav-item
+                                    a.nav-link(href="/login") 登录
+                                li.nav-item
+                                    a.nav-link(href="/register") 注册
+            block content
+
+            footer.text-muted
+                div.container-fluid.p-3.p-md-5
+                    ul.footer-links
+                        for item in config.footer.links
+                            li
+                                a(href=item.link target=item.target?item.target:"_blank")=item.title
+                    p!=config.footer.copyright
+                    p!="Designed with all the love in the world by <a href=\"https://im.daidr.me\" target=\"_blank\">@daidr</a>."
+        block scripts
+            script(src="/js/jquery.min.js" aysnc)
+            script(src="/js/bootstrap.min.js" aysnc)
+            script(src="/js/toastr.min.js" aysnc)
+            script(src="/js/main.js" aysnc)
+        
+        

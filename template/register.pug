@@ -1,0 +1,38 @@
+extends layout.pug
+
+block pagevar
+    - var pagename="注册"
+    if user.isLoggedIn
+        script.
+            window.location.href="/"
+
+block content
+    unless user.isLoggedIn
+        main(style="display: flex;align-items: center;flex-direction: column;justify-content: center;")
+            h1.display-4(style="margin-top:20px;") 注册
+            
+            form
+                .form-group
+                    label(for="inputEmail") 邮箱
+                    input#inputEmail.form-control(tabindex="1" type="email" aria-describedby="emailHelp" placeholder="你的邮箱" autocomplete="email")
+                    small#emailHelp.form-text.text-muted 放心，我们不会将你的邮箱泄露给任何人。<br />填写错误的游戏可能会导致封禁
+                .form-group
+                    label(for="inputPlayerName") 游戏昵称
+                    input#inputPlayerName.form-control(tabindex="2" type="text" aria-describedby="playerNameHelp" placeholder="游戏昵称" autocomplete="off")
+                    small#playerNameHelp.form-text.text-muted 这将会是你游戏内的玩家名称。<br />支持字母、数字、下划线。<br />合理的游戏ID应为4-12个字符。
+                .form-group
+                    label(for="inputPassword") 密码
+                    input#inputPassword.form-control(tabindex="3" type="password" placeholder="密码" autocomplete="off")
+                .form-group
+                    label(for="inputRepeatPassword") 重复密码
+                    input#inputRepeatPassword.form-control(tabindex="4" type="password" placeholder="确认你的密码正确无误" autocomplete="off")
+                .form-group
+                    label(for="inputCaptcha") 人机验证
+                    input#inputCaptcha.form-control(tabindex="5" type="text" maxlength="3" placeholder="请输入下图表达式计算结果" autocomplete="off")
+                    img.img-fluid#img-captcha(src="/api/captcha" alt="验证码图片" title="点击以刷新" style="cursor: pointer;")
+                button.btn.btn-primary.btn-block.btn-register(tabindex="6" type="button") 注册
+
+append scripts
+    unless user.isLoggedIn
+        script(src="/js/crypto-js.js")
+        script(src="/js/register.js")

@@ -1,0 +1,33 @@
+{
+  "name": "ghauth",
+  "version": "0.5.0",
+  "description": "轻量的MC服务器yggdrasil验证",
+  "main": "app.js",
+  "author": "戴兜(daidr@daidr.me)",
+  "license": "MIT",
+  "scripts": {
+    "start": "supervisor app.js",
+    "debug": "nodemon --inspect ./app.js",
+    "dev": "nodemon ./app.js  -i ./public/"
+  },
+  "dependencies": {
+    "crypto-js": "^4.0.0",
+    "ioredis": "^4.17.3",
+    "jstransformer-markdown-it": "^2.1.0",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-logger": "^3.2.1",
+    "koa-redis": "^4.0.1",
+    "koa-router": "^9.1.0",
+    "koa-session": "^6.0.0",
+    "koa-static": "^5.0.0",
+    "koa-views": "^6.3.0",
+    "koa2-ratelimit": "^0.9.0",
+    "mongoose": "^5.9.25",
+    "pngjs-nozlib": "^1.0.0",
+    "pug": "^3.0.0",
+    "supervisor": "^0.12.0",
+    "svg-captcha": "^1.4.0",
+    "uuid": "^8.3.0"
+  }
+}

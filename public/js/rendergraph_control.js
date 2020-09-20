@@ -1,6 +1,6 @@
 (function () {
     var images = {}, loadCount, skin = new Image(), texturecontainer = document.createElement('div'),
-        offrendercanvas = document.createElement('canvas'), remapcanvas = document.createElement('canvas');
+        rendercanvas = document.querySelector("#rendergraph-image"), remapcanvas = document.createElement('canvas');
     skin.onload = onSkinImageLoad;
 
     var imagelist = {
@@ -30,30 +30,24 @@
 
     function onSkinImageLoad() {
         document.querySelector("#rendergraph-loading").classList.add("active");
+        rendercanvas.classList.remove("show");
         compose();
     }
 
     function compose() {
         merge(images.layer_object_1_0001, images.layer_matcolor0001, skin, images.layer_illum0001, function (player) {
             merge(images.layer_object_1_0002, images.layer_matcolor0002, skin, images.layer_illum0002, function (hat) {
-                var canvas = offrendercanvas,
+                var canvas = rendercanvas,
                     ctx = canvas.getContext('2d');
-                canvas.width = images.background0001.width;
-                canvas.height = images.background0001.height;
+                canvas.width = 3840;
+                canvas.height = 2160;
                 ctx.drawImage(images.background0001, 0, 0);
                 ctx.drawImage(player, 2598, 1043);
                 ctx.drawImage(hat, 2875, 1023);
-                canvas.toBlob(function (blobObj) {
-                    var imgSrc = window.URL.createObjectURL(blobObj);
-                    document.querySelector("#rendergraph-image").onload = function () {
-                        window.URL.revokeObjectURL(this.src);
-                        setTimeout(function () {
-                            document.querySelector("#rendergraph-loading").classList.remove("active");
-                        }, 500);
-                    }
-                    document.querySelector("#rendergraph-image").src = imgSrc;
-                    canvas.remove();
-                });
+                setTimeout(function () {
+                    document.querySelector("#rendergraph-loading").classList.remove("active");
+                    rendercanvas.classList.add("show");
+                }, 500);
             });
         });
     }

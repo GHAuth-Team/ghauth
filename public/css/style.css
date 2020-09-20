@@ -106,7 +106,15 @@ footer {
 
 #rendergraph-image {
     width: 100%;
+    filter: blur(0.6px);
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
 }
+
+#rendergraph-image.show {
+    opacity: 1;
+}
+
 
 .rendergraph-main-container {
     padding: 0 !important;

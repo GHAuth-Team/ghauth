@@ -92,7 +92,7 @@ block content
                                         span.sr-only Loading...
                                     strong.text-light Loading...
                             div.rendergraph-main-container.viewer-container
-                                img#rendergraph-image(src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMzg0MCAyMTYwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciLz4=")
+                                canvas#rendergraph-image
                                 #rendergraph-loading.viewer-loading.active
                                     .spinner-border.text-light(role="status")
                                         span.sr-only Loading...
@@ -128,7 +128,6 @@ block content
         
 append scripts
     if user.isLoggedIn
-        script(src="/js/polyfill.js" aysnc)
         script(src="/js/caman.full.min.js" aysnc)
         script(src="/js/bs-custom-file-input.min.js" aysnc)
         script(src="/js/skinview3d.bundle.js" aysnc)

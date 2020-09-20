@@ -45,8 +45,11 @@ GHAuth
 ## 安全警告
 * yggdrasil验证时明文传递密码（协议限制），你需要启用https以提升安全性
 
-## 密钥对的生成和处理
 > 以下内容引用自[https://github.com/yushijinhun/authlib-injector/wiki/签名密钥对#密钥对的生成和处理](https://github.com/yushijinhun/authlib-injector/wiki/%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5%E5%AF%B9#%E5%AF%86%E9%92%A5%E5%AF%B9%E7%9A%84%E7%94%9F%E6%88%90%E5%92%8C%E5%A4%84%E7%90%86)
+
+> 开始引用
+
+## 密钥对的生成和处理
 
 下面对 OpenSSL 的调用都是使用标准输入和标准输出进行输入输出的。
 如果要使用文件，可使用参数 `-in <file>` 和 `-out <file>`。
@@ -66,6 +69,8 @@ openssl rsa -pubout
 ```
 
 私钥从标准输入读入，公钥将输出到标准输出。
+
+> 结束引用
 
 ## 交流
 Q群：850093647（同时也是“基佬之家”基友服交流群）

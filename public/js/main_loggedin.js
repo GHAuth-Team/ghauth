@@ -14,12 +14,14 @@
     // }
     // checkBrowser();
 
+    // yggdrasil配置按钮 拖拽
     document.querySelector(".btn-dnd-button").addEventListener("dragstart", function (e) {
         var btn = e.target;
         var content = "authlib-injector:yggdrasil-server:" + encodeURIComponent(btn.dataset.clipboardText);
         e.dataTransfer && (e.dataTransfer.setData("text/plain", content), e.dataTransfer.dropEffect = "copy");
     })
 
+    // yggdrasil配置按钮 点击
     document.querySelector(".btn-dnd-button").addEventListener("click", function (e) {
         var btn = e.target,
             content = btn.dataset.clipboardText,
@@ -31,8 +33,10 @@
         }, 1e3)
     })
 
+    // 切换皮肤浏览至 模型
     document.querySelector("#viewer3DModelRadio").onchange = function (e) {
         if (e.target.value == "on") {
+            window.pauseSkinviewer(false);
             document.querySelector("#skinData").dataset.type = "0";
             window.refreshSkinviewer();
             document.querySelector(".viewer-container.active").classList.remove("active")
@@ -40,8 +44,10 @@
         }
     }
 
+    // 切换皮肤浏览至 原始图片
     document.querySelector("#viewerRawImage").onchange = function (e) {
         if (e.target.value == "on") {
+            window.pauseSkinviewer(true);
             document.querySelector("#skinData").dataset.type = "1";
             window.refreshRawImage();
             document.querySelector(".viewer-container.active").classList.remove("active")
@@ -49,8 +55,10 @@
         }
     }
 
+    // 切换皮肤浏览至 渲染图
     document.querySelector("#viewerRenderGraph").onchange = function (e) {
         if (e.target.value == "on") {
+            window.pauseSkinviewer(true);
             document.querySelector("#skinData").dataset.type = "2";
             window.refreshRenderGraph();
             document.querySelector(".viewer-container.active").classList.remove("active")

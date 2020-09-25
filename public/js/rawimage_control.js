@@ -4,6 +4,6 @@
         document.querySelector("#raw-image").src = document.querySelector("#skinData").data.skin;
         setTimeout(function () {
             document.querySelector("#rawimage-loading").classList.remove("active");
-        }, 500);
+        }, 200);
     }
 })()

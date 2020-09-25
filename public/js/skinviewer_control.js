@@ -34,7 +34,7 @@
                     skinViewer.rotate = skinViewer.handle.animations.add(skinview3d.RotatingAnimation);
                     setTimeout(function () {
                         document.querySelector("#skinviewer-loading").classList.remove("active");
-                    }, 500);
+                    }, 200);
                 } catch (error) {
                     console.log(error)
                     toastr["error"]("皮肤模块加载错误");
@@ -54,14 +54,19 @@
         skinViewer.handle.height = skinViewer.el.offsetHeight;
     }
 
+    // 刷新皮肤
     window.refreshSkinviewer = function () {
         document.querySelector("#skinviewer-loading").classList.add("active");
         skinViewer.handle.loadSkin(document.querySelector("#skinData").data.skin, document.querySelector("#skinData").data.skinType ? "slim" : "default");
         setTimeout(function () {
             document.querySelector("#skinviewer-loading").classList.remove("active");
-        }, 500);
+        }, 200);
     }
 
+    // 临时暂停，传入false后恢复原始状态
+    window.pauseSkinviewer = function (state) {
+        skinViewer.handle.animations.paused = state ? state : document.querySelector("#skinviewerPauseCheckbox").checked;
+    }
 
     document.querySelector("#skinviewerWalkRadio").onchange = function (e) {
         if (e.target.value == "on") {

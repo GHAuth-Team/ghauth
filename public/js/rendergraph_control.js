@@ -47,7 +47,7 @@
                 setTimeout(function () {
                     document.querySelector("#rendergraph-loading").classList.remove("active");
                     rendercanvas.classList.add("show");
-                }, 500);
+                }, 200);
             });
         });
     }

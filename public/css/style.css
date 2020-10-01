@@ -106,33 +106,70 @@ footer {
 
 #rendergraph-image {
     width: 100%;
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
+    border-radius: 20px;
 }
-
-#rendergraph-image.show {
-    opacity: 1;
-}
-
 
 .rendergraph-main-container {
     padding: 0 !important;
+    background: transparent !important;
 }
 
 .rendergraph-main-container.active {
     display: flex !important;
+    flex-direction: column;
     will-change: height;
     min-height: 90px;
     align-items: center;
     justify-content: center;
 }
 
-.rendergraph-main-container:after {
-    content: "原图来自 icrdr";
+.rendergraph-canvas-container {
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.rendergraph-canvas-container.show {
+    opacity: 1;
+}
+
+.rendergraph-canvas-container:after {
+    content: attr(data-copyright);
     position: absolute;
-    bottom: 0px;
+    bottom: 50%;
     color: #fff;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 9px 15px;
+    opacity: 0;
+    border-radius: 20px;
     font-weight: 100;
+    left: 50%;
+    transition: opacity 0.2s ease-in-out;
+    transform: translate(-50%, 50%);
+    pointer-events: none;
+}
+
+.rendergraph-canvas-container:hover:after {
+    opacity: 1;
+}
+
+.rendergraph-holder {
+    height: 5px;
+    flex-wrap: wrap;
+}
+
+.rendergraph-control-container {
+    width: 100%;
+    flex-wrap: wrap;
+    border-radius: 20px;
+    padding: 0 4px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.rendergraph-control-container > .btn {
+    border-radius: 10px;
 }
 
 .viewer-loading {

@@ -16,7 +16,7 @@ block content
                         if config.showAnnouncement
                             p.lead 欢迎来到 #{config.sitename}
                             div.announcement
-                                include:markdown-it ../announcement.md
+                                include:markdown-it ../config/announcement.md
                         else
                             p.lead(style="margin-bottom:0;") 欢迎来到 #{config.sitename}
 

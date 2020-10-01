@@ -16,9 +16,8 @@ GHAuth
 * 完整的皮肤管理
 
 ## 暂未实现
-* 玩家名称修改
-* 用户管理
 * 站点的可视化设置
+* 玩家名称修改
 * 忘记密码/修改邮箱功能
 * 邮箱验证
 * FIDO支持
@@ -29,21 +28,32 @@ GHAuth
 * NodeJS
 * npm or yarn
 
-## 使用
+## 部署
 * 安装依赖 `yarn install` or `npm install`
-* 复制一份 `config.sample.js` 并将其重命名为 `config.js`
-* 修改 `config.js` 以完成站点配置
+* 进入 `config` 目录
+* 复制一份 `config.sample.yml` 并将其重命名为 `config.yml`
+* 修改 `config.yml` 以完成站点配置
 * 启动 `yarn start` or `npm run start`
 
+## 常用命令
+* 启动: `yarn start` or `npm start`
+* 停止: `yarn stop` or `npm stop`
+* 重启: `yarn restart` or `npm restart`
+* 查看日志: `yarn logs` or `npm run logs`
+* 实时监控: `yarn monit` or `npm run monit`
+
 ## 关于管理权限
-* 具有管理权限的账号由 `adminList.js` 控制
+* 具有管理权限的账号由 `config/adminList.js` 控制
 * 目前管理权限功能正在开发，仅提供一个前端展示
-* 未来会加入用户管理的功能
+* 前端站点管理正在实现
 
 ## 站点公告
-* 站点公告被储存于 `announcement.md` 文件中
-* 你可以通过 `config.js` 内的配置项来禁用站点公告功能
+* 站点公告被储存于 `config/announcement.md` 文件中
+* 你可以通过 `config/config.yml` 内的配置项来禁用站点公告功能
 * 支持Markdown语法
+
+## 建议
+* 建议使用nginx等类似服务器代理程序代理public目录，减轻后端压力
 
 ## 安全警告
 * yggdrasil验证时明文传递密码（协议限制），你需要启用https以提升安全性
@@ -52,12 +62,12 @@ GHAuth
 
 > 开始引用
 
-## 密钥对的生成和处理
+### 密钥对的生成和处理
 
 下面对 OpenSSL 的调用都是使用标准输入和标准输出进行输入输出的。
 如果要使用文件，可使用参数 `-in <file>` 和 `-out <file>`。
 
-### 生成私钥
+#### 生成私钥
 密钥算法为 RSA，推荐长度为 4096 位。
 
 ```
@@ -66,7 +76,7 @@ openssl genrsa 4096
 
 生成的私钥将输出到标准输出。
 
-### 从私钥生成公钥
+#### 从私钥生成公钥
 ```
 openssl rsa -pubout
 ```

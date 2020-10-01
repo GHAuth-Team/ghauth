@@ -1,3 +1,7 @@
+const color = require('colors/safe');
+process.on('uncaughtException', function (err) {
+    console.log(color.red('[错误] ') + err);
+});
 
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
@@ -39,6 +43,6 @@ app.use(async (ctx, next) => {
 const mainRouter = require('./routers/urls'); //引入根路由
 mainRouter(app);
 
-app.listen(3000, () => {
-    console.log('GHAuth 现已成功运行在 3000 端口上');
-})
+app.listen(config.extra.port ? config.extra.port : 3000, () => {
+    console.log(`GHAuth 现已成功运行在 ${config.extra.port ? config.extra.port : 3000} 端口上`);
+});

@@ -3,24 +3,23 @@
         texturecontainer = document.createElement('div'),
         rendercanvas = document.querySelector("#rendergraph-image"),
         remapcanvas = document.createElement('canvas'),
+        currectImage = 0,
+        canRenderDirectly = true,
+        resourcesNeedToLoad = 0,
+        resourcesLoadedCounter = 0,
+        renderlist = {},
         resizecanvas = document.createElement('canvas');
     skin.onload = onSkinImageLoad;
 
-    var imagelist = {
-        background0001: 'background0001.jpg',
-        layer_matcolor0001: 'layer_matcolor0001.png',
-        layer_illum0001: 'layer_illum0001.jpg',
-        layer_matcolor0002: 'layer_matcolor0002.png',
-        layer_illum0002: 'layer_illum0002.jpg',
-    };
-
     function init() {
-        for (const key in imagelist) {
-            var image = new Image();
-            images[key] = image;
-            texturecontainer.appendChild(image);
-            image.src = "/images/render/" + imagelist[key];
-        }
+        fetch("./images/render/render_data.json")
+            .then(result => result.json())
+            .then(result => {
+                renderlist = result;
+            })
+            .catch(e => {
+                toastr["error"]("拉取渲染图数据时发生错误");
+            });
     }
 
     window.refreshRenderGraph = function () {
@@ -29,29 +28,91 @@
 
     function onSkinImageLoad() {
         document.querySelector("#rendergraph-loading").classList.add("active");
-        rendercanvas.classList.remove("show");
-        compose();
+        document.querySelector(".rendergraph-canvas-container").classList.remove("show");
+        canRenderDirectly = true;
+        if (!images[renderlist[currectImage]["name"]]) {
+            canRenderDirectly = false;
+            resourcesNeedToLoad = Object.keys(renderlist[currectImage]["images"]).length;
+            images[renderlist[currectImage]["name"]] = {};
+            for (const key in renderlist[currectImage]["images"]) {
+                var image = new Image();
+                images[renderlist[currectImage]["name"]][key] = image;
+                texturecontainer.appendChild(image);
+                image.onload = onResourcesLoaded;
+                image.src = "/images/render/" + renderlist[currectImage]["name"] + "/" + renderlist[currectImage]["images"][key];
+            }
+        }
+        if (canRenderDirectly) {
+            setTimeout(function () {
+                compose();
+            }, 200);
+        }
+    }
+
+    function onResourcesLoaded() {
+        resourcesLoadedCounter++;
+        if (resourcesLoadedCounter == resourcesNeedToLoad) {
+            resourcesLoadedCounter = 0;
+            setTimeout(function () {
+                compose();
+            }, 100);
+        }
     }
 
     function compose() {
         var ctx = rendercanvas.getContext('2d');
-        rendercanvas.width = images.background0001.width;
-        rendercanvas.height = images.background0001.height;
+        rendercanvas.width = renderlist[currectImage]["width"];
+        rendercanvas.height = renderlist[currectImage]["height"];
 
-        // 绘制背景
-        ctx.drawImage(images.background0001, 0, 0);
-        // 玩家身体映射
-        remap(skin, images.layer_matcolor0001, images.layer_illum0001);
-        // 绘制玩家身体
-        ctx.drawImage(remapcanvas, 2598, 1043);
-        // 玩家头颅映射
-        remap(skin, images.layer_matcolor0002, images.layer_illum0002);
-        // 绘制玩家头颅
-        ctx.drawImage(remapcanvas, 2875, 1023);
+        // 使用滤镜
+        if (renderlist[currectImage]["filter"]) {
+            ctx.filter = renderlist[currectImage]["filter"];
+        } else {
+            ctx.filter = "";
+        }
+
+        // 绘制背景1(衔接玩家主体)(必须)
+        ctx.drawImage(
+            images[renderlist[currectImage]["name"]]["background0001"], // 背景层(可能不完整)
+            renderlist[currectImage]["pos"]["background0001"][0], // x
+            renderlist[currectImage]["pos"]["background0001"][1] // y
+        );
+
+        // 玩家一层皮肤映射(必须)
+        remap(skin,
+            images[renderlist[currectImage]["name"]]["layer_matcolor0001"], // 映射层
+            images[renderlist[currectImage]["name"]]["layer_illum0001"] // 灯光层
+        );
+        // 绘制玩家一层皮肤
+        ctx.drawImage(
+            remapcanvas,
+            renderlist[currectImage]["pos"]["first"][0], // x
+            renderlist[currectImage]["pos"]["first"][1] // y
+        );
+
+        // 绘制背景2(用于抗锯齿,若提供则必须完整大小)(可选)
+        if (images[renderlist[currectImage]["name"]]["background0000"]) {
+            ctx.drawImage(images[renderlist[currectImage]["name"]]["background0000"], 0, 0);
+        }
+
+        // 玩家二层皮肤映射
+        remap(skin,
+            images[renderlist[currectImage]["name"]]["layer_matcolor0002"], // 映射层
+            images[renderlist[currectImage]["name"]]["layer_illum0002"] // 灯光层
+        );
+        // 绘制玩家二层皮肤
+        ctx.drawImage(
+            remapcanvas,
+            renderlist[currectImage]["pos"]["second"][0], // x
+            renderlist[currectImage]["pos"]["second"][1] // y
+        );
+
+        // 设置版权信息
+        document.querySelector(".rendergraph-canvas-container").dataset.copyright = renderlist[currectImage]["copyright"];
 
         setTimeout(function () {
             document.querySelector("#rendergraph-loading").classList.remove("active");
-            rendercanvas.classList.add("show");
+            document.querySelector(".rendergraph-canvas-container").classList.add("show");
         }, 200);
     }
 
@@ -111,6 +172,36 @@
     try {
         init()
     } catch (error) {
-        toastr["error"]("皮肤预览模块发生错误");
+        toastr["error"]("皮肤渲染图模块发生错误");
     }
+
+    var rendergraphPreviousButton = document.querySelector("#rendergraphPreviousButton");
+    var rendergraphNextButton = document.querySelector("#rendergraphNextButton");
+
+    rendergraphPreviousButton.addEventListener("click", function () {
+        currectImage--;
+        checkCurrectImage();
+    })
+
+    rendergraphNextButton.addEventListener("click", function () {
+        currectImage++;
+        checkCurrectImage();
+    })
+
+    function checkCurrectImage() {
+        if (currectImage > 0) {
+            rendergraphPreviousButton.removeAttribute("disabled", "disabled");
+        } else {
+            rendergraphPreviousButton.setAttribute("disabled", "disabled");
+        }
+
+        if (currectImage < renderlist.length - 1) {
+            rendergraphNextButton.removeAttribute("disabled", "disabled");
+        } else {
+            rendergraphNextButton.setAttribute("disabled", "disabled");
+        }
+
+        window.refreshRenderGraph();
+    }
+
 })()

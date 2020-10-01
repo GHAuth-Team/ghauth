@@ -91,12 +91,17 @@ block content
                                     .spinner-border.text-light(role="status")
                                         span.sr-only Loading...
                                     strong.text-light Loading...
-                            div.rendergraph-main-container.viewer-container
-                                canvas#rendergraph-image(width="3840" height="2160")
+                            div.rendergraph-main-container.viewer-container(data-copyright="")
+                                div.rendergraph-canvas-container
+                                    canvas#rendergraph-image
                                 #rendergraph-loading.viewer-loading.active
                                     .spinner-border.text-light(role="status")
                                         span.sr-only Loading...
                                     strong.text-light Loading...
+                                div.rendergraph-holder
+                                div.rendergraph-control-container
+                                    button#rendergraphPreviousButton.btn.btn-primary.btn-sm(type="button" disabled) < 上一张
+                                    button#rendergraphNextButton.btn.btn-primary.btn-sm(type="button") 下一张 >
 
                     .jumbotron
                         p.lead 游戏皮肤上传

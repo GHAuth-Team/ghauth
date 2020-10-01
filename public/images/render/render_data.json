@@ -1,0 +1,58 @@
+[
+    {
+        "name": "reading",
+        "width": "3840",
+        "height": "2160",
+        "copyright": "原图来自 icrdr",
+        "images": {
+            "background0001": "background0001.webp",
+            "layer_illum0001": "layer_illum0001.webp",
+            "layer_illum0002": "layer_illum0002.webp",
+            "layer_matcolor0001": "layer_matcolor0001.png",
+            "layer_matcolor0002": "layer_matcolor0002.png"
+        },
+        "pos": {
+            "background0001": [
+                0,
+                0
+            ],
+            "first": [
+                2598,
+                1043
+            ],
+            "second": [
+                2875,
+                1023
+            ]
+        }
+    },
+    {
+        "name": "wrestler",
+        "width": "1920",
+        "height": "1080",
+        "copyright": "原图来自 icrdr",
+        "images": {
+            "background0000": "background0000.webp",
+            "background0001": "background0001.webp",
+            "layer_illum0001": "layer_illum0001.webp",
+            "layer_illum0002": "layer_illum0002.webp",
+            "layer_matcolor0001": "layer_matcolor0001.png",
+            "layer_matcolor0002": "layer_matcolor0002.png"
+        },
+        "pos": {
+            "background0001": [
+                232,
+                49
+            ],
+            "first": [
+                232,
+                49
+            ],
+            "second": [
+                197,
+                30
+            ]
+        },
+        "filter": "sepia(.2)"
+    }
+]

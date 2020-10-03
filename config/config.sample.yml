@@ -1,0 +1,73 @@
+common:
+    #站点名称
+    sitename: GHAuth
+
+    #站点描述
+    description: 轻量的MC服务器yggdrasil验证
+
+    #是否显示公告
+    #公告文件请编辑config/announcement.md
+    #支持markdown语法
+    showAnnouncement: true
+
+    #站点链接，主要用于Yggdrasil认证（末尾不加/）
+    url: "http://example.com"
+
+    #页脚相关设置
+    footer:
+        copyright: Powered By DaiDR.
+
+        #页脚链接
+        links:
+            - title: GHAuth
+              link: "https://auth.daidr.me"
+              target: _self
+
+            - title: Github
+              link: "https://github.com/daidr/ghauth"
+              target: _blank
+
+extra:
+    #密码加盐，使用前务必修改为随机字串
+    slat: aQ7LU7stHKd0GaYfL64JRpH791keAumQTFCXE0
+
+    #mongodb数据库相关设置
+    mongodb:
+        host: 127.0.0.1
+        port: 27017
+        db: ghauth
+        hasAuth: false
+        username: ""
+        password: ""
+
+    #redis数据库相关设置
+    redis:
+        host: 127.0.0.1
+        port: 6379
+        #储存session使用的数据库
+        sessiondb: 1
+        #储存入服验证请求使用的数据库
+        authdb: 1
+
+    #会话密钥，使用前务必修改为随机字串
+    session:
+        key: V7tf9zzIxryQfRSDEpL8pboBmbx340pfJOoSwswK
+
+    #签名所需要的密钥字串，生成方式请阅读README
+    signature:
+        private: |-
+            -----BEGIN RSA PRIVATE KEY-----
+            假装是私钥
+            -----END RSA PRIVATE KEY-----
+        public: |-
+            -----BEGIN PUBLIC KEY-----
+            假装是公钥
+            -----END PUBLIC KEY-----
+
+    #资源可信域列表，删除样例域名，然后将你网站的域名加入到下面列表中
+    #游戏会拒绝非可信域的材质加载
+    #加句点.能够使用泛域(如.example2.com)
+    skinDomains:
+        - auth.daidr.me
+        - example.com
+        - .example2.com

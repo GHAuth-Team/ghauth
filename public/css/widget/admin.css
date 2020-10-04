@@ -1,0 +1,69 @@
+.admin-widget-container {
+    opacity: 0;
+    display: none;
+    transition: opacity 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+}
+
+.admin-widget-container.active {
+    opacity: 1;
+    display: block;
+}
+
+.admin-widget-container .nav a {
+    cursor: pointer;
+}
+
+.admin-widget-container .admin-pane {
+    padding: 5px 0;
+}
+
+.admin-widget-container .table-container {
+    overflow: auto;
+}
+
+.admin-widget-container *:not(button):not(a):not(em):not(.previous_page):not(.next_page):not(.badge) {
+    user-select: text !important;
+}
+
+.admin-widget-container table {
+    table-layout: fixed;
+    min-width: 630px;
+}
+
+.admin-widget-container table th,
+.admin-widget-container table td {
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.userlist-btn {
+    min-width: 46px;
+    min-height: 31px;
+}
+
+.userlist-btn span {
+    pointer-events: none;
+}
+
+.userlist-btn .spinner-border {
+    display: none;
+    margin: 0 auto;
+}
+
+.userlist-btn:not(.no-action):disabled .spinner-border {
+    display: block;
+}
+
+.userlist-btn .btn-text {
+    display: block;
+}
+
+.userlist-btn:disabled {
+    cursor: default;
+}
+
+.userlist-btn:not(.no-action):disabled .btn-text {
+    display: none;
+}

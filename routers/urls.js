@@ -25,6 +25,10 @@ module.exports = (app) => {
     // ./api/
     const apiRouter = require('./api');
     rootRouter.use('/api', apiRouter.routes(), apiRouter.allowedMethods());
+
+    // ./admin/
+    const adminRouter = require('./admin');
+    rootRouter.use('/admin', adminRouter.routes(), adminRouter.allowedMethods());
     
     // ./textures/
     const texturesRouter = require('./textures');

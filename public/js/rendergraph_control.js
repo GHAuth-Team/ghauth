@@ -1,5 +1,5 @@
 (function () {
-    var images = {}, skin = new Image(),
+    let images = {}, skin = new Image(),
         texturecontainer = document.createElement('div'),
         rendercanvas = document.querySelector("#rendergraph-image"),
         remapcanvas = document.createElement('canvas'),
@@ -35,7 +35,7 @@
             resourcesNeedToLoad = Object.keys(renderlist[currectImage]["images"]).length;
             images[renderlist[currectImage]["name"]] = {};
             for (const key in renderlist[currectImage]["images"]) {
-                var image = new Image();
+                let image = new Image();
                 images[renderlist[currectImage]["name"]][key] = image;
                 texturecontainer.appendChild(image);
                 image.onload = onResourcesLoaded;
@@ -60,7 +60,7 @@
     }
 
     function compose() {
-        var ctx = rendercanvas.getContext('2d');
+        let ctx = rendercanvas.getContext('2d');
         rendercanvas.width = renderlist[currectImage]["width"];
         rendercanvas.height = renderlist[currectImage]["height"];
 
@@ -132,20 +132,20 @@
     function remap(skin, map, illum) {
         // 将皮肤缩放至合适大小
         resizeSkin(skin, 256 / skin.width);
-        var SkinPixelData = resizecanvas.getContext('2d').getImageData(0, 0, resizecanvas.width, resizecanvas.height).data;
+        let SkinPixelData = resizecanvas.getContext('2d').getImageData(0, 0, resizecanvas.width, resizecanvas.height).data;
 
         // 将皮肤映射至图层
-        var remapctx = remapcanvas.getContext('2d');
+        let remapctx = remapcanvas.getContext('2d');
         remapcanvas.width = map.width;
         remapcanvas.height = map.height;
         remapctx.drawImage(map, 0, 0);
 
-        var mapImageData = remapctx.getImageData(0, 0, remapcanvas.width, remapcanvas.height);
-        var mapPixelData = mapImageData.data;
+        let mapImageData = remapctx.getImageData(0, 0, remapcanvas.width, remapcanvas.height);
+        let mapPixelData = mapImageData.data;
 
-        for (var i = 0; i < mapPixelData.length; i = i + 4) {
+        for (let i = 0; i < mapPixelData.length; i = i + 4) {
             if (mapPixelData[i + 3] > 0) {
-                var loc = (mapPixelData[i + 1] * resizecanvas.width + mapPixelData[i]) * 4;
+                let loc = (mapPixelData[i + 1] * resizecanvas.width + mapPixelData[i]) * 4;
                 mapPixelData[i] = mapPixelData[i + 3] * SkinPixelData[loc + 0] / 255;
                 mapPixelData[i + 1] = mapPixelData[i + 3] * SkinPixelData[loc + 1] / 255;
                 mapPixelData[i + 2] = mapPixelData[i + 3] * SkinPixelData[loc + 2] / 255;
@@ -160,10 +160,10 @@
         remapctx.globalCompositeOperation = "source-over";
 
         // 处理光影Alpha通道
-        var finalImageData = remapctx.getImageData(0, 0, remapcanvas.width, remapcanvas.height);
-        var finalPixelData = finalImageData.data;
+        let finalImageData = remapctx.getImageData(0, 0, remapcanvas.width, remapcanvas.height);
+        let finalPixelData = finalImageData.data;
 
-        for (var i = 3; i < finalPixelData.length; i = i + 4) {
+        for (let i = 3; i < finalPixelData.length; i = i + 4) {
             finalPixelData[i] = mapPixelData[i];
         }
 
@@ -175,30 +175,32 @@
         toastr["error"]("皮肤渲染图模块发生错误");
     }
 
-    var rendergraphPreviousButton = document.querySelector("#rendergraphPreviousButton");
-    var rendergraphNextButton = document.querySelector("#rendergraphNextButton");
+    let rendergraphPreviousButton = document.querySelector("#rendergraphPreviousButton");
+    let rendergraphNextButton = document.querySelector("#rendergraphNextButton");
 
-    rendergraphPreviousButton.addEventListener("click", function () {
+    rendergraphPreviousButton.addEventListener("click", function (e) {
+        if (e.target.classList.contains("disabled")) return;
         currectImage--;
         checkCurrectImage();
     })
 
-    rendergraphNextButton.addEventListener("click", function () {
+    rendergraphNextButton.addEventListener("click", function (e) {
+        if (e.target.classList.contains("disabled")) return;
         currectImage++;
         checkCurrectImage();
     })
 
     function checkCurrectImage() {
         if (currectImage > 0) {
-            rendergraphPreviousButton.removeAttribute("disabled", "disabled");
+            rendergraphPreviousButton.classList.remove("disabled");
         } else {
-            rendergraphPreviousButton.setAttribute("disabled", "disabled");
+            rendergraphPreviousButton.classList.add("disabled");
         }
 
         if (currectImage < renderlist.length - 1) {
-            rendergraphNextButton.removeAttribute("disabled", "disabled");
+            rendergraphNextButton.classList.remove("disabled");
         } else {
-            rendergraphNextButton.setAttribute("disabled", "disabled");
+            rendergraphNextButton.classList.add("disabled");
         }
 
         window.refreshRenderGraph();

@@ -36,6 +36,7 @@ block content
                         p.lead 修改密码
                         small.text-muted 修改密码后你可能需要重新登录你的游戏
                         form
+                            input(autocomplete='username' style="display: none;")
                             .form-group(style="margin-top:20px;")
                                 input#old-password.form-control(type="password" placeholder="旧密码" autocomplete="off")
                             .form-group(style="margin-top:20px;")
@@ -43,7 +44,7 @@ block content
                             .form-group(style="margin-top:20px;")
                                 input#repeat-new-password.form-control(type="password" placeholder="重复新密码" autocomplete="new-password")
                         button.btn.btn-changepassword.btn-primary.btn-block(type="button") 修改密码
-                            
+
                 .col-xl-8
                     .jumbotron.d-none.d-lg-block
                         p.lead 快速配置启动器
@@ -93,15 +94,15 @@ block content
                                     strong.text-light Loading...
                             div.rendergraph-main-container.viewer-container(data-copyright="")
                                 div.rendergraph-canvas-container
-                                    canvas#rendergraph-image
+                                    canvas(width="1920px" height="1080px")#rendergraph-image
                                 #rendergraph-loading.viewer-loading.active
                                     .spinner-border.text-light(role="status")
                                         span.sr-only Loading...
                                     strong.text-light Loading...
                                 div.rendergraph-holder
-                                div.rendergraph-control-container
-                                    button#rendergraphPreviousButton.btn.btn-primary.btn-sm(type="button" disabled) < 上一张
-                                    button#rendergraphNextButton.btn.btn-primary.btn-sm(type="button") 下一张 >
+                                div.rendergraph-control-container.pagination
+                                    a#rendergraphPreviousButton.previous_page.disabled 上一张
+                                    a#rendergraphNextButton.next_page 下一张
 
                     .jumbotron
                         p.lead 游戏皮肤上传
@@ -121,16 +122,20 @@ block content
                             .input-group-append
                                 button#viewSelectedSkin.btn.btn-primary(type="button") 查看效果
                         button.btn.btn-uploadskin.btn-primary.btn-block(type="button") 提交
-                            
+
+                    if user.isLoggedIn
+                        if user.isAdmin
+                            include widget/admin.pug
 
 
-                        
+
+
     else
         main(style="display: flex;align-items: center;flex-direction: column;justify-content: center;")
             h1.display-4(style="margin-top:30px;") 🚀
             h1.display-4 #{config.sitename}
             h1.lead #{config.description}
-        
+
 append scripts
     if user.isLoggedIn
         script(src="/js/bs-custom-file-input.min.js" aysnc)

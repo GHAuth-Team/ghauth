@@ -165,7 +165,7 @@ button.toast-close-button {
 .toast-error,
 .toast-info,
 .toast-warning {
-  transition: box-shadow 0.15s ease-in-out;
+  transition: box-shadow 0.15s cubic-bezier(0.3, 0, 0.5, 1);
   box-shadow: 0 0 0 0 transparent;
 }
 .toast:hover {

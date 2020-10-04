@@ -9,7 +9,7 @@ const path = require("path");
 module.exports = {
     getUserInfo: (ctx) => {
         return new Promise((resolve, reject) => {
-            if (!ctx.session.userInfo || !ctx.session.userInfo.isLoggedIn) {
+            if (!ctx.session || !ctx.session.userInfo || !ctx.session.userInfo.isLoggedIn) {
                 resolve({ isLoggedIn: false });
                 return;
             }
@@ -272,5 +272,59 @@ module.exports = {
             ]
         }
         return data;
+    },
+    genUserList: (filter, currectPage, pageSize) => {
+        return new Promise((resolve, reject) => {
+            User.countDocuments(filter || {}, (error, count) => {
+                if (error) {
+                    reject({ code: -1 });
+                } else {
+                    User.find(filter || {}, 'email playername uuid isBanned time').skip((currectPage - 1) * pageSize).limit(parseInt(pageSize) || 20).sort({ 'time.register': 1 }).exec((err, doc) => {
+                        if (err) {
+                            reject({ code: -1 });
+                        } else {
+                            for (let i = 0; i < doc.length; i++) {
+                                doc[i]["_doc"]["isAdmin"] = adminList.includes(doc[i]["email"]);
+                                delete doc[i]["_doc"]["_id"];
+                            }
+                            resolve({
+                                total: count,
+                                data: doc
+                            })
+                        }
+                    })
+                }
+            })
+        })
+    },
+    switchUserStatusByUUID: (uuid) => {
+        return new Promise((resolve, reject) => {
+            User.findOne({ 'uuid': uuid }, 'email isBanned', function (err, user) {
+                if (!err && user) {
+                    // 被操作对象是管理员，操作失败
+                    if (adminList.includes(user["email"])) {
+                        reject({ code: -2 });
+                        return;
+                    }
+
+                    if (user.isBanned == true) {
+                        user.isBanned = false;
+                    } else {
+                        user.isBanned = true;
+                    }
+
+                    user.save(function (err) {
+                        if (err) {
+                            reject({ code: -1 });
+                            return;
+                        }
+
+                        resolve({ code: 0 });
+                    });
+                } else {
+                    reject({ code: -1 });
+                }
+            });
+        })
     }
 }

@@ -1,0 +1,29 @@
+.jumbotron
+    .admin-widget-container
+        nav.nav.nav-pills
+            a.nav-item.nav-link.active 用户管理
+        .admin-pane.admin-pane-user
+            .table-container
+                table.table.table-sm.table-hover
+                    thead
+                        th(scope='col' width="130px") 昵称
+                        th(scope='col' width="180px") 邮箱
+                        th(scope='col' width="90px") 注册时间
+                        th(scope='col' width="110px") 徽章
+                        th(scope='col' width="55px") 操作
+                    tbody#user-list
+            .paginate-container.userlist-pagination-container
+                .d-inline-block.pagination.userlist-pagination(role='navigation' aria-label='Pagination')
+                    span.previous_page.disabled 上一页
+                    em.current 1
+                    a(rel='next' aria-label='Page 2') 2
+                    a(aria-label='Page 3') 3
+                    span.gap …
+                    a(aria-label='Page 99') 99
+                    a(aria-label='Page 100') 100
+                    a.next_page(rel='next') 下一页
+
+    button.admin-widget-load-btn.btn.btn-primary.btn-block(type='button') 载入管理面板
+
+    script(src="/js/widget/admin.js" aysnc)
+    link(rel="stylesheet" href="/css/widget/admin.css")

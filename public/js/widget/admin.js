@@ -27,7 +27,6 @@
     }
 
     function fetchUserList(currectPage, pageSize) {
-        toastr["info"]("拉取用户列表...");
         fetch(`/admin/getUserList?currectPage=${currectPage}&pageSize=${pageSize}`, { method: 'GET' })
             .then(result => result.json())
             .then(result => {
@@ -91,7 +90,6 @@
                     document.querySelector("#user-list").appendChild(tr);
                 }
                 genPaginate(currectPage, pageSize, result["total"]);
-                toastr["success"]("拉取用户完成");
             })
             .catch(e => {
                 toastr["error"]("拉取用户列表失败");
@@ -101,14 +99,13 @@
     function switchStatusBtnClicked(e) {
         e.target.setAttribute("disabled", "disabled");
         let uuid = e.target.uuid;
-        toastr["info"]("执行中，请稍后...");
         fetch(`/admin/switchUserStatus?uuid=${uuid}`, { method: 'POST' })
             .then(result => result.json())
             .then(result => result["code"])
             .then(code => {
                 switch (code) {
                     case 0:
-                        toastr["success"]("操作成功");
+                        // 操作成功
                         break;
                     default:
                         toastr["error"]("操作失败，请重试");

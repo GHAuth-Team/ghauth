@@ -128,7 +128,19 @@ module.exports = {
                 return;
             }
 
+            // 获取用户总数
+            let userNumber = await user.getUserNumber().then(result => { return result });
+
+            if (userNumber == -1) {
+                data.code = -1;
+                data.msg = "处理用户ID时发生错误";
+                ctx.set("Content-Type", "application/json");
+                ctx.body = JSON.stringify(data);
+                return;
+            }
+
             let userInfo = {
+                id: userNumber + 1,
                 email: body.email,
                 playername: body.playername,
                 uuid: utils.genUUID(),

@@ -93,6 +93,17 @@ module.exports = {
             })
         })
     },
+    getUserNumber: () => {
+        return new Promise((resolve, reject) => {
+            User.countDocuments({}, (error, count) => {
+                if (error || isNaN(count)) {
+                    resolve(-1);
+                } else {
+                    resolve(count);
+                }
+            })
+        })
+    },
     isUserPasswordCorrect: (email, password) => {
         return new Promise((resolve, reject) => {
             User.findOne({ 'email': email }, 'password', function (err, user) {
@@ -279,20 +290,24 @@ module.exports = {
                 if (error) {
                     reject({ code: -1 });
                 } else {
-                    User.find(filter || {}, 'email playername uuid isBanned time').skip((currectPage - 1) * pageSize).limit(parseInt(pageSize) || 20).sort({ 'time.register': 1 }).exec((err, doc) => {
-                        if (err) {
-                            reject({ code: -1 });
-                        } else {
-                            for (let i = 0; i < doc.length; i++) {
-                                doc[i]["_doc"]["isAdmin"] = adminList.includes(doc[i]["email"]);
-                                delete doc[i]["_doc"]["_id"];
+                    pageSize = pageSize || 8;
+                    User
+                        .find({ id: { $gt: (currectPage - 1) * pageSize, $lte: (currectPage) * pageSize }, ...filter }, 'email playername uuid isBanned time.register')
+                        .sort({ 'time.register': 1 })
+                        .exec((err, doc) => {
+                            if (err) {
+                                reject({ code: -1 });
+                            } else {
+                                for (let i = 0; i < doc.length; i++) {
+                                    doc[i]["_doc"]["isAdmin"] = adminList.includes(doc[i]["email"]);
+                                    delete doc[i]["_doc"]["_id"];
+                                }
+                                resolve({
+                                    total: count,
+                                    data: doc
+                                })
                             }
-                            resolve({
-                                total: count,
-                                data: doc
-                            })
-                        }
-                    })
+                        })
                 }
             })
         })

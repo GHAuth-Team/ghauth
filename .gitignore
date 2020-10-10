@@ -2,5 +2,5 @@
 /yarn.lock
 /node_modules
 /.vscode
-/test.js
+/test
 /config/config.yml

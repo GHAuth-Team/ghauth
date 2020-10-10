@@ -112,7 +112,7 @@
                         break;
                 }
                 fetchUserList(CurrectPage, PageSize);
-             })
+            })
             .catch(e => {
                 toastr["error"]("操作失败，请重试");
                 e.target.removeAttribute("disabled");
@@ -215,7 +215,7 @@
                 pageBtn.addEventListener("click", jumpToPage);
                 userListPaginate.appendChild(pageBtn);
 
-            } else if (currectPage >= totalPages - 2) {
+            } else if (currectPage > totalPages - 2) {
                 pageBtn = document.createElement("a");
                 pageBtn.innerText = 1;
                 pageBtn.page = 1;
@@ -251,7 +251,7 @@
 
                     userListPaginate.appendChild(pageBtn);
                 }
-            } else if (currectPage >= 3 && currectPage < totalPages - 2) {
+            } else if (currectPage >= 3 && currectPage <= totalPages - 4) {
                 pageBtn = document.createElement("a");
                 pageBtn.innerText = 1;
                 pageBtn.page = 1;
@@ -265,6 +265,54 @@
                 userListPaginate.appendChild(gap);
 
                 for (var i = currectPage; i <= currectPage + 1; i++) {
+                    if (i == currectPage) {
+                        pageBtn = document.createElement("em");
+                        pageBtn.classList.add("current");
+                    } else if (i + 1 == currectPage) {
+                        pageBtn = document.createElement("a");
+                        pageBtn.setAttribute("rel", "next");
+                    } else if (i - 1 == currectPage) {
+                        pageBtn = document.createElement("a");
+                        pageBtn.setAttribute("rel", "prev");
+                    } else {
+                        pageBtn = document.createElement("a");
+                    }
+                    pageBtn.innerText = i;
+                    pageBtn.page = i;
+                    pageBtn.setAttribute("aria-label", `Page ${i}`);
+
+                    if (i != currectPage) {
+                        pageBtn.addEventListener("click", jumpToPage);
+                    }
+
+                    userListPaginate.appendChild(pageBtn);
+                }
+
+                gap = document.createElement("span");
+                gap.innerText = "...";
+                gap.classList.add("gap");
+                userListPaginate.appendChild(gap);
+
+                pageBtn = document.createElement("a");
+                pageBtn.innerText = totalPages;
+                pageBtn.page = totalPages;
+                pageBtn.setAttribute("aria-label", `Page ${totalPages}`);
+                pageBtn.addEventListener("click", jumpToPage);
+                userListPaginate.appendChild(pageBtn);
+            } else {
+                pageBtn = document.createElement("a");
+                pageBtn.innerText = 1;
+                pageBtn.page = 1;
+                pageBtn.setAttribute("aria-label", `Page ${1}`);
+                pageBtn.addEventListener("click", jumpToPage);
+                userListPaginate.appendChild(pageBtn);
+
+                gap = document.createElement("span");
+                gap.innerText = "...";
+                gap.classList.add("gap");
+                userListPaginate.appendChild(gap);
+
+                for (var i = currectPage - 1; i <= currectPage; i++) {
                     if (i == currectPage) {
                         pageBtn = document.createElement("em");
                         pageBtn.classList.add("current");

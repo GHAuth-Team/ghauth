@@ -3,6 +3,13 @@
         nav.nav.nav-pills
             a.nav-item.nav-link.active 用户管理
         .admin-pane.admin-pane-user
+            .user-filter-container.form-inline
+                input#userFilterInput.form-control.form-control-sm(type='text' placeholder='搜索')
+                button#userFilterBtn.btn.btn-sm.btn-primary(type='button')
+                    span.spinner-border.spinner-border-sm(role="status" aria-hidden="true")
+                    span.btn-text 搜索
+                    
+
             .table-container
                 table.table.table-sm.table-hover
                     thead
@@ -17,5 +24,7 @@
 
     button.admin-widget-load-btn.btn.btn-primary.btn-block(type='button') 载入管理面板
 
-    script(src="/js/widget/admin.js" aysnc)
-    link(rel="stylesheet" href="/css/widget/admin.css")
+    script(type="text/javascript")
+        include ./admin.js
+    style
+        include ./admin.css

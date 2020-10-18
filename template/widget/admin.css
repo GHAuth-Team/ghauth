@@ -67,3 +67,49 @@
 .userlist-btn:not(.no-action):disabled .btn-text {
     display: none;
 }
+
+.user-filter-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 2px 14px;
+}
+
+.user-filter-container .form-inline {
+    width: auto;
+}
+
+#userFilterInput {
+    width: 180px;
+    border-radius: 6px;
+}
+
+#userFilterBtn {
+    margin-left: 5px;
+    min-width: 46px;
+    min-height: 31px;
+}
+
+#userFilterBtn span {
+    pointer-events: none;
+}
+
+#userFilterBtn .spinner-border {
+    display: none;
+    margin: 0 auto;
+}
+
+#userFilterBtn:disabled .spinner-border {
+    display: block;
+}
+
+#userFilterBtn .btn-text {
+    display: block;
+}
+
+#userFilterBtn:disabled {
+    cursor: default;
+}
+
+#userFilterBtn:disabled .btn-text {
+    display: none;
+}

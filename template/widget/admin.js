@@ -1,9 +1,9 @@
 (function () {
-    let CurrectPage = 1, PageSize = 8;
+    let CurrectPage = 1, PageSize = 8, Filter = "";
     document.querySelector(".admin-widget-load-btn").addEventListener("click", function (e) {
         document.querySelector(".admin-widget-container").classList.add("active");
         e.target.remove();
-        fetchUserList(CurrectPage, PageSize);
+        fetchUserList(CurrectPage, PageSize, Filter);
     });
 
     function dateFormat(fmt, date) {
@@ -26,73 +26,93 @@
         return fmt;
     }
 
-    function fetchUserList(currectPage, pageSize) {
-        fetch(`/admin/getUserList?currectPage=${currectPage}&pageSize=${pageSize}`, { method: 'GET' })
+    document.querySelector("#userFilterBtn").addEventListener("click", function (e) {
+        Filter = document.querySelector("#userFilterInput").value;
+        e.target.setAttribute("disabled", "true");
+        fetchUserList(CurrectPage, PageSize, Filter, function () {
+            e.target.removeAttribute("disabled");
+        });
+    });
+
+    function fetchUserList(currectPage, pageSize, filter, callback) {
+        filter = filter || "";
+        fetch(`/admin/getUserList?currectPage=${currectPage}&pageSize=${pageSize}&filter=${filter}`, { method: 'GET' })
             .then(result => result.json())
             .then(result => {
                 let child, btn, btnchild;
                 document.querySelector("#user-list").innerText = "";
-                for (let i = 0; i < result["data"].length; i++) {
-                    tr = document.createElement("tr");
+                if (result["total"] == 0) {
+                    document.querySelector("#user-list").innerHTML = "<tr><th colspan='5' style='text-align: center;font-size: 25px;opacity: .5;font-weight: 400;'>未找到结果</th></tr>"
+                } else {
+                    for (let i = 0; i < result["data"].length; i++) {
+                        tr = document.createElement("tr");
 
-                    child = document.createElement("th");
-                    child.setAttribute("scope", "row");
-                    child.innerText = result["data"][i]["playername"];
-                    child.title = result["data"][i]["playername"];
-                    tr.appendChild(child);
+                        child = document.createElement("th");
+                        child.setAttribute("scope", "row");
+                        child.innerText = result["data"][i]["playername"];
+                        child.title = result["data"][i]["playername"];
+                        tr.appendChild(child);
 
-                    child = document.createElement("td");
-                    child.innerText = result["data"][i]["email"];
-                    child.title = result["data"][i]["email"];
-                    tr.appendChild(child);
+                        child = document.createElement("td");
+                        child.innerText = result["data"][i]["email"];
+                        child.title = result["data"][i]["email"];
+                        tr.appendChild(child);
 
-                    child = document.createElement("td");
-                    child.innerText = dateFormat("YYYY-mm-dd", result["data"][i]["time"]["register"]);
-                    tr.appendChild(child);
+                        child = document.createElement("td");
+                        child.innerText = dateFormat("YYYY-mm-dd", result["data"][i]["time"]["register"]);
+                        tr.appendChild(child);
 
-                    child = document.createElement("td");
-                    child.innerHTML = genUserBadge(result["data"][i]["isAdmin"], result["data"][i]["isBanned"]);
-                    tr.appendChild(child);
+                        child = document.createElement("td");
+                        child.innerHTML = genUserBadge(result["data"][i]["isAdmin"], result["data"][i]["isBanned"]);
+                        tr.appendChild(child);
 
-                    child = document.createElement("td");
-                    tr.appendChild(child);
+                        child = document.createElement("td");
+                        tr.appendChild(child);
 
-                    btn = document.createElement("button");
-                    btn.setAttribute("type", "button");
-                    btn.classList.add("userlist-btn");
-                    btn.classList.add("btn");
-                    btn.classList.add("btn-primary");
-                    btn.classList.add("btn-sm");
+                        btn = document.createElement("button");
+                        btn.setAttribute("type", "button");
+                        btn.classList.add("userlist-btn");
+                        btn.classList.add("btn");
+                        btn.classList.add("btn-primary");
+                        btn.classList.add("btn-sm");
 
-                    btnchild = document.createElement("span");
-                    btnchild.classList.add("spinner-border");
-                    btnchild.classList.add("spinner-border-sm");
-                    btnchild.setAttribute("role", "status");
-                    btnchild.setAttribute("aria-hidden", "true");
-                    btn.appendChild(btnchild);
+                        btnchild = document.createElement("span");
+                        btnchild.classList.add("spinner-border");
+                        btnchild.classList.add("spinner-border-sm");
+                        btnchild.setAttribute("role", "status");
+                        btnchild.setAttribute("aria-hidden", "true");
+                        btn.appendChild(btnchild);
 
-                    btnchild = document.createElement("span");
-                    btnchild.classList.add("btn-text");
-                    btn.appendChild(btnchild);
+                        btnchild = document.createElement("span");
+                        btnchild.classList.add("btn-text");
+                        btn.appendChild(btnchild);
 
-                    btn.uuid = result["data"][i]["uuid"];
-                    btn.addEventListener("click", switchStatusBtnClicked);
-                    if (result["data"][i]["isAdmin"]) {
-                        btn.classList.add("no-action");
-                        btn.setAttribute("disabled", "disabled");
-                        btnchild.innerText = "无";
-                    } else if (result["data"][i]["isBanned"]) {
-                        btnchild.innerText = "解封";
-                    } else {
-                        btnchild.innerText = "封禁";
+                        btn.uuid = result["data"][i]["uuid"];
+                        btn.addEventListener("click", switchStatusBtnClicked);
+                        if (result["data"][i]["isAdmin"]) {
+                            btn.classList.add("no-action");
+                            btn.setAttribute("disabled", "disabled");
+                            btnchild.innerText = "无";
+                        } else if (result["data"][i]["isBanned"]) {
+                            btnchild.innerText = "解封";
+                        } else {
+                            btnchild.innerText = "封禁";
+                        }
+                        child.appendChild(btn);
+                        document.querySelector("#user-list").appendChild(tr);
                     }
-                    child.appendChild(btn);
-                    document.querySelector("#user-list").appendChild(tr);
                 }
+
                 genPaginate(currectPage, pageSize, result["total"]);
+                if (callback) {
+                    callback(0);
+                }
             })
             .catch(e => {
                 toastr["error"]("拉取用户列表失败");
+                if (callback) {
+                    callback(-1);
+                }
             });
     }
 
@@ -111,7 +131,7 @@
                         toastr["error"]("操作失败，请重试");
                         break;
                 }
-                fetchUserList(CurrectPage, PageSize);
+                fetchUserList(CurrectPage, PageSize, Filter);
             })
             .catch(e => {
                 toastr["error"]("操作失败，请重试");
@@ -134,8 +154,15 @@
 
     function genPaginate(currectPage, pageSize, total) {
         let totalPages = Math.ceil(total / pageSize);
+        let userListPaginateContainer = document.querySelector(".userlist-pagination-container");
         let userListPaginate = document.querySelector(".userlist-pagination");
         userListPaginate.innerHTML = "";
+        if (total == 0) {
+            userListPaginateContainer.style.display = "none";
+            return;
+        } else {
+            userListPaginateContainer.style.display = "block";
+        }
         let previousBtn, nextBtn, pageBtn, gap;
 
         // 上一页
@@ -366,17 +393,17 @@
 
         function jumpToPage(e) {
             CurrectPage = e.target.page;
-            fetchUserList(CurrectPage, PageSize);
+            fetchUserList(CurrectPage, PageSize, Filter);
         }
         function prevPage(e) {
             if (e.target.classList.contains("disabled")) return;
             CurrectPage--;
-            fetchUserList(CurrectPage, PageSize);
+            fetchUserList(CurrectPage, PageSize, Filter);
         }
         function nextPage(e) {
             if (e.target.classList.contains("disabled")) return;
             CurrectPage++;
-            fetchUserList(CurrectPage, PageSize);
+            fetchUserList(CurrectPage, PageSize, Filter);
         }
 
     }

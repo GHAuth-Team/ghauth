@@ -291,23 +291,46 @@ module.exports = {
                     reject({ code: -1 });
                 } else {
                     pageSize = pageSize || 8;
-                    User
-                        .find({ id: { $gt: (currectPage - 1) * pageSize, $lte: (currectPage) * pageSize }, ...filter }, 'email playername uuid isBanned time.register')
-                        .sort({ 'time.register': 1 })
-                        .exec((err, doc) => {
-                            if (err) {
-                                reject({ code: -1 });
-                            } else {
-                                for (let i = 0; i < doc.length; i++) {
-                                    doc[i]["_doc"]["isAdmin"] = adminList.includes(doc[i]["email"]);
-                                    delete doc[i]["_doc"]["_id"];
+                    if (filter) {
+                        User
+                            .find(filter, 'email playername uuid isBanned time.register')
+                            .skip((currectPage - 1) * pageSize)
+                            .limit(pageSize)
+                            .sort({ 'time.register': 1 })
+                            .exec((err, doc) => {
+                                if (err) {
+                                    reject({ code: -1 });
+                                } else {
+                                    for (let i = 0; i < doc.length; i++) {
+                                        doc[i]["_doc"]["isAdmin"] = adminList.includes(doc[i]["email"]);
+                                        delete doc[i]["_doc"]["_id"];
+                                    }
+                                    resolve({
+                                        total: count,
+                                        data: doc
+                                    })
                                 }
-                                resolve({
-                                    total: count,
-                                    data: doc
-                                })
-                            }
-                        })
+                            })
+                    } else {
+                        User
+                            .find({ id: { $gt: (currectPage - 1) * pageSize, $lte: (currectPage) * pageSize } }, 'email playername uuid isBanned time.register')
+                            .sort({ 'time.register': 1 })
+                            .exec((err, doc) => {
+                                if (err) {
+                                    reject({ code: -1 });
+                                } else {
+                                    for (let i = 0; i < doc.length; i++) {
+                                        doc[i]["_doc"]["isAdmin"] = adminList.includes(doc[i]["email"]);
+                                        delete doc[i]["_doc"]["_id"];
+                                    }
+                                    resolve({
+                                        total: count,
+                                        data: doc
+                                    })
+                                }
+                            })
+                    }
+
                 }
             })
         })

@@ -18,7 +18,16 @@ module.exports = {
         }
         let currectPage = parseInt(ctx.request.query["currectPage"]) || 1;
         let pageSize = parseInt(ctx.request.query["pageSize"]) || 5;
-        let userList = await user.genUserList({}, currectPage, pageSize).then(result => { return result; });
+        let filter = ctx.request.query["filter"];
+        if (filter) {
+            filter = {
+                $or: [
+                    { playername: { "$regex": new RegExp(filter.toString()) } },
+                    { email: { "$regex": new RegExp(filter.toString()) } }
+                ]
+            }
+        }
+        let userList = await user.genUserList(filter, currectPage, pageSize).then(result => { return result; });
         ctx.status = 200;
         ctx.set("Content-Type", "application/json");
         ctx.body = userList;

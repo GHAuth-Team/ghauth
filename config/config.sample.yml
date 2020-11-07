@@ -8,7 +8,7 @@ common:
     #是否显示公告
     #公告文件请编辑config/announcement.md
     #支持markdown语法
-    showAnnouncement: true
+    showAnnouncement: false
 
     #站点链接，主要用于Yggdrasil认证（末尾不加/）
     url: "http://example.com"

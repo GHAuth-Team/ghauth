@@ -34,6 +34,8 @@ GHAuth
 * 进入 `config` 目录
 * 复制一份 `config.sample.yml` 并将其重命名为 `config.yml`
 * 修改 `config.yml` 以完成站点配置
+* 复制一份 `adminList.sample.yml` 并将其重命名为 `adminList.yml`
+* 修改 `adminList.yml` 以定义管理员邮箱列表
 * 启动 `yarn start` or `npm run start`
 
 ## 常用命令
@@ -44,12 +46,15 @@ GHAuth
 * 实时监控: `yarn monit` or `npm run monit`
 
 ## 关于管理权限
-* 具有管理权限的账号由 `config/adminList.js` 控制
+* 具有管理权限的账号由 `config/adminList.yml` 控制
 * 用户管理Widget会对拥有管理权限的用户显示
 
 ## 站点公告
-* 站点公告被储存于 `config/announcement.md` 文件中
-* 你可以通过 `config/config.yml` 内的配置项来禁用站点公告功能
+* 站点公告默认**关闭**
+* 进入 `config` 目录
+* 复制一份 `announcement.sample.md` 并将其重命名为 `announcement.md`
+* 修改 `announcement.md`
+* 修改 `config.yml` 内 `common` 配置节点的 `showAnnouncement` 配置项为 `true` 来启用公告
 * 支持Markdown语法
 
 ## 建议

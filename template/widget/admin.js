@@ -29,16 +29,23 @@
     document.querySelector("#userFilterBtn").addEventListener("click", function (e) {
         Filter = document.querySelector("#userFilterInput").value;
         e.target.setAttribute("disabled", "true");
-        fetchUserList(CurrectPage, PageSize, Filter, function () {
-            e.target.removeAttribute("disabled");
-        });
+        fetchUserList(1, PageSize, Filter,
+            function () { //beforeUpdate
+                CurrectPage = 1;
+            },
+            function () { //callback
+                e.target.removeAttribute("disabled");
+            });
     });
 
-    function fetchUserList(currectPage, pageSize, filter, callback) {
+    function fetchUserList(currectPage, pageSize, filter, beforeUpdate, callback) {
         filter = filter || "";
         fetch(`/admin/getUserList?currectPage=${currectPage}&pageSize=${pageSize}&filter=${filter}`, { method: 'GET' })
             .then(result => result.json())
             .then(result => {
+                if (beforeUpdate) {
+                    beforeUpdate();
+                }
                 let child, btn, btnchild;
                 document.querySelector("#user-list").innerText = "";
                 if (result["total"] == 0) {

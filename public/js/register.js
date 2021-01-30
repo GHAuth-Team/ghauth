@@ -36,8 +36,10 @@
 
         document.querySelector(".btn-register").setAttribute("disabled", "true");
         toastr["info"]("提交中，请稍后...");
-        $.post("/api/genkey")
-            .success(function (text) {
+
+        fetch(`/api/genkey`, { method: 'POST' })
+            .then(result => result.text())
+            .then(text => {
                 if (text.length == 86) {
                     var secret = "";
                     var iv = "";
@@ -66,15 +68,22 @@
                     throw "传输凭证获取失败";
                 }
             })
-            .error(function (error) {
-                toastr["error"](error.responseText);
+            .catch(e => {
+                toastr["error"](e.responseText);
                 document.querySelector(".btn-register").removeAttribute("disabled");
             });
     })
 
     function postData(data) {
-        $.post("/register", { data: data })
-            .success(function (json) {
+        fetch(`/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `data=${encodeURIComponent(data)}`
+        })
+            .then(result => result.json())
+            .then(json => {
                 switch (json["code"]) {
                     case -1:
                         toastr["error"](json["msg"]);
@@ -88,13 +97,13 @@
                     default:
                         throw "未知错误";
                 }
-            })
-            .error(function (error) {
-                toastr["error"](error.responseText);
-            })
-            .complete(function () {
                 refreshCaptcha();
                 document.querySelector(".btn-register").removeAttribute("disabled");
             })
+            .catch(e => {
+                toastr["error"](e.responseText);
+                refreshCaptcha();
+                document.querySelector(".btn-register").removeAttribute("disabled");
+            });
     }
 })()

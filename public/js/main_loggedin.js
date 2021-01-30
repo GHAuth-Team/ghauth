@@ -67,8 +67,9 @@
     }
     window.refreshViewer = function (remote) {
         if (remote) {
-            $.get("/api/ownskin")
-                .success(function (json) {
+            fetch(`/api/ownskin`, { method: 'GET' })
+                .then(result => result.json())
+                .then(json => {
                     if (json.code == "-1") {
                         toastr["error"]("皮肤信息获取失败");
                     } else {
@@ -83,6 +84,9 @@
                         }
                     }
                 })
+                .catch(e => {
+                    toastr["error"]("皮肤信息获取失败");
+                });
         } else {
             var type = document.querySelector("#skinData").dataset.type;
             if (type == 0) {
@@ -95,7 +99,7 @@
         }
 
     }
-    $("#skin-refresh").click(function () {
+    document.querySelector("#skin-refresh").addEventListener("click",function () {
         window.refreshViewer(true);
     })
 

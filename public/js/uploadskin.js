@@ -7,7 +7,7 @@
             skinHandleCanvas.height = this.height;
             skinHandleCanvas.getContext('2d').drawImage(this, 0, 0);
             window.URL.revokeObjectURL(this.src);
-            document.querySelector("#skinData").data.skinType = parseInt($("input[name='skinUploadTypeRadio']:checked").val());
+            document.querySelector("#skinData").data.skinType = parseInt(document.querySelector("input[name='skinUploadTypeRadio']:checked").value);
             document.querySelector("#skinData").data.skin = skinHandleCanvas.toDataURL("image/png");
             window.refreshViewer(false);
         } else {
@@ -15,17 +15,17 @@
             toastr["error"]("皮肤尺寸必须为64*64或64*32");
         }
     }
-
+    
     skinHandleImage.onerror = function () {
         window.URL.revokeObjectURL(this.src);
         toastr["error"]("读取皮肤时发生错误");
     }
 
-    $(document).ready(function () {
+    document.addEventListener("DOMContentLoaded", function () {
         bsCustomFileInput.init()
-    })
+    });
 
-    $("#viewSelectedSkin").click(function () {
+    document.querySelector("#viewSelectedSkin").addEventListener("click", function () {
         var files = document.querySelector("#skinFileInput").files;
         if (files[0]) {
             var imgsrc = window.URL.createObjectURL(files[0]);
@@ -68,8 +68,8 @@
     })
 
     function postSkinData(canvas) {
-        var skinType = parseInt($("input[name='skinUploadTypeRadio']:checked").val());
-        var skinData = "";
+        var skinType = parseInt(document.querySelector("input[name='skinUploadTypeRadio']:checked").value);
+        var skinData = ""; 
         if (canvas.width != 64 || (canvas.height != 64 && canvas.height != 32)) {
             toastr["error"]("皮肤格式错误");
             return;
@@ -94,8 +94,10 @@
 
         document.querySelector(".btn-uploadskin").setAttribute("disabled", "true");
         toastr["info"]("提交中，请稍后...");
-        $.post("/api/genkey")
-            .success(function (text) {
+
+        fetch(`/api/genkey`, { method: 'POST' })
+            .then(result => result.text())
+            .then(text => {
                 if (text.length == 86) {
                     var secret = "";
                     var iv = "";
@@ -118,15 +120,23 @@
                     throw "传输凭证获取失败";
                 }
             })
-            .error(function (error) {
-                toastr["error"](error.responseText);
+            .catch(e => {
+                toastr["error"](e.responseText);
                 document.querySelector(".btn-uploadskin").removeAttribute("disabled");
             });
     }
 
     function postData(data) {
-        $.post("/api/uploadskin", { data: data })
-            .success(function (json) {
+
+        fetch(`/api/uploadskin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `data=${encodeURIComponent(data)}`
+        })
+            .then(result => result.json())
+            .then(json => {
                 switch (json["code"]) {
                     case -1:
                         toastr["error"](json["msg"]);
@@ -138,12 +148,11 @@
                     default:
                         throw "未知错误";
                 }
-            })
-            .error(function (error) {
-                toastr["error"](error.responseText);
-            })
-            .complete(function () {
                 document.querySelector(".btn-uploadskin").removeAttribute("disabled");
             })
+            .catch(e => {
+                toastr["error"](e.responseText);
+                document.querySelector(".btn-uploadskin").removeAttribute("disabled");
+            });
     }
 })()

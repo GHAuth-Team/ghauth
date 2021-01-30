@@ -24,7 +24,7 @@ common:
               target: _self
 
             - title: Github
-              link: "https://github.com/daidr/ghauth"
+              link: "https://github.com/GHAuth-Team/ghauth"
               target: _blank
 
 extra:

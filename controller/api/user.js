@@ -7,7 +7,7 @@ const utils = require("../../utils");
 module.exports = {
     changepassword: async (ctx, next) => {
         let data = {};
-        let time = new Date().getTime();
+        let time = Date.now();
         body = {};
         let userData = await user.getUserInfo(ctx).then(result => { return result; });
         if (!userData["isLoggedIn"]) {
@@ -80,7 +80,7 @@ module.exports = {
     },
     uploadskin: async (ctx, next) => {
         let data = {};
-        let time = new Date().getTime();
+        let time = Date.now();
         body = {};
         let userData = await user.getUserInfo(ctx).then(result => { return result; });
         if (!userData["isLoggedIn"]) {

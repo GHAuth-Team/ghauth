@@ -9,8 +9,10 @@
         rotate: null
     };
 
-    $.get("/api/ownskin")
-        .success(function (json) {
+
+    fetch(`/api/ownskin`, { method: 'GET' })
+        .then(result => result.json())
+        .then(json => {
             if (json.code == "-1") {
                 toastr["error"]("皮肤信息获取失败");
             } else {
@@ -36,11 +38,13 @@
                         document.querySelector("#skinviewer-loading").classList.remove("active");
                     }, 200);
                 } catch (error) {
-                    console.log(error)
                     toastr["error"]("皮肤模块加载错误");
                 }
             }
         })
+        .catch(e => {
+            toastr["error"]("皮肤模块加载错误");
+        });
 
     // 监听窗口大小变化，以修改skinviewer大小
     window.addEventListener('resize', function () {

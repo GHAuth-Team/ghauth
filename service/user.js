@@ -14,7 +14,7 @@ module.exports = {
                 return;
             }
 
-            User.findOne({ 'email': ctx.session.userInfo.email }, 'email password playername uuid tokens skin isBanned ip time', function (err, user) {
+            User.findOne({ 'email': ctx.session.userInfo.email }, 'email password playername uuid tokens skin isBanned ip time', { lean: true }, function (err, user) {
                 if (err) {
                     resolve({ isLoggedIn: false });
                     return;
@@ -61,7 +61,7 @@ module.exports = {
     isUserExists: (type, text) => {
         return new Promise((resolve, reject) => {
             if (type == "email") {
-                User.findOne({ 'email': text }, '', function (err, user) {
+                User.findOne({ 'email': text }, '', { lean: true }, function (err, user) {
                     if (err) throw err;
                     if (user) {
                         resolve(true);
@@ -70,7 +70,7 @@ module.exports = {
                     };
                 });
             } else {
-                User.findOne({ 'playername': text }, '', function (err, user) {
+                User.findOne({ 'playername': text }, '', { lean: true }, function (err, user) {
                     if (err) throw err;
                     if (user) {
                         resolve(true);
@@ -106,7 +106,7 @@ module.exports = {
     },
     isUserPasswordCorrect: (email, password) => {
         return new Promise((resolve, reject) => {
-            User.findOne({ 'email': email }, 'password', function (err, user) {
+            User.findOne({ 'email': email }, 'password', { lean: true }, function (err, user) {
                 if (!err && user.password == password) {
                     resolve(true);
                 } else {
@@ -135,7 +135,7 @@ module.exports = {
     },
     searchUserInfoByEmail: (email) => {
         return new Promise((resolve, reject) => {
-            User.findOne({ 'email': email }, '', function (err, user) {
+            User.findOne({ 'email': email }, '', { lean: true }, function (err, user) {
                 if (!err && user) {
                     resolve(user);
                 } else {
@@ -202,7 +202,7 @@ module.exports = {
     },
     searchUserInfoBySkinHash: (hash) => {
         return new Promise((resolve, reject) => {
-            User.findOne({ 'skin.hash': hash }, '', function (err, user) {
+            User.findOne({ 'skin.hash': hash }, '', { lean: true }, function (err, user) {
                 if (!err && user) {
                     resolve(user);
                 } else {
@@ -213,7 +213,7 @@ module.exports = {
     },
     searchUserInfoByUUID: (uuid) => {
         return new Promise((resolve, reject) => {
-            User.findOne({ 'uuid': uuid }, '', function (err, user) {
+            User.findOne({ 'uuid': uuid }, '', { lean: true }, function (err, user) {
                 if (!err && user) {
                     resolve(user);
                 } else {
@@ -227,7 +227,7 @@ module.exports = {
             User.findOne({ 'email': email }, 'email playername password uuid tokens skin isBanned ip time', function (err, user) {
                 if (err) throw err;
                 user.ip.lastLogged = utils.getUserIp(ctx.req);
-                user.time.lastLogged = new Date().getTime();
+                user.time.lastLogged = Date.now();
                 user.save(function (err, updatedUser) {
                     if (err) throw err;
                     ctx.session.userInfo = {
@@ -250,7 +250,7 @@ module.exports = {
     },
     getUserSkin: (email) => {
         return new Promise((resolve, reject) => {
-            User.findOne({ 'email': email }, 'skin', function (err, user) {
+            User.findOne({ 'email': email }, 'skin', { lean: true }, function (err, user) {
                 if (err) throw err;
                 resolve({ "skinType": user.skin.type, "skin": user.skin.hash + ".png" });
             });
@@ -258,7 +258,7 @@ module.exports = {
     },
     genUserProfile: (userData) => {
         let textureData = {
-            timestamp: new Date().getTime(),
+            timestamp: Date.now(),
             profileId: userData.uuid.replace(/-/g, ""),
             profileName: userData.playername,
             textures: {
@@ -293,7 +293,7 @@ module.exports = {
                     pageSize = pageSize || 8;
                     if (filter) {
                         User
-                            .find(filter, 'email playername uuid isBanned time.register')
+                            .find(filter, 'id email playername uuid isBanned time.register', { lean: true })
                             .skip((currectPage - 1) * pageSize)
                             .limit(pageSize)
                             .sort({ 'time.register': 1 })
@@ -302,8 +302,9 @@ module.exports = {
                                     reject({ code: -1 });
                                 } else {
                                     for (let i = 0; i < doc.length; i++) {
-                                        doc[i]["_doc"]["isAdmin"] = adminList.includes(doc[i]["email"]);
-                                        delete doc[i]["_doc"]["_id"];
+                                        console.log(doc[i])
+                                        doc[i]["isAdmin"] = adminList.includes(doc[i]["email"]);
+                                        delete doc[i]["_id"];
                                     }
                                     resolve({
                                         total: count,
@@ -313,15 +314,15 @@ module.exports = {
                             })
                     } else {
                         User
-                            .find({ id: { $gt: (currectPage - 1) * pageSize, $lte: (currectPage) * pageSize } }, 'email playername uuid isBanned time.register')
+                            .find({ id: { $gt: (currectPage - 1) * pageSize, $lte: (currectPage) * pageSize } }, 'id email playername uuid isBanned time.register', { lean: true })
                             .sort({ 'time.register': 1 })
                             .exec((err, doc) => {
                                 if (err) {
                                     reject({ code: -1 });
                                 } else {
                                     for (let i = 0; i < doc.length; i++) {
-                                        doc[i]["_doc"]["isAdmin"] = adminList.includes(doc[i]["email"]);
-                                        delete doc[i]["_doc"]["_id"];
+                                        doc[i]["isAdmin"] = adminList.includes(doc[i]["email"]);
+                                        delete doc[i]["_id"];
                                     }
                                     resolve({
                                         total: count,

@@ -15,7 +15,7 @@ module.exports = {
     },
     handle: async (ctx, next) => {
         let data = {};
-        let time = new Date().getTime();
+        let time = Date.now();
         body = {};
         let userData = await user.getUserInfo(ctx).then(result => { return result; });
         if (userData["isLoggedIn"]) {
@@ -150,8 +150,8 @@ module.exports = {
                     lastLogged: utils.getUserIp(ctx.req)
                 },
                 time: {
-                    register: new Date().getTime(),
-                    lastLogged: new Date().getTime()
+                    register: Date.now(),
+                    lastLogged: Date.now()
                 }
             }
             let registerResult = await user.createNewUser(userInfo).then(result => { return result });

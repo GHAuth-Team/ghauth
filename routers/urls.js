@@ -1,7 +1,7 @@
 /* routers/urls.js */
 
 const Router = require('koa-router');
-const static = require('koa-static');
+const staticCache = require('koa-static-cache');
 
 module.exports = (app) => {
     const rootRouter = new Router();
@@ -29,13 +29,16 @@ module.exports = (app) => {
     // ./admin/
     const adminRouter = require('./admin');
     rootRouter.use('/admin', adminRouter.routes(), adminRouter.allowedMethods());
-    
+
     // ./textures/
     const texturesRouter = require('./textures');
     rootRouter.use('/textures', texturesRouter.routes(), texturesRouter.allowedMethods());
 
     //静态文件路由
-    app.use(static("./public")); 
+    app.use(staticCache("./public", {
+        gzip: true,
+        buffer: false
+    }));
 
     app.use(rootRouter.routes());
 }

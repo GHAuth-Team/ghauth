@@ -8,7 +8,7 @@
                 button#userFilterBtn.btn.btn-sm.btn-primary(type='button')
                     span.spinner-border.spinner-border-sm(role="status" aria-hidden="true")
                     span.btn-text 搜索
-                    
+
 
             .table-container
                 table.table.table-sm.table-hover
@@ -23,8 +23,7 @@
                 .d-inline-block.pagination.userlist-pagination(role='navigation' aria-label='Pagination')
 
     button.admin-widget-load-btn.btn.btn-primary.btn-block(type='button') 载入管理面板
-
-    script(type="text/javascript")
-        include ./admin.js
-    style
-        include ./admin.css
+append scripts
+    script(src="/js/admin.js" aysnc)
+append styles
+    link(rel="stylesheet", href="/css/admin.css")

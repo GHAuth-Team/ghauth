@@ -18,7 +18,7 @@ module.exports = {
 
                     // 遍历所有旧token并删除过期token
                     for (let i = 0; i < tokens.length; i++) {
-                        if (new Date().getTime() - tokens[i]["createAt"] >= 432000000) {
+                        if (Date.now() - tokens[i]["createAt"] >= 432000000) {
                             tokens[i].remove();
                         }
                     }
@@ -80,7 +80,7 @@ module.exports = {
                     }
 
                     // accessToken已过期
-                    if (new Date().getTime() - user.tokens[tokenIndex]["createAt"] >= 432000000) {
+                    if (Date.now() - user.tokens[tokenIndex]["createAt"] >= 432000000) {
                         user.tokens[tokenIndex].remove();
                         user.save();
                         resolve(false);
@@ -131,7 +131,7 @@ module.exports = {
                     }
 
                     // accessToken已过期
-                    if (new Date().getTime() - user.tokens[tokenIndex]["createAt"] >= 432000000) {
+                    if (Date.now() - user.tokens[tokenIndex]["createAt"] >= 432000000) {
                         user.tokens[tokenIndex].remove();
                         user.save();
                         resolve(false);
@@ -157,7 +157,6 @@ module.exports = {
             User.findOne(query, 'tokens _id', function (err, user) {
                 if (err) throw err;
                 if (user && !user.isBanned) {
-                    console.log(user)
                     let tokenIndex = -1;
                     for (let i = 0; i < user.tokens.length; i++) {
                         if (user.tokens[i].accessToken == accessToken) {

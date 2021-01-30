@@ -1,7 +1,7 @@
 (function () {
     document.querySelector("#img-captcha").addEventListener("click", refreshCaptcha);
     function refreshCaptcha() {
-        document.querySelector("#img-captcha").src = `/api/captcha?t=${new Date().getTime()}`;
+        document.querySelector("#img-captcha").src = `/api/captcha?t=${Date.now()}`;
     }
 
     document.querySelector(".btn-login").addEventListener("click", function () {

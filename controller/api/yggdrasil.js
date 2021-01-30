@@ -108,7 +108,6 @@ module.exports = {
         refresh: async (ctx, next) => {
             const data = ctx.request.body;
             ctx.set("Content-Type", "application/json");
-            console.log(ctx.body)
             // 属性accessToken不存在，返回403
             if (!data["accessToken"]) {
                 ctx.status = 403;

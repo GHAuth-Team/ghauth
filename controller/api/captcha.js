@@ -18,7 +18,7 @@ module.exports = {
             mathOperator: "+"
         });
         ctx.session.captcha = {};
-        ctx.session.captcha.ts = new Date().getTime();
+        ctx.session.captcha.ts = Date.now();
         ctx.session.captcha.text = captcha.text.toLocaleLowerCase();
         ctx.set("Content-Type", "image/svg+xml");
         ctx.body = captcha.data;

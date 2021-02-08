@@ -11,7 +11,7 @@
         if (!email || !raw_password || !captcha) {
             notyf.open({
                 type: 'error',
-                message: "邮箱/密码/验证码不能为空"
+                message: "<b>邮箱</b>/<b>密码</b>/<b>验证码</b>不能为空"
             });
             return;
         }

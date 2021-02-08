@@ -20,7 +20,7 @@
         if (!email || !raw_password || !playername || !repeat_password) {
             notyf.open({
                 type: 'error',
-                message: "邮箱/密码/游戏昵称不能为空"
+                message: "<b>邮箱</b>/<b>密码</b>/<b>游戏昵称</b>不能为空"
             });
             return;
         }

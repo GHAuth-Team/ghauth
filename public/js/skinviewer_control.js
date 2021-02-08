@@ -14,7 +14,10 @@
         .then(result => result.json())
         .then(json => {
             if (json.code == "-1") {
-                toastr["error"]("皮肤信息获取失败");
+                notyf.open({
+                    type: 'error',
+                    message: '皮肤信息获取失败'
+                });
             } else {
                 try {
                     document.querySelector("#skinData").data = json.data;
@@ -38,12 +41,18 @@
                         document.querySelector("#skinviewer-loading").classList.remove("active");
                     }, 200);
                 } catch (error) {
-                    toastr["error"]("皮肤模块加载错误");
+                    notyf.open({
+                        type: 'error',
+                        message: '皮肤模块加载错误'
+                    });
                 }
             }
         })
         .catch(e => {
-            toastr["error"]("皮肤模块加载错误");
+            notyf.open({
+                type: 'error',
+                message: '皮肤模块加载错误'
+            });
         });
 
     // 监听窗口大小变化，以修改skinviewer大小

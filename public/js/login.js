@@ -9,17 +9,26 @@
         var raw_password = document.querySelector("#inputPassword").value;
         var captcha = document.querySelector("#inputCaptcha").value;
         if (!email || !raw_password || !captcha) {
-            toastr["error"]("邮箱/密码/验证码不能为空");
+            notyf.open({
+                type: 'error',
+                message: "<b>邮箱</b>/<b>密码</b>/<b>验证码</b>不能为空"
+            });
             return;
         }
 
         if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
-            toastr["error"]("输入的邮箱格式不正确");
+            notyf.open({
+                type: 'error',
+                message: "输入的邮箱格式不正确"
+            });
             return;
         }
 
         document.querySelector(".btn-login").setAttribute("disabled", "true");
-        toastr["info"]("提交中，请稍后...");
+        notyf.open({
+            type: 'info',
+            message: "提交中，请稍后..."
+        });
 
         fetch(`/api/genkey`, { method: 'POST' })
             .then(result => result.text())
@@ -52,7 +61,10 @@
                 }
             })
             .catch(e => {
-                toastr["error"](e.responseText);
+                notyf.open({
+                    type: 'error',
+                    message: e
+                });
                 document.querySelector(".btn-login").removeAttribute("disabled");
             });
     })
@@ -69,10 +81,16 @@
             .then(json => {
                 switch (json["code"]) {
                     case -1:
-                        toastr["error"](json["msg"]);
+                        notyf.open({
+                            type: 'error',
+                            message: json["msg"]
+                        });
                         break;
                     case 1000:
-                        toastr["success"]("登录成功，2秒后跳转到首页...");
+                        notyf.open({
+                            type: 'success',
+                            message: "登录成功，2秒后跳转到首页..."
+                        });
                         setTimeout(function () {
                             location.href = "/"
                         }, 2000);
@@ -84,7 +102,10 @@
                 document.querySelector(".btn-login").removeAttribute("disabled");
             })
             .catch(e => {
-                toastr["error"](e.responseText);
+                notyf.open({
+                    type: 'error',
+                    message: e
+                });
                 refreshCaptcha();
                 document.querySelector(".btn-login").removeAttribute("disabled");
             });

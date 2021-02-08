@@ -71,7 +71,10 @@
                 .then(result => result.json())
                 .then(json => {
                     if (json.code == "-1") {
-                        toastr["error"]("皮肤信息获取失败");
+                        notyf.open({
+                            type: 'error',
+                            message: "皮肤信息获取失败"
+                        });
                     } else {
                         document.querySelector("#skinData").data = json.data;
                         var type = document.querySelector("#skinData").dataset.type;
@@ -85,7 +88,10 @@
                     }
                 })
                 .catch(e => {
-                    toastr["error"]("皮肤信息获取失败");
+                    notyf.open({
+                        type: 'error',
+                        message: "皮肤信息获取失败"
+                    });
                 });
         } else {
             var type = document.querySelector("#skinData").dataset.type;

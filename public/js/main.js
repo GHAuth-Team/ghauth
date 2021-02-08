@@ -1,16 +1,38 @@
-toastr.options = {
-    "closeButton": false,
-    "debug": false,
-    "newestOnTop": false,
-    "progressBar": false,
-    "positionClass": "toast-top-right",
-    "preventDuplicates": false,
-    "showDuration": "100",
-    "hideDuration": "100",
-    "timeOut": "2000",
-    "extendedTimeOut": "500",
-    "showEasing": "linear",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-}
+const notyf = new Notyf({
+    duration: 2000,
+    position: {
+        x: 'right',
+        y: 'top',
+    },
+    types: [
+        {
+            type: 'success',
+            background: 'green',
+            className: "notyf__toast--success",
+
+            dismissible: true,
+            icon: false
+        },
+        {
+            type: 'warning',
+            background: 'orange',
+            className: "notyf__toast--warning",
+            dismissible: true,
+            icon: false
+        },
+        {
+            type: 'error',
+            background: 'indianred',
+            className: "notyf__toast--error",
+            dismissible: true,
+            icon: false
+        },
+        {
+            type: 'info',
+            background: '#2196f3',
+            className: "notyf__toast--info",
+            dismissible: true,
+            icon: false
+        }
+    ]
+});

@@ -116,7 +116,10 @@
                 }
             })
             .catch(e => {
-                toastr["error"]("拉取用户列表失败");
+                notyf.open({
+                    type: 'error',
+                    message: '拉取用户列表失败'
+                });
                 if (callback) {
                     callback(-1);
                 }
@@ -135,13 +138,19 @@
                         // 操作成功
                         break;
                     default:
-                        toastr["error"]("操作失败，请重试");
+                        notyf.open({
+                            type: 'error',
+                            message: '操作失败，请重试'
+                        });
                         break;
                 }
                 fetchUserList(CurrectPage, PageSize, Filter);
             })
             .catch(e => {
-                toastr["error"]("操作失败，请重试");
+                notyf.open({
+                    type: 'error',
+                    message: '操作失败，请重试'
+                });
                 e.target.removeAttribute("disabled");
             });
     }

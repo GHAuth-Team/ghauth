@@ -10,33 +10,50 @@
         var repeat_password = document.querySelector("#inputRepeatPassword").value;
         var captchaCode = document.querySelector("#inputCaptcha").value;
         if (!captchaCode) {
-            toastr["error"]("验证码不能为空");
+            notyf.open({
+                type: 'error',
+                message: "验证码不能为空"
+            });
             return;
         }
 
         if (!email || !raw_password || !playername || !repeat_password) {
-            toastr["error"]("邮箱/密码/游戏昵称不能为空");
+            notyf.open({
+                type: 'error',
+                message: "邮箱/密码/游戏昵称不能为空"
+            });
             return;
         }
 
         if (raw_password !== repeat_password) {
-            toastr["error"]("两次密码输入不一致");
+            notyf.open({
+                type: 'error',
+                message: "两次密码输入不一致"
+            });
             return;
         }
 
         if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
-            toastr["error"]("输入的邮箱格式不正确");
+            notyf.open({
+                type: 'error',
+                message: "输入的邮箱格式不正确"
+            });
             return;
         }
 
         if (!/^[A-Za-z0-9_]+$/.test(playername) || playername.length < 4 || playername.length > 12) {
-            toastr["error"]("输入的游戏昵称不合法");
+            notyf.open({
+                type: 'error',
+                message: "输入的游戏昵称不合法"
+            });
             return;
         }
 
         document.querySelector(".btn-register").setAttribute("disabled", "true");
-        toastr["info"]("提交中，请稍后...");
-
+        notyf.open({
+            type: 'info',
+            message: "提交中，请稍后..."
+        });
         fetch(`/api/genkey`, { method: 'POST' })
             .then(result => result.text())
             .then(text => {
@@ -69,7 +86,10 @@
                 }
             })
             .catch(e => {
-                toastr["error"](e.responseText);
+                notyf.open({
+                    type: 'error',
+                    message: e
+                });
                 document.querySelector(".btn-register").removeAttribute("disabled");
             });
     })
@@ -86,10 +106,16 @@
             .then(json => {
                 switch (json["code"]) {
                     case -1:
-                        toastr["error"](json["msg"]);
+                        notyf.open({
+                            type: 'error',
+                            message: json["msg"]
+                        });
                         break;
                     case 1000:
-                        toastr["success"]("注册成功，2秒后跳转到首页...");
+                        notyf.open({
+                            type: 'success',
+                            message: "注册成功，2秒后跳转到首页..."
+                        });
                         setTimeout(function () {
                             location.href = "/"
                         }, 2000);
@@ -101,7 +127,10 @@
                 document.querySelector(".btn-register").removeAttribute("disabled");
             })
             .catch(e => {
-                toastr["error"](e.responseText);
+                notyf.open({
+                    type: 'error',
+                    message: e
+                });
                 refreshCaptcha();
                 document.querySelector(".btn-register").removeAttribute("disabled");
             });

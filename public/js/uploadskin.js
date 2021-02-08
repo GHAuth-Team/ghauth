@@ -12,13 +12,19 @@
             window.refreshViewer(false);
         } else {
             window.URL.revokeObjectURL(this.src);
-            toastr["error"]("皮肤尺寸必须为64*64或64*32");
+            notyf.open({
+                type: 'error',
+                message: '皮肤尺寸必须为<b>64*64</b>或<b>64*32</b>'
+            });
         }
     }
     
     skinHandleImage.onerror = function () {
         window.URL.revokeObjectURL(this.src);
-        toastr["error"]("读取皮肤时发生错误");
+        notyf.open({
+            type: 'error',
+            message: '读取皮肤时发生错误'
+        });
     }
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -31,7 +37,10 @@
             var imgsrc = window.URL.createObjectURL(files[0]);
             skinHandleImage.src = imgsrc;
         } else {
-            toastr["error"]("你还没有选择文件");
+            notyf.open({
+                type: 'error',
+                message: '你还没有选择文件'
+            });
         }
     })
 
@@ -48,13 +57,19 @@
                 postSkinData(skinUploadCanvas);
             } else {
                 window.URL.revokeObjectURL(this.src);
-                toastr["error"]("皮肤尺寸必须为64*64或64*32");
+                notyf.open({
+                    type: 'error',
+                    message: '皮肤尺寸必须为<b>64*64</b>或<b>64*32</b>'
+                });
             }
         }
 
         skinUploadImage.onerror = function () {
             window.URL.revokeObjectURL(this.src);
-            toastr["error"]("读取皮肤时发生错误");
+            notyf.open({
+                type: 'error',
+                message: '读取皮肤时发生错误'
+            });
         }
 
 
@@ -63,7 +78,10 @@
             var imgsrc = window.URL.createObjectURL(files[0]);
             skinUploadImage.src = imgsrc;
         } else {
-            toastr["error"]("你还没有选择文件");
+            notyf.open({
+                type: 'error',
+                message: '你还没有选择文件'
+            });
         }
     })
 
@@ -71,7 +89,10 @@
         var skinType = parseInt(document.querySelector("input[name='skinUploadTypeRadio']:checked").value);
         var skinData = ""; 
         if (canvas.width != 64 || (canvas.height != 64 && canvas.height != 32)) {
-            toastr["error"]("皮肤格式错误");
+            notyf.open({
+                type: 'error',
+                message: '皮肤格式错误'
+            });
             return;
         }
         try {
@@ -81,19 +102,28 @@
         } catch (error) {
             console.log(error)
             canvas.remove();
-            toastr["error"]("皮肤上传错误");
+            notyf.open({
+                type: 'error',
+                message: '皮肤上传错误'
+            });
             return;
         }
 
         if (skinType != 0 && skinType != 1) {
-            toastr["error"]("皮肤模型选择错误");
+            notyf.open({
+                type: 'error',
+                message: '皮肤模型选择错误'
+            });
             return;
         }
 
 
 
         document.querySelector(".btn-uploadskin").setAttribute("disabled", "true");
-        toastr["info"]("提交中，请稍后...");
+        notyf.open({
+            type: 'info',
+            message: '提交中，请稍后...'
+        });
 
         fetch(`/api/genkey`, { method: 'POST' })
             .then(result => result.text())
@@ -121,7 +151,10 @@
                 }
             })
             .catch(e => {
-                toastr["error"](e.responseText);
+                notyf.open({
+                    type: 'error',
+                    message: e
+                });
                 document.querySelector(".btn-uploadskin").removeAttribute("disabled");
             });
     }
@@ -139,10 +172,16 @@
             .then(json => {
                 switch (json["code"]) {
                     case -1:
-                        toastr["error"](json["msg"]);
+                        notyf.open({
+                            type: 'error',
+                            message: json["msg"]
+                        });
                         break;
                     case 1000:
-                        toastr["success"]("皮肤修改成功");
+                        notyf.open({
+                            type: 'success',
+                            message: "皮肤修改成功"
+                        });
                         window.refreshViewer(true);
                         break;
                     default:
@@ -151,7 +190,10 @@
                 document.querySelector(".btn-uploadskin").removeAttribute("disabled");
             })
             .catch(e => {
-                toastr["error"](e.responseText);
+                notyf.open({
+                    type: 'error',
+                    message: e
+                });
                 document.querySelector(".btn-uploadskin").removeAttribute("disabled");
             });
     }

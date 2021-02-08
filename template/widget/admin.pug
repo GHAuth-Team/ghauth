@@ -2,6 +2,7 @@
     .admin-widget-container
         nav.nav.nav-pills
             a.nav-item.nav-link.active 用户管理
+            a.nav-item.nav-link 站点配置
         .admin-pane.admin-pane-user
             .user-filter-container.form-inline
                 input#userFilterInput.form-control.form-control-sm(type='text' placeholder='搜索')
@@ -23,7 +24,7 @@
                 .d-inline-block.pagination.userlist-pagination(role='navigation' aria-label='Pagination')
 
     button.admin-widget-load-btn.btn.btn-primary.btn-block(type='button') 载入管理面板
-append scripts
+append block scripts
     script(src="/js/admin.js" aysnc)
-append styles
+append block styles
     link(rel="stylesheet", href="/css/admin.css")

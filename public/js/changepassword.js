@@ -5,17 +5,26 @@
         var repeat_password = document.querySelector("#repeat-new-password").value;
 
         if (!old_password || !new_password || !repeat_password) {
-            toastr["error"]("邮箱/密码/游戏昵称不能为空");
+            notyf.open({
+                type: 'error',
+                message: "邮箱/密码/游戏昵称不能为空"
+            });
             return;
         }
 
         if (new_password !== repeat_password) {
-            toastr["error"]("两次密码输入不一致");
+            notyf.open({
+                type: 'error',
+                message: "两次密码输入不一致"
+            });
             return;
         }
 
         document.querySelector(".btn-changepassword").setAttribute("disabled", "true");
-        toastr["info"]("提交中，请稍后...");
+        notyf.open({
+            type: 'info',
+            message: "提交中，请稍后..."
+        });
 
         fetch(`/api/genkey`, { method: 'POST' })
             .then(result => result.text())
@@ -51,7 +60,10 @@
                 }
             })
             .catch(e => {
-                toastr["error"](e.responseText);
+                notyf.open({
+                    type: 'error',
+                    message: e
+                });
                 document.querySelector(".btn-changepassword").removeAttribute("disabled");
             });
     })
@@ -68,10 +80,16 @@
             .then(json => {
                 switch (json["code"]) {
                     case -1:
-                        toastr["error"](json["msg"]);
+                        notyf.open({
+                            type: 'error',
+                            message: json["msg"]
+                        });
                         break;
                     case 1000:
-                        toastr["success"]("密码修改成功，2秒后刷新...");
+                        notyf.open({
+                            type: 'success',
+                            message: "密码修改成功，2秒后刷新..."
+                        });
                         setTimeout(function () {
                             location.href = "/"
                         }, 2000);
@@ -82,7 +100,10 @@
                 document.querySelector(".btn-changepassword").removeAttribute("disabled");
             })
             .catch(e => {
-                toastr["error"](e.responseText);
+                notyf.open({
+                    type: 'error',
+                    message: e
+                });
                 document.querySelector(".btn-changepassword").removeAttribute("disabled");
             });
     }

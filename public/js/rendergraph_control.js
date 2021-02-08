@@ -18,7 +18,10 @@
                 renderlist = result;
             })
             .catch(e => {
-                toastr["error"]("拉取渲染图数据时发生错误");
+                notyf.open({
+                    type: 'error',
+                    message: "拉取渲染图数据时发生错误"
+                });
             });
     }
 
@@ -172,7 +175,10 @@
     try {
         init()
     } catch (error) {
-        toastr["error"]("皮肤渲染图模块发生错误");
+        notyf.open({
+            type: 'error',
+            message: "皮肤渲染图模块发生错误"
+        });
     }
 
     let rendergraphPreviousButton = document.querySelector("#rendergraphPreviousButton");

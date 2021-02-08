@@ -10,7 +10,7 @@ html
             title #{pagename} | #{config.sitename}
         block styles
             link(rel="stylesheet", href="/css/bootstrap.min.css")
-            link(rel="stylesheet", href="/css/toastr.css")
+            link(rel="stylesheet", href="css/notyf.css")
             link(rel="stylesheet", href="/css/style.css")
     body
         .main-container
@@ -50,9 +50,7 @@ html
                     p!=config.footer.copyright
                     p!="Designed with all the love in the world by <a href=\"https://im.daidr.me\" target=\"_blank\">@daidr</a>."
         block scripts
-            script(src="/js/jquery.min.js" aysnc)
-            script(src="/js/bootstrap.min.js" aysnc)
-            script(src="/js/toastr.min.js" aysnc)
+            script(src="/js/notyf.js" aysnc)
             script(src="/js/main.js" aysnc)
         
         

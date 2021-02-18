@@ -100,7 +100,6 @@
             skinData = skinData.slice(22);
             canvas.remove();
         } catch (error) {
-            console.log(error)
             canvas.remove();
             notyf.open({
                 type: 'error',

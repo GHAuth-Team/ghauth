@@ -40,7 +40,7 @@
 
     function fetchUserList(currectPage, pageSize, filter, beforeUpdate, callback) {
         filter = filter || "";
-        fetch(`/admin/getUserList?currectPage=${currectPage}&pageSize=${pageSize}&filter=${filter}`, { method: 'GET' })
+        fetch(`/admin/getUserList?currectPage=${currectPage}&pageSize=${pageSize}${filter ? "&filter=" + filter : ""}`, { method: 'GET' })
             .then(result => result.json())
             .then(result => {
                 if (beforeUpdate) {

@@ -11,6 +11,8 @@ GHAuth
 
 [GHAuth](https://auth.daidr.me)
 
+[更改日志](/CHANGELOG.md)
+
 ## 功能
 * 完整的yggdrasil协议支持
 * 完整的皮肤管理

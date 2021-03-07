@@ -222,6 +222,17 @@ module.exports = {
             });
         })
     },
+    searchUserInfoByPlayerName: (playername) => {
+        return new Promise((resolve, reject) => {
+            User.findOne({ 'playername': playername }, '', { lean: true }, function (err, user) {
+                if (!err && user) {
+                    resolve(user);
+                } else {
+                    resolve(false);
+                }
+            });
+        })
+    },
     letUserLoggedIn: (ctx, email) => {
         return new Promise((resolve, reject) => {
             User.findOne({ 'email': email }, 'email playername password uuid tokens skin isBanned ip time', function (err, user) {
@@ -256,32 +267,43 @@ module.exports = {
             });
         })
     },
-    genUserProfile: (userData) => {
-        let textureData = {
-            timestamp: Date.now(),
-            profileId: userData.uuid.replace(/-/g, ""),
-            profileName: userData.playername,
-            textures: {
-                SKIN: {
-                    url: `${config.common.url}/textures/${userData.skin.hash}`,
-                    metadata: {
-                        model: userData.skin.type == 0 ? "default" : "slim"
+    genUserProfile: (userData, isPropertiesContained = true) => {
+        if (isPropertiesContained) {
+            let textureData = {
+                timestamp: Date.now(),
+                profileId: userData.uuid.replace(/-/g, ""),
+                profileName: userData.playername,
+                textures: {
+                    SKIN: {
+                        url: `${config.common.url}/textures/${userData.skin.hash}`,
+                        metadata: {
+                            model: userData.skin.type == 0 ? "default" : "slim"
+                        }
                     }
                 }
             }
+            textureData = Buffer.from(JSON.stringify(textureData)).toString("base64");
         }
-        textureData = Buffer.from(JSON.stringify(textureData)).toString("base64");
-        let data = {
-            id: userData.uuid.replace(/-/g, ""),
-            name: userData.playername,
-            properties: [
-                {
-                    "name": "textures",
-                    "value": textureData,
-                    "signature": utils.genSignedData(textureData)
-                }
-            ]
+        let data;
+        if (isPropertiesContained) {
+            data = {
+                id: userData.uuid.replace(/-/g, ""),
+                name: userData.playername,
+                properties: [
+                    {
+                        "name": "textures",
+                        "value": textureData,
+                        "signature": utils.genSignedData(textureData)
+                    }
+                ]
+            }
+        } else {
+            data = {
+                id: userData.uuid.replace(/-/g, ""),
+                name: userData.playername
+            }
         }
+
         return data;
     },
     genUserList: (filter, currectPage, pageSize) => {

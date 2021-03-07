@@ -91,6 +91,10 @@ router.get('/yggdrasil/sessionserver/session/minecraft/hasJoined', yggdrasilCont
 // Yggdrasil角色查询接口
 router.get('/yggdrasil/sessionserver/session/minecraft/profile/:uuid', yggdrasilController.sessionserver.session.minecraft.profile);
 
+// POST ./api/yggdrasil/api/profiles/minecraft
+// Yggdrasil按名称批量查询角色接口
+router.post('/yggdrasil/api/profiles/minecraft', yggdrasilController.api.profiles.minecraft);
+
 /* ---------- ROUTES END ---------- */
 
 module.exports = router;

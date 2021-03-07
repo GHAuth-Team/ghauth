@@ -26,6 +26,51 @@ module.exports = {
         }
         ctx.body = data;
     },
+    api: {
+        profiles: {
+            minecraft: async (ctx, next) => {
+                const data = ctx.request.body;
+
+                // 校验是否传入了数组
+                if (!data instanceof Array) {
+                    ctx.set("Content-Type", "application/json");
+                    ctx.body = [];
+                    return;
+                }
+
+                // 去除重复及无效数据
+                data.filter(function (item, index, arr) {
+                    return arr.indexOf(item, 0) === index && typeof item == "string";
+                });
+
+                // 一次最多查询3个玩家的数据
+                if (data.length >= 3) {
+                    ctx.set("Content-Type", "application/json");
+                    ctx.body = [];
+                    return;
+                }
+
+                let playerList = [];
+
+                // 遍历玩家列表
+                for (let i = 0; i < data.length; i++) {
+
+                    // 搜索玩家信息
+                    let userData = await suser.searchUserInfoByPlayerName(data[i]).then(result => { return result; });
+
+                    // 如果存在则生成玩家Profile，并加入到playerList
+                    // 无需提供详细角色属性，第二个参数设置为false
+                    if (userData) {
+                        playerList.push(suser.genUserProfile(userData, false));
+                    }
+                }
+
+                // 返回数据
+                ctx.set("Content-Type", "application/json");
+                ctx.body = playerList;
+            }
+        }
+    },
     authserver: {
         authenticate: async (ctx, next) => {
             const data = ctx.request.body;

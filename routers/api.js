@@ -1,5 +1,5 @@
 /* routers/api.js */
-const RateLimit = require('koa2-ratelimit').RateLimit;
+const { RateLimit } = require('koa2-ratelimit');
 const router = require('koa-router')();
 
 const captchaController = require('../controller/api/captcha'); // captchaController
@@ -8,30 +8,26 @@ const ownskinController = require('../controller/api/ownskin'); // ownskinContro
 const userController = require('../controller/api/user'); // userController
 const yggdrasilController = require('../controller/api/yggdrasil'); // yggdrasilController
 
-
 // 频率限制中间件
-const yggdrasilAuthLimiter = (type) => {
-    return RateLimit.middleware({
-        interval: 60 * 1000,
-        delayAfter: 3,
-        timeWait: 2 * 1000,
-        max: 5, // 每分钟最多5次请求
-        keyGenerator: async function (ctx) {
-            const data = ctx.request.body;
-            const prefixKey = "yggdrasil/" + type;
-            if (data["username"]) {
-                return `${prefixKey}|${data["username"]}`;
-            }
-            return `${prefixKey}|${ctx.request.ip}`;
-        },
-        handler: async function (ctx) {
-            ctx.status = 418;
-            ctx.set("Content-Type", "text/html");
-            ctx.body = "<h1>I'm a teapot</h1>"
-        }
-    })
-};
-
+const yggdrasilAuthLimiter = (type) => RateLimit.middleware({
+  interval: 60 * 1000,
+  delayAfter: 3,
+  timeWait: 2 * 1000,
+  max: 5, // 每分钟最多5次请求
+  async keyGenerator(ctx) {
+    const data = ctx.request.body;
+    const prefixKey = `yggdrasil/${type}`;
+    if (data.username) {
+      return `${prefixKey}|${data.username}`;
+    }
+    return `${prefixKey}|${ctx.request.ip}`;
+  },
+  async handler(ctx) {
+    ctx.status = 418;
+    ctx.set('Content-Type', 'text/html');
+    ctx.body = "<h1>I'm a teapot</h1>";
+  },
+});
 
 /* ---------- ROUTES START ---------- */
 
@@ -53,19 +49,19 @@ router.post('/changepassword', userController.changepassword);
 
 // POST ./api/uploadskin
 // 修改用户皮肤
-router.post('/uploadskin', yggdrasilAuthLimiter("uploadskin"),userController.uploadskin);
+router.post('/uploadskin', yggdrasilAuthLimiter('uploadskin'), userController.uploadskin);
 
 // GET ./api/yggdrasil
 // Yggdrasil信息获取接口
-router.get('/yggdrasil', yggdrasilAuthLimiter("yggdrasil"), yggdrasilController.yggdrasil);
+router.get('/yggdrasil', yggdrasilAuthLimiter('yggdrasil'), yggdrasilController.yggdrasil);
 
 // POST ./api/yggdrasil/authserver/authenticate
 // Yggdrasil登录接口
-router.post('/yggdrasil/authserver/authenticate', yggdrasilAuthLimiter("auth"), yggdrasilController.authserver.authenticate);
+router.post('/yggdrasil/authserver/authenticate', yggdrasilAuthLimiter('auth'), yggdrasilController.authserver.authenticate);
 
 // POST ./api/yggdrasil/authserver/refresh
 // Yggdrasil令牌刷新接口
-router.post('/yggdrasil/authserver/refresh', yggdrasilAuthLimiter("refresh"), yggdrasilController.authserver.refresh);
+router.post('/yggdrasil/authserver/refresh', yggdrasilAuthLimiter('refresh'), yggdrasilController.authserver.refresh);
 
 // POST ./api/yggdrasil/authserver/validate
 // Yggdrasil令牌验证接口
@@ -77,7 +73,7 @@ router.post('/yggdrasil/authserver/invalidate', yggdrasilController.authserver.i
 
 // POST ./api/yggdrasil/authserver/signout
 // Yggdrasil登出(吊销所有令牌)接口
-router.post('/yggdrasil/authserver/signout', yggdrasilAuthLimiter("signout"), yggdrasilController.authserver.signout);
+router.post('/yggdrasil/authserver/signout', yggdrasilAuthLimiter('signout'), yggdrasilController.authserver.signout);
 
 // POST ./api/yggdrasil/sessionserver/session/minecraft/join
 // Yggdrasil客户端请求入服接口

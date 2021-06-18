@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - eslint 7.23.0 -> 7.28.0
   - eslint-plugin-import 2.22.1 -> 2.23.4
 - 规范代码风格
+- 润色注册提示文本
 
 ## [0.5.1] - 2021-03-07
 

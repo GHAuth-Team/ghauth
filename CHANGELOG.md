@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - koa-session 6.1.0 -> 6.2.0
   - eslint 7.23.0 -> 7.28.0
   - eslint-plugin-import 2.22.1 -> 2.23.4
+- 规范代码风格
 
 ## [0.5.1] - 2021-03-07
 
@@ -48,5 +49,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 实现基础的Yggdrasil协议
 
 [CHANGELOG.md]: /CHANGELOG.md
-[Unreleased]: https://github.com/GHAuth-Team/ghauth/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/GHAuth-Team/ghauth/compare/main...dev
 [0.5.1]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.5.1

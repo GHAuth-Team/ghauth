@@ -268,8 +268,9 @@ module.exports = {
         })
     },
     genUserProfile: (userData, isPropertiesContained = true) => {
+        let textureData;
         if (isPropertiesContained) {
-            let textureData = {
+            textureData = {
                 timestamp: Date.now(),
                 profileId: userData.uuid.replace(/-/g, ""),
                 profileName: userData.playername,

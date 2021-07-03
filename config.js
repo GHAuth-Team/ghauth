@@ -2,9 +2,9 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 
 try {
-    let configFile = fs.readFileSync('./config/config.yml', 'utf8');
-    let config = yaml.load(configFile);
-    module.exports = config;
+  const configFile = fs.readFileSync('./config/config.yml', 'utf8');
+  const config = yaml.load(configFile);
+  module.exports = config;
 } catch (e) {
-    throw "Configuration file not found.";
+  throw new Error('Configuration file not found.');
 }

@@ -6,6 +6,7 @@ const router = require('koa-router')();
 
 // ./
 const indexController = require('../controller/index');
+
 router.get('/', indexController.index);
 
 /* ---------- ROUTES END ---------- */

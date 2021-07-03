@@ -11,13 +11,14 @@
     "stop": "pm2 stop ghauth",
     "logs": "pm2 logs ghauth",
     "monit": "pm2 monit ghauth",
-    "dev": "supervisor app.js",
+    "dev": "nodemon",
     "lint": "eslint ./ --fix"
   },
   "dependencies": {
     "bytes": "^3.1.0",
     "colors": "^1.4.0",
     "crypto-js": "^4.0.0",
+    "global": "^4.4.0",
     "humanize-number": "^0.0.2",
     "ioredis": "^4.27.5",
     "js-yaml": "^4.1.0",
@@ -31,6 +32,7 @@
     "koa-views": "^7.0.1",
     "koa2-ratelimit": "^0.9.0",
     "mongoose": "^5.12.13",
+    "nodemailer": "^6.6.2",
     "passthrough-counter": "^1.0.0",
     "pm2": "^5.0.4",
     "pngjs-nozlib": "^1.0.0",
@@ -43,6 +45,22 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-pug": "^1.2.3",
-    "supervisor": "^0.12.0"
+    "nodemon": "^2.0.9"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      ".git",
+      ".svn",
+      "node_modules/**/node_modules",
+      "public"
+    ],
+    "verbose": true,
+    "watch": [],
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "script": "app.js",
+    "ext": "js json"
   }
 }

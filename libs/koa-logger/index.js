@@ -1,20 +1,12 @@
-
 /**
  * Module dependencies.
  */
-'use strict'
 
-const Counter = require('passthrough-counter')
-const humanize = require('humanize-number')
-const bytes = require('bytes')
-const colors = require('colors/safe')
-const util = require('util')
-
-/**
- * Expose logger.
- */
-
-module.exports = dev
+const Counter = require('passthrough-counter');
+const humanize = require('humanize-number');
+const bytes = require('bytes');
+const colors = require('colors/safe');
+const util = require('util');
 
 /**
  * Color map.
@@ -27,120 +19,122 @@ const colorCodes = {
   3: 'cyan',
   2: 'green',
   1: 'green',
-  0: 'yellow'
-}
+  0: 'yellow',
+};
 
 /**
  * Development logger.
  */
 
-function dev (opts) {
+function dev(opts) {
   // print to console helper.
   const print = (function () {
-    let transporter
+    let transporter;
     if (typeof opts === 'function') {
-      transporter = opts
+      transporter = opts;
     } else if (opts && opts.transporter) {
-      transporter = opts.transporter
+      transporter = opts.transporter;
     }
 
-    return function printFunc (...args) {
-      const str = util.format(...args)
+    return function printFunc(...args) {
+      const str = util.format(...args);
       if (transporter) {
-        transporter(str, args)
+        transporter(str, args);
       } else {
-        console.log(...args)
+        console.log(...args);
       }
-    }
-  }())
+    };
+  }());
 
-  return async function logger (ctx, next) {
+  return async function logger(ctx, next) {
     // request
-    const start = ctx[Symbol.for('request-received.startTime')] ? ctx[Symbol.for('request-received.startTime')].getTime() : Date.now()
-    print('  ' + colors.gray('<--') +
-      ' ' + colors.bold('%s') +
-      ' ' + colors.gray('%s'),
+    const start = ctx[Symbol.for('request-received.startTime')] ? ctx[Symbol.for('request-received.startTime')].getTime() : Date.now();
+    print(`  ${colors.gray('<--')
+    } ${colors.bold('%s')
+    } ${colors.gray('%s')}`,
     ctx.method,
-    ctx.originalUrl)
+    ctx.originalUrl);
 
     try {
-      await next()
+      await next();
     } catch (err) {
       // log uncaught downstream errors
-      log(print, ctx, start, null, err)
-      throw err
+      log(print, ctx, start, null, err);
+      throw err;
     }
 
     // calculate the length of a streaming response
     // by intercepting the stream with a counter.
     // only necessary if a content-length header is currently not set.
-    const length = ctx.response.length
-    const body = ctx.body
-    let counter
-    if (length == null && body && body.readable) {
+    const { length } = ctx.response;
+    const { body } = ctx;
+    let counter;
+    if (length === null && body && body.readable) {
       ctx.body = body
         .pipe(counter = Counter())
-        .on('error', ctx.onerror)
+        .on('error', ctx.onerror);
     }
 
     // log when the response is finished or closed,
     // whichever happens first.
-    const res = ctx.res
+    const { res } = ctx;
 
-    const onfinish = done.bind(null, 'finish')
-    const onclose = done.bind(null, 'close')
+    const onfinish = done.bind(null, 'finish');
+    const onclose = done.bind(null, 'close');
 
-    res.once('finish', onfinish)
-    res.once('close', onclose)
+    res.once('finish', onfinish);
+    res.once('close', onclose);
 
-    function done (event) {
-      res.removeListener('finish', onfinish)
-      res.removeListener('close', onclose)
-      log(print, ctx, start, counter ? counter.length : length, null, event)
+    function done(event) {
+      res.removeListener('finish', onfinish);
+      res.removeListener('close', onclose);
+      log(print, ctx, start, counter ? counter.length : length, null, event);
     }
-  }
+  };
 }
 
 /**
  * Log helper.
  */
 
-function log (print, ctx, start, len, err, event) {
+function log(print, ctx, start, len, err, event) {
   // get the status code of the response
   const status = err
     ? (err.isBoom ? err.output.statusCode : err.status || 500)
-    : (ctx.status || 404)
+    : (ctx.status || 404);
 
   // set the color of the status code;
-  const s = status / 100 | 0
+  const s = status / 100 | 0;
   // eslint-disable-next-line
   const color = colorCodes.hasOwnProperty(s) ? colorCodes[s] : colorCodes[0]
 
   // get the human readable response length
-  let length
+  let length;
   if (~[204, 205, 304].indexOf(status)) {
-    length = ''
-  } else if (len == null) {
-    length = '-'
+    length = '';
+  } else if (len === null) {
+    length = '-';
+  } else if (len === undefined) {
+    length = '-';
   } else {
-    length = bytes(len).toLowerCase()
+    length = bytes(len).toLowerCase();
   }
 
   const upstream = err ? colors.red('xxx')
     : event === 'close' ? colors.yellow('-x-')
-      : colors.gray('-->')
+      : colors.gray('-->');
 
-  print('  ' + upstream +
-    ' ' + colors.bold('%s') +
-    ' ' + colors.gray('%s') +
-    ' ' + colors[color]('%s') +
-    ' ' + colors.gray('%s') +
-    ' ' + colors.gray('%s'),
+  print(`  ${upstream
+  } ${colors.bold('%s')
+  } ${colors.gray('%s')
+  } ${colors[color]('%s')
+  } ${colors.gray('%s')
+  } ${colors.gray('%s')}`,
   ctx.method,
   ctx.originalUrl,
   status,
   time(start),
-  length)
+  length);
 }
 
 /**
@@ -149,9 +143,15 @@ function log (print, ctx, start, len, err, event) {
  * in seconds otherwise.
  */
 
-function time (start) {
-  const delta = Date.now() - start
+function time(start) {
+  const delta = Date.now() - start;
   return humanize(delta < 10000
-    ? delta + 'ms'
-    : Math.round(delta / 1000) + 's')
+    ? `${delta}ms`
+    : `${Math.round(delta / 1000)}s`);
 }
+
+/**
+ * Expose logger.
+ */
+
+module.exports = dev;

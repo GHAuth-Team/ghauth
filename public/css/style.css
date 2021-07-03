@@ -57,13 +57,16 @@ footer {
     font-weight: 100;
 }
 
-#browser-warning {
+#browser-warning,#email-warning {
     border: 4px solid #f7630c;
     border-radius: 8px;
+}
+
+#browser-warning {
     display: none;
 }
 
-.browser-warning-label {
+.browser-warning-label{
     font-weight: 100;
     margin-bottom: 0;
 }

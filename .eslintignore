@@ -3,3 +3,4 @@
 /public/js/crypto-js.js
 /public/js/skinview3d.bundle.js
 /public/js/notyf.js
+/libs/koa-logger/index.js

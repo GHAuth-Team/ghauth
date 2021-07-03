@@ -71,3 +71,13 @@ extra:
         - auth.daidr.me
         - example.com
         - .example2.com
+    
+    #用于发送验证邮件的smtp服务器配置
+    smtp:
+        host: "example.com"
+        port: 465
+        secure: true
+        auth: 
+            user:"example@example.com"
+            pass:"1234567"
+            

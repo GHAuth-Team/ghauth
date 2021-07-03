@@ -1,0 +1,16 @@
+extends layout.pug
+
+block pagevar
+    - var pagename="邮箱验证"
+
+block content
+    main(style="display: flex;align-items: center;flex-direction: column;justify-content: center;")
+        h1.display-4(style="margin-top:20px;") 邮箱验证
+        if !isCurrect
+            p.lead ❌链接无效，4秒后跳转首页
+        else 
+            p.lead ✔邮箱验证通过，4秒后跳转首页
+
+append scripts
+    script. 
+        setTimeout(()=>{window.location.href = '/';},4000)

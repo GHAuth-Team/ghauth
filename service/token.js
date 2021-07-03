@@ -206,6 +206,12 @@ module.exports = {
         return;
       }
 
+      // 令牌对应用户未验证邮箱
+      if (!result.verified) {
+        resolve(false);
+        return;
+      }
+
       // 令牌对应玩家uuid不一致
       if (result.uuid.replace(/-/g, '') !== selectedProfile) {
         resolve(false);
@@ -221,7 +227,7 @@ module.exports = {
 
       data = JSON.stringify(data);
       // 将授权信息储存至redis，15秒过期
-      redis.set(serverId, data, 'EX', 15).then(
+      redis.set(`serverId_${serverId}`, data, 'EX', 15).then(
         () => {
           resolve(true);
         },
@@ -230,7 +236,7 @@ module.exports = {
   }),
   serverToClientValidate: (username, serverId, ip) => new Promise((resolve) => {
     // 根据serverId获取对应授权信息
-    redis.get(serverId, (err, response) => {
+    redis.get(`serverId_${serverId}`, (err, response) => {
       // 未找到对应授权信息或发生错误
       if (err || !response) {
         resolve(false);

@@ -142,6 +142,7 @@ module.exports = {
       const userInfo = {
         id: userNumber + 1,
         email: body.email,
+        verified: false,
         playername: body.playername,
         uuid: utils.genUUID(),
         password: CryptoJS.HmacSHA256(body.password, config.extra.slat).toString(),

@@ -13,7 +13,7 @@ module.exports = {
       return;
     }
 
-    USER.findOne({ email: ctx.session.userInfo.email }, 'email password playername uuid tokens skin isBanned ip time', { lean: true }, (err, user) => {
+    USER.findOne({ email: ctx.session.userInfo.email }, 'id email password verified playername uuid tokens skin isBanned ip time', { lean: true }, (err, user) => {
       if (err) {
         resolve({ isLoggedIn: false });
         return;
@@ -26,7 +26,9 @@ module.exports = {
 
       const userInfo = {
         isLoggedIn: true,
+        id: user.id,
         email: user.email,
+        verified: user.verified,
         password: user.password,
         playername: user.playername,
         uuid: user.uuid,
@@ -130,6 +132,22 @@ module.exports = {
       }
     });
   }),
+  changeUserVerifiedStatusById: (playerId, status) => new Promise((resolve) => {
+    USER.findOne({ id: playerId }, 'verified', (err, user) => {
+      if (!err && user) {
+        Object.assign(user, { verified: status });
+        user.save((e) => {
+          if (e) {
+            resolve(false);
+            return;
+          }
+          resolve(true);
+        });
+      } else {
+        resolve(false);
+      }
+    });
+  }),
   changeUserSkinByEmail: (email, skinType, skinData) => new Promise((resolve) => {
     USER.findOne({ email }, '', (err, user) => {
       if (!err && user) {
@@ -200,6 +218,15 @@ module.exports = {
       }
     });
   }),
+  searchUserInfoByID: (id) => new Promise((resolve) => {
+    USER.findOne({ id }, '', { lean: true }, (err, user) => {
+      if (!err && user) {
+        resolve(user);
+      } else {
+        resolve(false);
+      }
+    });
+  }),
   searchUserInfoByPlayerName: (playername) => new Promise((resolve) => {
     USER.findOne({ playername }, '', { lean: true }, (err, user) => {
       if (!err && user) {
@@ -210,7 +237,7 @@ module.exports = {
     });
   }),
   letUserLoggedIn: (ctx, email) => new Promise((resolve) => {
-    USER.findOne({ email }, 'email playername password uuid tokens skin isBanned ip time', (err, user) => {
+    USER.findOne({ email }, 'id email playername verified password uuid tokens skin isBanned ip time', (err, user) => {
       if (err) throw err;
       Object.assign(user.ip, { lastLogged: utils.getUserIp(ctx.req) });
       Object.assign(user.time, { lastLogged: Date.now() });
@@ -218,7 +245,9 @@ module.exports = {
         if (e) throw e;
         ctx.session.userInfo = {
           isLoggedIn: true,
+          id: updatedUser.id,
           email: updatedUser.email,
+          verified: updatedUser.verified,
           playername: updatedUser.playername,
           password: updatedUser.password,
           uuid: updatedUser.uuid,

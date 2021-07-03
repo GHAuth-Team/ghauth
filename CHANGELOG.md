@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2021-07-03
+
+### Added
+- 实现邮箱验证功能
+- 配置文件增加smtp相关设置
+
 ### Changed
 - 升级依赖
   - ioredis 4.23.0 -> 4.27.5
@@ -21,16 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 润色注册提示文本
 - *[开发]* 使用nodemon代替了supervisor
 
-## [0.5.1] - 2021-03-07
-
-### Changed
-- 升级依赖
-  - ioredis 4.17.3 -> 4.23.0
-  - js-yaml 3.14.0 -> 4.0.0
-  - koa 2.13.0 -> 2.13.1
-  - mongoose 5.9.25 -> 5.11.19
-  - pm2 4.5.0 -> 4.5.5
-  - pug 3.0.0 -> 3.0.2
+### Fixed
+- 修复 #11
 
 ## [0.5.1] - 2021-03-07
 ### Added
@@ -53,3 +51,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [CHANGELOG.md]: /CHANGELOG.md
 [Unreleased]: https://github.com/GHAuth-Team/ghauth/compare/main...dev
 [0.5.1]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.5.1
+[0.6.0]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.6.0

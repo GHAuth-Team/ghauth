@@ -51,6 +51,14 @@ router.post('/changepassword', userController.changepassword);
 // 修改用户皮肤
 router.post('/uploadskin', yggdrasilAuthLimiter('uploadskin'), userController.uploadskin);
 
+// GET ./api/sendverifyemail
+// 发送验证邮件
+router.get('/sendverifyemail', userController.sendverifyemail);
+
+// GET ./api/emailcheck/:token/:id
+// 发送验证邮件
+router.get('/emailcheck/:token/:id', userController.emailcheck);
+
 // GET ./api/yggdrasil
 // Yggdrasil信息获取接口
 router.get('/yggdrasil', yggdrasilAuthLimiter('yggdrasil'), yggdrasilController.yggdrasil);

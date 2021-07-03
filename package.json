@@ -1,6 +1,6 @@
 {
   "name": "ghauth",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "轻量的MC服务器yggdrasil验证",
   "main": "app.js",
   "author": "戴兜(daidr@daidr.me)",

@@ -30,7 +30,7 @@ GHAuth
 * NodeJS
 * npm or yarn
 
-## 部署(半配置)
+## 部署(辅助配置)
 * 克隆本仓库 `git clone https://github.com/GHAuth-Team/ghauth.git`
 * 安装依赖 `yarn install` or `npm install`
 * 启动配置程序 `yarn helper` or `npm install helper`

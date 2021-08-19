@@ -191,7 +191,7 @@ if (isInstallLocked) {
 
         Print.info("生成配置文件中，请稍等...");
         let final = yaml.dump(config);
-        fs.writeFileSync(path.join(__dirname, "../config/config1.yml"), final);
+        fs.writeFileSync(path.join(__dirname, "../config/config.yml"), final);
         
         Print.success("基础配置全部完成，高级配置(页脚配置、邮件服务器配置、资源可信域配置)请修改 /config/config.yml");
     });

@@ -11,6 +11,7 @@
     "stop": "pm2 stop ghauth",
     "logs": "pm2 logs ghauth",
     "monit": "pm2 monit ghauth",
+    "helper": "node ./install/install.js",
     "dev": "nodemon",
     "lint": "eslint ./ --fix"
   },
@@ -20,6 +21,7 @@
     "crypto-js": "^4.0.0",
     "global": "^4.4.0",
     "humanize-number": "^0.0.2",
+    "inquirer": "^8.1.2",
     "ioredis": "^4.27.5",
     "js-yaml": "^4.1.0",
     "jstransformer-markdown-it": "^2.1.0",
@@ -32,6 +34,7 @@
     "koa-views": "^7.0.1",
     "koa2-ratelimit": "^0.9.0",
     "mongoose": "^5.12.13",
+    "node-rsa": "^1.1.1",
     "nodemailer": "^6.6.2",
     "passthrough-counter": "^1.0.0",
     "pm2": "^5.0.4",

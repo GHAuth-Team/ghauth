@@ -5,7 +5,6 @@ GHAuth
 [![GitHub commit](https://img.shields.io/github/last-commit/daidr/ghauth?style=flat-square)](https://github.com/daidr/ghauth/commit/master)
 [![MIT License](https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square)](https://github.com/daidr/ghauth/blob/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/daidr/ghauth?style=flat-square)](https://github.com/daidr/ghauth/issues)
-[![Liberapay patrons](https://img.shields.io/liberapay/patrons/daidr?label=liberapay%20patrons&style=flat-square)](https://liberapay.com/daidr/)
 
 轻量的MC服务器yggdrasil验证/皮肤加载解决方案
 
@@ -17,12 +16,12 @@ GHAuth
 * 完整的yggdrasil协议支持
 * 完整的皮肤管理
 * 简易的用户管理
+* 邮箱验证
 
 ## 暂未实现
 * 站点的可视化设置
 * 玩家名称修改
 * 忘记密码/修改邮箱功能
-* 邮箱验证
 * FIDO支持
 
 ## 环境
@@ -31,7 +30,19 @@ GHAuth
 * NodeJS
 * npm or yarn
 
-## 部署
+## 部署(半配置)
+* 克隆本仓库 `git clone https://github.com/GHAuth-Team/ghauth.git`
+* 安装依赖 `yarn install` or `npm install`
+* 启动配置程序 `yarn helper` or `npm install helper`
+* 根据提示完成基础配置
+* 进入 `config` 目录
+* 修改 `config.yml` (配置项注释可参考`config.sample.yml`)以完成高级配置(页脚配置、邮件服务器配置、资源可信域配置)
+* 复制一份 `adminList.sample.yml` 并将其重命名为 `adminList.yml`
+* 修改 `adminList.yml` 以定义管理员邮箱列表
+* 启动 `yarn start` or `npm run start`
+
+## 部署(手动配置)
+* 克隆本仓库 `git clone https://github.com/GHAuth-Team/ghauth.git`
 * 安装依赖 `yarn install` or `npm install`
 * 进入 `config` 目录
 * 复制一份 `config.sample.yml` 并将其重命名为 `config.yml`
@@ -64,6 +75,9 @@ GHAuth
 
 ## 安全警告
 * yggdrasil验证时明文传递密码（协议限制），你需要启用https以提升安全性
+
+## 生成签名验证密钥
+* 从 `0.6.1` 版本开始辅助配置程序能够自动生成密钥。倘若需要手动配置rsa公私钥，可以参考下面的内容。
 
 > 以下内容引用自[https://github.com/yushijinhun/authlib-injector/wiki/签名密钥对#密钥对的生成和处理](https://github.com/yushijinhun/authlib-injector/wiki/%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5%E5%AF%B9#%E5%AF%86%E9%92%A5%E5%AF%B9%E7%9A%84%E7%94%9F%E6%88%90%E5%92%8C%E5%A4%84%E7%90%86)
 

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.1] - 2021-08-19
+
+### Added
+- 实现了首次部署配置指引
+
 ## [0.6.0] - 2021-07-03
 
 ### Added
@@ -28,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - *[开发]* 使用nodemon代替了supervisor
 
 ### Fixed
-- 修复 #11
+- 修复 [#11](https://github.com/GHAuth-Team/ghauth/issues/11)
 
 ## [0.5.1] - 2021-03-07
 ### Added
@@ -52,3 +57,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Unreleased]: https://github.com/GHAuth-Team/ghauth/compare/main...dev
 [0.5.1]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.5.1
 [0.6.0]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.6.0
+[0.6.1]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.6.1

@@ -91,7 +91,7 @@ module.exports = {
       ctx.body = JSON.stringify(data);
       return;
     }
-    if (userData.verified) {
+    if (!userData.verified) {
       data.code = -1;
       data.msg = '邮箱未验证，无法上传皮肤';
       ctx.set('Content-Type', 'application/json');
@@ -232,10 +232,10 @@ module.exports = {
     const userData = await User.getUserInfo(ctx).then((ret) => ret);
     const playerId = ctx.params.id;
     const token = ctx.params.token;
-    const result = await Email.isVerifyTokenCurrect(playerId, token).then((ret) => ret);
-    let isCurrect = false;
+    const result = await Email.isVerifyTokenCorrect(playerId, token).then((ret) => ret);
+    let isCorrect = false;
     if (result) {
-      isCurrect = true;
+      isCorrect = true;
       await Email.delVerifyToken(playerId);
       await User.changeUserVerifiedStatusById(playerId, true);
     }
@@ -243,7 +243,7 @@ module.exports = {
     await ctx.render('emailcheck', {
       config: config.common,
       user: userData,
-      isCurrect
+      isCorrect
     });
   },
 };

@@ -16,7 +16,7 @@ module.exports = {
       };
       return;
     }
-    const currectPage = Number.parseInt(ctx.request.query.currectPage, 10) || 1;
+    const correctPage = Number.parseInt(ctx.request.query.correctPage, 10) || 1;
     const pageSize = Number.parseInt(ctx.request.query.pageSize, 10) || 5;
     let { filter } = ctx.request.query;
     if (filter) {
@@ -27,7 +27,7 @@ module.exports = {
         ],
       };
     }
-    const userList = await User.genUserList(filter, currectPage, pageSize).then((ret) => ret);
+    const userList = await User.genUserList(filter, correctPage, pageSize).then((ret) => ret);
     ctx.status = 200;
     ctx.set('Content-Type', 'application/json');
     ctx.body = userList;

@@ -4,7 +4,7 @@
   const texturecontainer = document.createElement('div');
   const rendercanvas = document.querySelector('#rendergraph-image');
   const remapcanvas = document.createElement('canvas');
-  let currectImage = 0;
+  let correctImage = 0;
   let canRenderDirectly = true;
   let resourcesNeedToLoad = 0;
   let resourcesLoadedCounter = 0;
@@ -66,58 +66,58 @@
 
   function compose() {
     const ctx = rendercanvas.getContext('2d');
-    rendercanvas.width = renderlist[currectImage].width;
-    rendercanvas.height = renderlist[currectImage].height;
+    rendercanvas.width = renderlist[correctImage].width;
+    rendercanvas.height = renderlist[correctImage].height;
 
     // 使用滤镜
-    if (renderlist[currectImage].filter) {
-      ctx.filter = renderlist[currectImage].filter;
+    if (renderlist[correctImage].filter) {
+      ctx.filter = renderlist[correctImage].filter;
     } else {
       ctx.filter = '';
     }
 
     // 绘制背景1(衔接玩家主体)(必须)
     ctx.drawImage(
-      images[renderlist[currectImage].name].background0001, // 背景层(可能不完整)
-      renderlist[currectImage].pos.background0001[0], // x
-      renderlist[currectImage].pos.background0001[1], // y
+      images[renderlist[correctImage].name].background0001, // 背景层(可能不完整)
+      renderlist[correctImage].pos.background0001[0], // x
+      renderlist[correctImage].pos.background0001[1], // y
     );
 
     // 玩家一层皮肤映射(必须)
     remap(
       skinImage,
-      images[renderlist[currectImage].name].layer_matcolor0001, // 映射层
-      images[renderlist[currectImage].name].layer_illum0001, // 灯光层
+      images[renderlist[correctImage].name].layer_matcolor0001, // 映射层
+      images[renderlist[correctImage].name].layer_illum0001, // 灯光层
     );
 
     // 绘制玩家一层皮肤
     ctx.drawImage(
       remapcanvas,
-      renderlist[currectImage].pos.first[0], // x
-      renderlist[currectImage].pos.first[1], // y
+      renderlist[correctImage].pos.first[0], // x
+      renderlist[correctImage].pos.first[1], // y
     );
 
     // 绘制背景2(用于抗锯齿,若提供则必须完整大小)(可选)
-    if (images[renderlist[currectImage].name].background0000) {
-      ctx.drawImage(images[renderlist[currectImage].name].background0000, 0, 0);
+    if (images[renderlist[correctImage].name].background0000) {
+      ctx.drawImage(images[renderlist[correctImage].name].background0000, 0, 0);
     }
 
     // 玩家二层皮肤映射
     remap(
       skinImage,
-      images[renderlist[currectImage].name].layer_matcolor0002, // 映射层
-      images[renderlist[currectImage].name].layer_illum0002, // 灯光层
+      images[renderlist[correctImage].name].layer_matcolor0002, // 映射层
+      images[renderlist[correctImage].name].layer_illum0002, // 灯光层
     );
 
     // 绘制玩家二层皮肤
     ctx.drawImage(
       remapcanvas,
-      renderlist[currectImage].pos.second[0], // x
-      renderlist[currectImage].pos.second[1], // y
+      renderlist[correctImage].pos.second[0], // x
+      renderlist[correctImage].pos.second[1], // y
     );
 
     // 设置版权信息
-    document.querySelector('.rendergraph-canvas-container').dataset.copyright = renderlist[currectImage].copyright;
+    document.querySelector('.rendergraph-canvas-container').dataset.copyright = renderlist[correctImage].copyright;
 
     setTimeout(() => {
       document.querySelector('#rendergraph-loading').classList.remove('active');
@@ -139,16 +139,16 @@
     document.querySelector('#rendergraph-loading').classList.add('active');
     document.querySelector('.rendergraph-canvas-container').classList.remove('show');
     canRenderDirectly = true;
-    if (!images[renderlist[currectImage].name]) {
+    if (!images[renderlist[correctImage].name]) {
       canRenderDirectly = false;
-      resourcesNeedToLoad = Object.keys(renderlist[currectImage].images).length;
-      images[renderlist[currectImage].name] = {};
-      for (const key of Object.keys(renderlist[currectImage].images)) {
+      resourcesNeedToLoad = Object.keys(renderlist[correctImage].images).length;
+      images[renderlist[correctImage].name] = {};
+      for (const key of Object.keys(renderlist[correctImage].images)) {
         const image = new Image();
-        images[renderlist[currectImage].name][key] = image;
+        images[renderlist[correctImage].name][key] = image;
         texturecontainer.appendChild(image);
         image.onload = onResourcesLoaded;
-        image.src = `/images/render/${renderlist[currectImage].name}/${renderlist[currectImage].images[key]}`;
+        image.src = `/images/render/${renderlist[correctImage].name}/${renderlist[correctImage].images[key]}`;
       }
     }
     if (canRenderDirectly) {
@@ -190,14 +190,14 @@
   const rendergraphPreviousButton = document.querySelector('#rendergraphPreviousButton');
   const rendergraphNextButton = document.querySelector('#rendergraphNextButton');
 
-  function checkCurrectImage() {
-    if (currectImage > 0) {
+  function checkCorrectImage() {
+    if (correctImage > 0) {
       rendergraphPreviousButton.classList.remove('disabled');
     } else {
       rendergraphPreviousButton.classList.add('disabled');
     }
 
-    if (currectImage < renderlist.length - 1) {
+    if (correctImage < renderlist.length - 1) {
       rendergraphNextButton.classList.remove('disabled');
     } else {
       rendergraphNextButton.classList.add('disabled');
@@ -208,13 +208,13 @@
 
   rendergraphPreviousButton.addEventListener('click', (e) => {
     if (e.target.classList.contains('disabled')) return;
-    currectImage -= 1;
-    checkCurrectImage();
+    correctImage -= 1;
+    checkCorrectImage();
   });
 
   rendergraphNextButton.addEventListener('click', (e) => {
     if (e.target.classList.contains('disabled')) return;
-    currectImage += 1;
-    checkCurrectImage();
+    correctImage += 1;
+    checkCorrectImage();
   });
 })();

@@ -308,14 +308,14 @@ module.exports = {
 
     return data;
   },
-  genUserList: (filter, currectPage, pageSize = 8) => new Promise((resolve) => {
+  genUserList: (filter, correctPage, pageSize = 8) => new Promise((resolve) => {
     USER.countDocuments(filter || {}, (error, count) => {
       if (error) {
         resolve({ code: -1 });
       } else if (filter) {
         USER
           .find(filter, 'id email playername uuid isBanned time.register', { lean: true })
-          .skip((currectPage - 1) * pageSize)
+          .skip((correctPage - 1) * pageSize)
           .limit(pageSize)
           .sort({ 'time.register': 1 })
           .exec((err, doc) => {
@@ -335,7 +335,7 @@ module.exports = {
           });
       } else {
         USER
-          .find({ id: { $gt: (currectPage - 1) * pageSize, $lte: (currectPage) * pageSize } }, 'id email playername uuid isBanned time.register', { lean: true })
+          .find({ id: { $gt: (correctPage - 1) * pageSize, $lte: (correctPage) * pageSize } }, 'id email playername uuid isBanned time.register', { lean: true })
           .sort({ 'time.register': 1 })
           .exec((err, doc) => {
             if (err) {

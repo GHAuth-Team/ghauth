@@ -1,12 +1,12 @@
 (() => {
-  let CurrectPage = 1;
+  let CorrectPage = 1;
   let Filter = '';
   let fetchUserList;
   const PageSize = 8;
   document.querySelector('.admin-widget-load-btn').addEventListener('click', (e) => {
     document.querySelector('.admin-widget-container').classList.add('active');
     e.target.remove();
-    fetchUserList(CurrectPage, PageSize, Filter);
+    fetchUserList(CorrectPage, PageSize, Filter);
   });
 
   function dateFormat(fmt, dateValue) {
@@ -61,7 +61,7 @@
             });
             break;
         }
-        fetchUserList(CurrectPage, PageSize, Filter);
+        fetchUserList(CorrectPage, PageSize, Filter);
       })
       .catch(() => {
         notyf.open({
@@ -72,20 +72,20 @@
       });
   }
 
-  function genPaginate(currectPage, pageSize, total) {
+  function genPaginate(correctPage, pageSize, total) {
     function jumpToPage(e) {
-      CurrectPage = e.target.page;
-      fetchUserList(CurrectPage, PageSize, Filter);
+      CorrectPage = e.target.page;
+      fetchUserList(CorrectPage, PageSize, Filter);
     }
     function prevPage(e) {
       if (e.target.classList.contains('disabled')) return;
-      CurrectPage -= 1;
-      fetchUserList(CurrectPage, PageSize, Filter);
+      CorrectPage -= 1;
+      fetchUserList(CorrectPage, PageSize, Filter);
     }
     function nextPage(e) {
       if (e.target.classList.contains('disabled')) return;
-      CurrectPage += 1;
-      fetchUserList(CurrectPage, PageSize, Filter);
+      CorrectPage += 1;
+      fetchUserList(CorrectPage, PageSize, Filter);
     }
 
     const totalPages = Math.ceil(total / pageSize);
@@ -104,7 +104,7 @@
     let gap;
 
     // 上一页
-    if (currectPage === 1) {
+    if (correctPage === 1) {
       previousBtn = document.createElement('span');
       previousBtn.classList.add('disabled');
     } else {
@@ -119,13 +119,13 @@
     if (totalPages <= 5) {
       // 无需绘制省略号
       for (let i = 1; i <= totalPages; i += 1) {
-        if (i === currectPage) {
+        if (i === correctPage) {
           pageBtn = document.createElement('em');
           pageBtn.classList.add('current');
-        } else if (i + 1 === currectPage) {
+        } else if (i + 1 === correctPage) {
           pageBtn = document.createElement('a');
           pageBtn.setAttribute('rel', 'next');
-        } else if (i - 1 === currectPage) {
+        } else if (i - 1 === correctPage) {
           pageBtn = document.createElement('a');
           pageBtn.setAttribute('rel', 'prev');
         } else {
@@ -135,21 +135,21 @@
         pageBtn.page = i;
         pageBtn.setAttribute('aria-label', `Page ${i}`);
 
-        if (i !== currectPage) {
+        if (i !== correctPage) {
           pageBtn.addEventListener('click', jumpToPage);
         }
 
         userListPaginate.appendChild(pageBtn);
       }
-    } else if (currectPage < 3) {
+    } else if (correctPage < 3) {
       for (let i = 1; i <= 3; i += 1) {
-        if (i === currectPage) {
+        if (i === correctPage) {
           pageBtn = document.createElement('em');
           pageBtn.classList.add('current');
-        } else if (i + 1 === currectPage) {
+        } else if (i + 1 === correctPage) {
           pageBtn = document.createElement('a');
           pageBtn.setAttribute('rel', 'next');
-        } else if (i - 1 === currectPage) {
+        } else if (i - 1 === correctPage) {
           pageBtn = document.createElement('a');
           pageBtn.setAttribute('rel', 'prev');
         } else {
@@ -159,7 +159,7 @@
         pageBtn.page = i;
         pageBtn.setAttribute('aria-label', `Page ${i}`);
 
-        if (i !== currectPage) {
+        if (i !== correctPage) {
           pageBtn.addEventListener('click', jumpToPage);
         }
 
@@ -177,7 +177,7 @@
       pageBtn.setAttribute('aria-label', `Page ${totalPages}`);
       pageBtn.addEventListener('click', jumpToPage);
       userListPaginate.appendChild(pageBtn);
-    } else if (currectPage > totalPages - 2) {
+    } else if (correctPage > totalPages - 2) {
       pageBtn = document.createElement('a');
       pageBtn.innerText = 1;
       pageBtn.page = 1;
@@ -191,13 +191,13 @@
       userListPaginate.appendChild(gap);
 
       for (let i = totalPages - 2; i <= totalPages; i += 1) {
-        if (i === currectPage) {
+        if (i === correctPage) {
           pageBtn = document.createElement('em');
           pageBtn.classList.add('current');
-        } else if (i + 1 === currectPage) {
+        } else if (i + 1 === correctPage) {
           pageBtn = document.createElement('a');
           pageBtn.setAttribute('rel', 'next');
-        } else if (i - 1 === currectPage) {
+        } else if (i - 1 === correctPage) {
           pageBtn = document.createElement('a');
           pageBtn.setAttribute('rel', 'prev');
         } else {
@@ -207,13 +207,13 @@
         pageBtn.page = i;
         pageBtn.setAttribute('aria-label', `Page ${i}`);
 
-        if (i !== currectPage) {
+        if (i !== correctPage) {
           pageBtn.addEventListener('click', jumpToPage);
         }
 
         userListPaginate.appendChild(pageBtn);
       }
-    } else if (currectPage >= 3 && currectPage <= totalPages - 4) {
+    } else if (correctPage >= 3 && correctPage <= totalPages - 4) {
       pageBtn = document.createElement('a');
       pageBtn.innerText = 1;
       pageBtn.page = 1;
@@ -226,14 +226,14 @@
       gap.classList.add('gap');
       userListPaginate.appendChild(gap);
 
-      for (let i = currectPage; i <= currectPage + 1; i += 1) {
-        if (i === currectPage) {
+      for (let i = correctPage; i <= correctPage + 1; i += 1) {
+        if (i === correctPage) {
           pageBtn = document.createElement('em');
           pageBtn.classList.add('current');
-        } else if (i + 1 === currectPage) {
+        } else if (i + 1 === correctPage) {
           pageBtn = document.createElement('a');
           pageBtn.setAttribute('rel', 'next');
-        } else if (i - 1 === currectPage) {
+        } else if (i - 1 === correctPage) {
           pageBtn = document.createElement('a');
           pageBtn.setAttribute('rel', 'prev');
         } else {
@@ -243,7 +243,7 @@
         pageBtn.page = i;
         pageBtn.setAttribute('aria-label', `Page ${i}`);
 
-        if (i !== currectPage) {
+        if (i !== correctPage) {
           pageBtn.addEventListener('click', jumpToPage);
         }
 
@@ -274,14 +274,14 @@
       gap.classList.add('gap');
       userListPaginate.appendChild(gap);
 
-      for (let i = currectPage - 1; i <= currectPage; i += 1) {
-        if (i === currectPage) {
+      for (let i = correctPage - 1; i <= correctPage; i += 1) {
+        if (i === correctPage) {
           pageBtn = document.createElement('em');
           pageBtn.classList.add('current');
-        } else if (i + 1 === currectPage) {
+        } else if (i + 1 === correctPage) {
           pageBtn = document.createElement('a');
           pageBtn.setAttribute('rel', 'next');
-        } else if (i - 1 === currectPage) {
+        } else if (i - 1 === correctPage) {
           pageBtn = document.createElement('a');
           pageBtn.setAttribute('rel', 'prev');
         } else {
@@ -291,7 +291,7 @@
         pageBtn.page = i;
         pageBtn.setAttribute('aria-label', `Page ${i}`);
 
-        if (i !== currectPage) {
+        if (i !== correctPage) {
           pageBtn.addEventListener('click', jumpToPage);
         }
 
@@ -312,7 +312,7 @@
     }
 
     // 下一页
-    if (currectPage === totalPages) {
+    if (correctPage === totalPages) {
       nextBtn = document.createElement('span');
       nextBtn.classList.add('disabled');
     } else {
@@ -325,8 +325,8 @@
     userListPaginate.appendChild(nextBtn);
   }
 
-  fetchUserList = (currectPage, pageSize, filter = '', beforeUpdate, callback) => {
-    fetch(`/admin/getUserList?currectPage=${currectPage}&pageSize=${pageSize}${filter ? `&filter=${filter}` : ''}`, { method: 'GET' })
+  fetchUserList = (correctPage, pageSize, filter = '', beforeUpdate, callback) => {
+    fetch(`/admin/getUserList?correctPage=${correctPage}&pageSize=${pageSize}${filter ? `&filter=${filter}` : ''}`, { method: 'GET' })
       .then((result) => result.json())
       .then((result) => {
         if (beforeUpdate) {
@@ -398,7 +398,7 @@
           }
         }
 
-        genPaginate(currectPage, pageSize, result.total);
+        genPaginate(correctPage, pageSize, result.total);
         if (callback) {
           callback(0);
         }
@@ -419,7 +419,7 @@
     e.target.setAttribute('disabled', 'true');
     fetchUserList(1, PageSize, Filter,
       () => { // beforeUpdate
-        CurrectPage = 1;
+        CorrectPage = 1;
       },
       () => { // callback
         e.target.removeAttribute('disabled');

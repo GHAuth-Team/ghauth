@@ -37,7 +37,7 @@ module.exports = {
                 resolve(result);
             })
     }),
-    isVerifyTokenCurrect: (playerId, token) => new Promise((resolve) => {
+    isVerifyTokenCorrect: (playerId, token) => new Promise((resolve) => {
         //判断对应玩家的邮箱验证字串是否正确
         redis.get(`verifyemail_${playerId}`, (err, response) => {
             // 未找到对应玩家的Token
@@ -101,6 +101,7 @@ module.exports = {
         //发送函数
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
+                console.info(error)
                 resolve(false)
             } else {
                 resolve(true)

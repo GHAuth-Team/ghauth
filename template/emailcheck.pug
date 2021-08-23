@@ -6,7 +6,7 @@ block pagevar
 block content
     main(style="display: flex;align-items: center;flex-direction: column;justify-content: center;")
         h1.display-4(style="margin-top:20px;") 邮箱验证
-        if !isCurrect
+        if !isCorrect
             p.lead ❌链接无效，4秒后跳转首页
         else 
             p.lead ✔邮箱验证通过，4秒后跳转首页

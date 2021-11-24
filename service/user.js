@@ -265,7 +265,20 @@ module.exports = {
   getUserSkin: (email) => new Promise((resolve) => {
     USER.findOne({ email }, 'skin', { lean: true }, (err, user) => {
       if (err) throw err;
-      resolve({ skinType: user.skin.type, skin: `${user.skin.hash}.png` });
+
+      // 拼接皮肤目录
+      const skinPath = path.join(utils.getRootPath(), './skin');
+
+      // 得到皮肤类型即皮肤数据
+      let skinHash = user.skin.hash;
+      let skinType = user.skin.type;
+
+      // 倘若皮肤不存在，那么将返回默认皮肤
+      if (!fs.existsSync(`${skinPath}/${skinHash}.png`)) {
+        skinHash = "9b155b4668427669ca9ed3828024531bc52fca1dcf8fbde8ccac3d9d9b53e3cf";
+        skinType = 0;
+      }
+      resolve({ skinType: skinType, skin: `${skinHash}.png` });
     });
   }),
   genUserProfile: (userData, isPropertiesContained = true) => {

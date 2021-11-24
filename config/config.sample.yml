@@ -78,6 +78,6 @@ extra:
         port: 465
         secure: true
         auth: 
-            user:"example@example.com"
-            pass:"1234567"
+            user: "example@example.com"
+            pass: "1234567"
             

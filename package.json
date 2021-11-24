@@ -12,7 +12,7 @@
     "logs": "pm2 logs ghauth",
     "monit": "pm2 monit ghauth",
     "helper": "node ./install/install.js",
-    "dev": "nodemon",
+    "dev": "nodemon -i ./test/",
     "lint": "eslint ./ --fix"
   },
   "dependencies": {

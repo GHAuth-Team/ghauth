@@ -56,7 +56,7 @@ router.post('/uploadskin', yggdrasilAuthLimiter('uploadskin'), userController.up
 router.get('/sendverifyemail', userController.sendverifyemail);
 
 // GET ./api/emailcheck/:token/:id
-// 发送验证邮件
+// 邮件验证
 router.get('/emailcheck/:token/:id', userController.emailcheck);
 
 // GET ./api/yggdrasil

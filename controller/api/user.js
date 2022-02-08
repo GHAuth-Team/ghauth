@@ -197,7 +197,7 @@ module.exports = {
       const verifyTokenTime = await Email.getVerifyTokenTime(userData.id).then((ret) => ret);
       if (!verifyTokenTime) {
         data.code = -1;
-        data.msg = `未知错误，请稍后重试`;
+        data.msg = '未知错误，请稍后重试';
         ctx.set('Content-Type', 'application/json');
         ctx.body = JSON.stringify(data);
         return;
@@ -213,7 +213,7 @@ module.exports = {
     const token = Email.genVerifyToken();
     await Email.storeVerifyTokenToRedis(userData.id, token).then((ret) => ret);
 
-    let result = Email.sendVerifyUrl(userData.email, userData.playername, userData.id, token).then((ret) => ret);
+    const result = Email.sendVerifyUrl(userData.email, userData.playername, userData.id, token).then((ret) => ret);
 
     if (!result) {
       data.code = -1;
@@ -231,7 +231,7 @@ module.exports = {
   emailcheck: async (ctx) => {
     const userData = await User.getUserInfo(ctx).then((ret) => ret);
     const playerId = ctx.params.id;
-    const token = ctx.params.token;
+    const { token } = ctx.params;
     const result = await Email.isVerifyTokenCurrect(playerId, token).then((ret) => ret);
     let isCurrect = false;
     if (result) {
@@ -243,7 +243,7 @@ module.exports = {
     await ctx.render('emailcheck', {
       config: config.common,
       user: userData,
-      isCurrect
+      isCurrect,
     });
   },
 };

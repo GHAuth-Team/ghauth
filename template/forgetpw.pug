@@ -1,7 +1,7 @@
 extends layout.pug
 
 block pagevar
-    - var pagename="登录"
+    - var pagename="忘记密码"
     if user.isLoggedIn
         script.
             window.location.href="/"
@@ -9,23 +9,19 @@ block pagevar
 block content
     unless user.isLoggedIn
         main(style="display: flex;align-items: center;flex-direction: column;justify-content: center;")
-            h1.display-4(style="margin-top:20px;") 登录
+            h1.display-4(style="margin-top:20px;") 忘记密码
             form
                 .form-group
                     label(for="inputEmail") 邮箱
                     input#inputEmail.form-control(tabindex="1" type="email" aria-describedby="emailHelp" placeholder="你的邮箱" autocomplete="email")
-                    small#emailHelp.form-text.text-muted 放心，我们不会将你的邮箱泄露给任何人。
-                .form-group
-                    label(for="inputPassword") 密码
-                    input#inputPassword.form-control(tabindex="2" type="password" placeholder="你的密码" autocomplete="current-password")
+                    small#emailHelp.form-text.text-muted 我们会向你的邮箱发送一封带有密码重置链接的邮件。
                 .form-group
                     label(for="inputCaptcha") 人机验证
                     input#inputCaptcha.form-control(tabindex="3" type="text" maxlength="3" placeholder="请输入下图表达式计算结果" autocomplete="off")
                     img.img-fluid#img-captcha(src="/api/captcha" alt="验证码图片" title="点击以刷新" style="cursor: pointer;")
-                button.btn.btn-primary.btn-block.btn-login(tabindex="4" type="button") 登录
-                a.float-right(href="/forgetpw") 忘记密码？
+                button.btn.btn-primary.btn-block.btn-forgetpw(tabindex="4" type="button") 发送邮件
 
 append scripts
     unless user.isLoggedIn
-        script(src="/js/login.js")
+        script(src="/js/forgetpw.js")
         script(src="/js/crypto-js.js")

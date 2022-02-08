@@ -9,7 +9,7 @@ module.exports = {
     if (hash.length === 64) {
       const skinPath = path.join(utils.getRootPath(), './skin');
       try {
-        const skin = fs.readFileSync(path.join(skinPath, `${hash.replace(/\\|\/|\./g,"")}.png`));
+        const skin = fs.readFileSync(path.join(skinPath, `${hash.replace(/\\|\/|\./g, '')}.png`));
         ctx.set('Content-Type', 'image/png');
         ctx.body = skin;
       } catch (e) {

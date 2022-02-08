@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2022-02-08
+
+### Added
+- 实现忘记密码功能
+
+### Fixed
+- 修复一处css路径错误
+- 修复几处语法错误
+- 修复几处注释错误
+- 修复了一处异步处理的问题
+
 ## [0.6.1] - 2021-08-19
 
 ### Added
@@ -58,3 +69,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.5.1]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.5.1
 [0.6.0]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.6.0
 [0.6.1]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.6.1
+[0.7.0]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.7.0

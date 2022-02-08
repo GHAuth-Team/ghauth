@@ -34,6 +34,10 @@ module.exports = (app) => {
   const texturesRouter = require('./textures');
   rootRouter.use('/textures', texturesRouter.routes(), texturesRouter.allowedMethods());
 
+  // ./forgetpw/
+  const forgetpwRouter = require('./forgetpw');
+  rootRouter.use('/forgetpw', forgetpwRouter.routes(), forgetpwRouter.allowedMethods());
+
   // 静态文件路由
   app.use(staticCache('./public', {
     gzip: true,

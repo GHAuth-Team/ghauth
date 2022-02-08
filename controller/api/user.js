@@ -213,7 +213,7 @@ module.exports = {
     const token = Email.genVerifyToken();
     await Email.storeVerifyTokenToRedis(userData.id, token).then((ret) => ret);
 
-    const result = Email.sendVerifyUrl(userData.email, userData.playername, userData.id, token).then((ret) => ret);
+    const result = await Email.sendVerifyUrl(userData.email, userData.playername, userData.id, token).then((ret) => ret);
 
     if (!result) {
       data.code = -1;

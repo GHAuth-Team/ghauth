@@ -19,9 +19,9 @@ module.exports = {
     // 过期时间5分钟
     const time = 5 * 60;
     // 储存对应玩家的邮箱验证Token
-    const storeToken = redis.set(`verifyemail_${playerId}`, token, 'EX', time);
+    const storeToken = redis.set(`verifyemail_${playerId}`, token, 'ex', time);
     // 储存对应玩家的邮箱验证Token的到期时间戳(10位)，过期时间5分钟
-    const storeTokenTime = redis.set(`verifyemailtime_${playerId}`, Math.floor(new Date().getTime() / 1000) + time, 'EX', time);
+    const storeTokenTime = redis.set(`verifyemailtime_${playerId}`, Math.floor(new Date().getTime() / 1000) + time, 'ex', time);
 
     Promise.all([storeToken, storeTokenTime]).then(
       () => {

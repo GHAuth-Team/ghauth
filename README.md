@@ -37,8 +37,7 @@ GHAuth
 * 根据提示完成基础配置
 * 进入 `config` 目录
 * 修改 `config.yml` (配置项注释可参考`config.sample.yml`)以完成高级配置(页脚配置、邮件服务器配置、资源可信域配置)
-* 复制一份 `adminList.sample.yml` 并将其重命名为 `adminList.yml`
-* 修改 `adminList.yml` 以定义管理员邮箱列表
+* [可选] 进入 `adminList.yml` 以添加更多管理员
 * 启动 `yarn start` or `npm run start`
 
 ## 部署(手动配置)

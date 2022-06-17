@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.1] - 2022-02-08
+
+### Added
+- helper 将自动生成 adminList.yml 和 announcement.yml
+- 未验证邮箱的用户将显示更加友好的提示
+
+### Fixed
+- Redis 过期时间问题 #20
+
+### Changed
+- 升级依赖
+
 ## [0.7.0] - 2022-02-08
 
 ### Added
@@ -65,8 +77,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 实现基础的Yggdrasil协议
 
 [CHANGELOG.md]: /CHANGELOG.md
-[Unreleased]: https://github.com/GHAuth-Team/ghauth/compare/main...dev
+[Unreleased]: https://github.com/GHAuth-Team/ghauth/compare/v0.7.1...main
 [0.5.1]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.5.1
 [0.6.0]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.6.0
 [0.6.1]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.6.1
 [0.7.0]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.7.0
+[0.7.1]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.7.1

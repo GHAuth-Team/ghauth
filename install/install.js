@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const inquirer = require('inquirer');
 const yaml = require('js-yaml');
-const rsa = require('node-rsa');
+const RSA = require('node-rsa');
 const Print = require('../libs/print');
 
 const isInstallLocked = fs.existsSync('./install.lock');
@@ -13,7 +13,7 @@ if (isInstallLocked) {
   const genRandomString = (length) => {
     let result = '';
     const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    for (let i = length; i > 0; i -= 1) result += chars[Math.floor(Math.random() * chars.length)];
     return result;
   };
 
@@ -43,7 +43,7 @@ if (isInstallLocked) {
       filter: Number,
       default: 3000,
       validate(value) {
-        const pass = !isNaN(value) && value >= 1024 && value <= 65535;
+        const pass = !Number.isNaN(value) && value >= 1024 && value <= 65535;
         if (pass) {
           return true;
         }
@@ -72,7 +72,7 @@ if (isInstallLocked) {
       filter: Number,
       default: 27017,
       validate(value) {
-        const pass = !isNaN(value) && value >= 1024 && value <= 65535;
+        const pass = !Number.isNaN(value) && value >= 1024 && value <= 65535;
         if (pass) {
           return true;
         }
@@ -122,7 +122,7 @@ if (isInstallLocked) {
       filter: Number,
       default: 6379,
       validate(value) {
-        const pass = !isNaN(value) && value >= 1024 && value <= 65535;
+        const pass = !Number.isNaN(value) && value >= 1024 && value <= 65535;
         if (pass) {
           return true;
         }
@@ -182,7 +182,7 @@ if (isInstallLocked) {
     config.extra.session.key = genRandomString(40);
 
     Print.info(`生成RSA签名公私钥(${answers.signaturesize})中，可能需要花费较长时间，请耐心等待...`);
-    const key = new rsa({ b: answers.signaturesize });
+    const key = new RSA({ b: answers.signaturesize });
     key.setOptions({ encryptionScheme: 'pkcs1' });
     const publicPem = key.exportKey('pkcs8-public-pem');
     const privatePem = key.exportKey('pkcs8-private-pem');

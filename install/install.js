@@ -61,6 +61,20 @@ if (isInstallLocked) {
     },
     {
       type: 'input',
+      name: 'adminEmail',
+      message: '管理员邮箱：',
+      default: 'example@example.com',
+      validate(value) {
+        const pass = value.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        if (pass) {
+          return true;
+        }
+
+        return '请输入有效的邮箱地址';
+      },
+    },
+    {
+      type: 'input',
       name: 'mongodb.host',
       message: 'MongoDB 主机：',
       default: '127.0.0.1',
@@ -190,8 +204,20 @@ if (isInstallLocked) {
     config.extra.signature.public = publicPem;
 
     Print.info('生成配置文件中，请稍等...');
+    // 生成 config.yml
     const final = yaml.dump(config);
     fs.writeFileSync(path.join(__dirname, '../config/config.yml'), final);
+
+    // 生成 adminList.yml
+    const adminList = [answers.adminEmail];
+    const adminListFile = yaml.dump(adminList);
+    fs.writeFileSync(path.join(__dirname, '../config/adminList.yml'), adminListFile);
+
+    // 复制 announcement.sample.md 到 announcement.md
+    fs.copyFileSync(path.join(__dirname, '../config/announcement.sample.md'), path.join(__dirname, '../config/announcement.md'));
+
+    // 写入 install.lock
+    fs.writeFileSync(path.join(__dirname, '../install.lock'), '1');
 
     Print.success('基础配置全部完成，高级配置(页脚配置、邮件服务器配置、资源可信域配置)请修改 /config/config.yml');
   });

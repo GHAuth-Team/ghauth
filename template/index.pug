@@ -131,6 +131,11 @@ block content
                                     .input-group-append
                                         button#viewSelectedSkin.btn.btn-primary(type="button") 查看效果
                                 button.btn.btn-uploadskin.btn-primary.btn-block(type="button") 提交
+                        else 
+                            .jumbotron
+                                p.lead 游戏皮肤上传
+                                small#emailHelp.form-text.text-muted 您需要完成页面顶端的邮箱验证才能自定义皮肤。<br />
+
 
                     if user.isLoggedIn
                         if user.isAdmin

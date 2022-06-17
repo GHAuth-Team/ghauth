@@ -2,11 +2,9 @@ const mongoose = require('mongoose');
 const Print = require('../libs/print');
 const config = require('../config');
 
-mongoose.set('useCreateIndex', true);
-
 const connect = () => {
   mongoose.connect(`mongodb://${config.extra.mongodb.hasAuth ? `${config.extra.mongodb.username}:${config.extra.mongodb.password}@` : ''}${config.extra.mongodb.host}:${config.extra.mongodb.port}/${config.extra.mongodb.db}`, {
-    useNewUrlParser: true, useUnifiedTopology: true, connectTimeoutMS: 5000, socketTimeoutMS: 5000, auto_reconnect: false,
+    useNewUrlParser: true, useUnifiedTopology: true, connectTimeoutMS: 5000, socketTimeoutMS: 5000,
   }).catch();
 };
 

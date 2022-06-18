@@ -31,7 +31,7 @@
             width: skinViewer.el.offsetWidth,
             height: skinViewer.el.offsetWHeight,
           });
-          skinViewer.handle.renderer.setClearColor(0xdddfe2);
+          skinViewer.handle.background = 0xdddfe2;
           skinViewer.handle.loadSkin(json.data.skin, json.data.skinType ? 'slim' : 'default');
           resizeSkinViewer();
           const control = skinview3d.createOrbitControls(skinViewer.handle);

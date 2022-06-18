@@ -95,6 +95,7 @@ footer {
 
 .skinviewer-container canvas {
     outline: 0;
+    touch-action: none;
 }
 
 .rawimage-main-container.active {

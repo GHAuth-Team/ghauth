@@ -10,6 +10,9 @@ common:
     #支持markdown语法
     showAnnouncement: false
 
+    #是否忽略用户邮箱验证
+    ignoreEmailVerification: false
+
     #站点链接，主要用于Yggdrasil认证（末尾不加/）
     url: "http://example.com"
 
@@ -71,13 +74,12 @@ extra:
         - auth.daidr.me
         - example.com
         - .example2.com
-    
+
     #用于发送验证邮件的smtp服务器配置
     smtp:
         host: "example.com"
         port: 465
         secure: true
-        auth: 
+        auth:
             user: "example@example.com"
             pass: "1234567"
-            

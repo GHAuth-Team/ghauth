@@ -2,6 +2,7 @@ const USER = require('../db/models/user');
 const User = require('./user');
 const utils = require('../utils');
 const redis = require('../db/redis');
+const config = require('../config');
 
 module.exports = {
   genAccessToken: (email, clientToken) => new Promise((resolve) => {
@@ -206,10 +207,12 @@ module.exports = {
         return;
       }
 
-      // 令牌对应用户未验证邮箱
-      if (!result.verified) {
-        resolve(false);
-        return;
+      if (!config.common.ignoreEmailVerification) {
+        // 令牌对应用户未验证邮箱
+        if (!result.verified) {
+          resolve(false);
+          return;
+        }
       }
 
       // 令牌对应玩家uuid不一致

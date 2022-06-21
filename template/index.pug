@@ -8,7 +8,7 @@ block content
         .container(style="margin-top:30px;")
             .row
                 if user.isLoggedIn
-                    unless user.verified
+                    unless user.verified || config.ignoreEmailVerification
                         .col-xl-12
                             #email-warning.jumbotron
                                 p.lead ⚠你的邮箱还没有通过验证，请点击下面的按钮来收取验证链接
@@ -112,7 +112,7 @@ block content
                                     a#rendergraphPreviousButton.previous_page.disabled 上一张
                                     a#rendergraphNextButton.next_page 下一张
                     if user.isLoggedIn
-                        if user.verified
+                        if user.verified || config.ignoreEmailVerification
                             .jumbotron
                                 p.lead 游戏皮肤上传
                                 small#emailHelp.form-text.text-muted 请勿上传违规内容(包括但不限于含有政治，色情，赌博信息)的皮肤图片，一经发现将直接封禁。<br />
@@ -161,7 +161,7 @@ append scripts
         script(src="/js/rawimage_control.js" aysnc)
         script(src="/js/rendergraph_control.js" aysnc)
     if user.isLoggedIn
-        if user.verified
+        if user.verified || config.ignoreEmailVerification
             script(src="/js/uploadskin.js" aysnc)
         else 
             script(src="/js/verify_email.js" aysnc)

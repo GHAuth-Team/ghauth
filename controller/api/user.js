@@ -91,12 +91,14 @@ module.exports = {
       ctx.body = JSON.stringify(data);
       return;
     }
-    if (!userData.verified) {
-      data.code = -1;
-      data.msg = '邮箱未验证，无法上传皮肤';
-      ctx.set('Content-Type', 'application/json');
-      ctx.body = JSON.stringify(data);
-      return;
+    if (!config.common.ignoreEmailVerification) {
+      if (!userData.verified) {
+        data.code = -1;
+        data.msg = '邮箱未验证，无法上传皮肤';
+        ctx.set('Content-Type', 'application/json');
+        ctx.body = JSON.stringify(data);
+        return;
+      }
     }
     if (!ctx.request.body.data) {
       data.code = -1;

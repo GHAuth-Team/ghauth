@@ -69,6 +69,10 @@ GHAuth
 * 修改 `config.yml` 内 `common` 配置节点的 `showAnnouncement` 配置项为 `true` 来启用公告
 * 支持Markdown语法
 
+## NodeJS 版本兼容
+* 建议 NodeJS 版本 >= v10.0.0
+* 倘若系统 OpenSSL 版本 >= v3.0.0, 则要求 NodeJS 版本 >= v18.0.0
+
 ## 建议
 * 建议使用nginx等类似服务器代理程序代理public目录，减轻后端压力
 

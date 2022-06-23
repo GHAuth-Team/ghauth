@@ -12,7 +12,7 @@ module.exports = {
     ctx.set('Content-Type', 'application/json');
     const data = {
       meta: {
-        implementationName: `${config.common.sitename}GHAuth Yggdrasil`, // Yggdrasil协议名称
+        implementationName: `${config.common.sitename}(GHAuth Yggdrasil)`, // Yggdrasil协议名称
         implementationVersion: pkg.version, // Yggdrasil协议版本
         serverName: config.common.sitename, // Yggdrasil认证站点名称
         links: {

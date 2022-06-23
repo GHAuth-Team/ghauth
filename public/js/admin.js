@@ -417,12 +417,16 @@
   document.querySelector('#userFilterBtn').addEventListener('click', (e) => {
     Filter = document.querySelector('#userFilterInput').value;
     e.target.setAttribute('disabled', 'true');
-    fetchUserList(1, PageSize, Filter,
+    fetchUserList(
+      1,
+      PageSize,
+      Filter,
       () => { // beforeUpdate
         CurrectPage = 1;
       },
       () => { // callback
         e.target.removeAttribute('disabled');
-      });
+      },
+    );
   });
 })();

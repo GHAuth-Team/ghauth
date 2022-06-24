@@ -226,6 +226,8 @@ function run() {
       config.common.ignoreEmailVerification = answers.ignoreEmailVerification;
       config.common.url = answers.url;
 
+      config.extra.port = answers.port;
+
       config.extra.mongodb.host = answers.mongodb.host;
       config.extra.mongodb.port = answers.mongodb.port;
       config.extra.mongodb.db = answers.mongodb.db;

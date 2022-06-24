@@ -79,6 +79,12 @@ function run() {
         default: true,
       },
       {
+        type: 'confirm',
+        name: 'ignoreEmailVerification',
+        message: '不强制进行邮箱验证：',
+        default: false,
+      },
+      {
         type: 'input',
         name: 'port',
         message: '监听端口：',
@@ -217,6 +223,7 @@ function run() {
       config.common.sitename = answers.sitename;
       config.common.description = answers.description;
       config.common.showAnnouncement = answers.showAnnouncement;
+      config.common.ignoreEmailVerification = answers.ignoreEmailVerification;
       config.common.url = answers.url;
 
       config.extra.mongodb.host = answers.mongodb.host;

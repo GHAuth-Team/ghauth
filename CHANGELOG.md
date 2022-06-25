@@ -7,7 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.7.1] - 2022-02-08
+## [0.7.2] - 2022-06-25
+
+### Added
+- 添加配置项 `ignoreEmailVerification` 来忽略邮箱验证
+- 一键配置增加了 `ignoreEmailVerification` 选项
+- 优化首页模板
+- 优化 Yggdrasil Meta 中的 `implementationName` 字段
+
+### Fixed
+- 移动设备上 SkinViewer 的交互问题
+- 未设定管理员时报错的问题
+- 配置项 `extra.port` 未生效的问题
+
+### Changed
+- 升级 SkinViewer
+- 更新 `README.md` 中对 NodeJS 版本号的说明
+
+## [0.7.1] - 2022-06-17
 
 ### Added
 - helper 将自动生成 adminList.yml 和 announcement.yml
@@ -77,9 +94,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 实现基础的Yggdrasil协议
 
 [CHANGELOG.md]: /CHANGELOG.md
-[Unreleased]: https://github.com/GHAuth-Team/ghauth/compare/v0.7.1...main
+[Unreleased]: https://github.com/GHAuth-Team/ghauth/compare/v0.7.2...main
 [0.5.1]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.5.1
 [0.6.0]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.6.0
 [0.6.1]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.6.1
 [0.7.0]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.7.0
 [0.7.1]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.7.1
+[0.7.1]: https://github.com/GHAuth-Team/ghauth/releases/tag/v0.7.2

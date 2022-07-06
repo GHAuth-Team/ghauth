@@ -27,35 +27,35 @@ GHAuth
 ## 环境
 * MongoDB
 * Redis
-* NodeJS
-* npm or yarn
+* NodeJS v12+
+* yarn v2+ (请不要使用另外的包管理器 npm/cnpm/pnpm)
 
 ## 部署(辅助配置)
 * 克隆本仓库 `git clone https://github.com/GHAuth-Team/ghauth.git`
-* 安装依赖 `yarn install` or `npm install`
-* 启动配置程序 `yarn helper` or `npm install helper`
+* 安装依赖 `yarn install`
+* 启动配置程序 `yarn helper`
 * 根据提示完成基础配置
 * 进入 `config` 目录
 * 修改 `config.yml` (配置项注释可参考`config.sample.yml`)以完成高级配置(页脚配置、邮件服务器配置、资源可信域配置)
 * [可选] 进入 `adminList.yml` 以添加更多管理员
-* 启动 `yarn start` or `npm run start`
+* 启动 `yarn start`
 
 ## 部署(手动配置)
 * 克隆本仓库 `git clone https://github.com/GHAuth-Team/ghauth.git`
-* 安装依赖 `yarn install` or `npm install`
+* 安装依赖 `yarn install`
 * 进入 `config` 目录
 * 复制一份 `config.sample.yml` 并将其重命名为 `config.yml`
 * 修改 `config.yml` 以完成站点配置
 * 复制一份 `adminList.sample.yml` 并将其重命名为 `adminList.yml`
 * 修改 `adminList.yml` 以定义管理员邮箱列表
-* 启动 `yarn start` or `npm run start`
+* 启动 `yarn start`
 
 ## 常用命令
-* 启动: `yarn start` or `npm start`
-* 停止: `yarn stop` or `npm stop`
-* 重启: `yarn restart` or `npm restart`
-* 查看日志: `yarn logs` or `npm run logs`
-* 实时监控: `yarn monit` or `npm run monit`
+* 启动: `yarn start`
+* 停止: `yarn stop`
+* 重启: `yarn restart`
+* 查看日志: `yarn logs`
+* 实时监控: `yarn monit`
 
 ## 关于管理权限
 * 具有管理权限的账号由 `config/adminList.yml` 控制
@@ -70,7 +70,7 @@ GHAuth
 * 支持Markdown语法
 
 ## NodeJS 版本兼容
-* 建议 NodeJS 版本 >= v10.0.0
+* 建议 NodeJS 版本 >= v12.0.0
 * 倘若系统 OpenSSL 版本 >= v3.0.0, 则要求 NodeJS 版本 >= v18.0.0
 
 ## 建议

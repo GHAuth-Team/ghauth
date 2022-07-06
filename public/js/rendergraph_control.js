@@ -30,7 +30,7 @@
     blurcanvas.height = canvas.height;
     blurcanvas.width = canvas.width;
     blurctx.clearRect(0, 0, blurcanvas.width, blurcanvas.height);
-    blurctx.filter = 'blur(2px)';
+    blurctx.filter = 'blur(1px)';
     blurctx.drawImage(canvas, 0, 0);
   }
 

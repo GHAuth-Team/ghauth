@@ -1,17 +1,17 @@
 (() => {
-  // function checkBrowser() {
-  //     try {
-  //         // canvas toBlob检测
-  //         var tempCanvas = document.createElement("canvas");
-  //         tempCanvas.toBlob(function (blob) {
-  //             tempCanvas.remove();
-  //         });
-  //     } catch (error) {
-  //         document.querySelector("#browser-warning").style.display = "block";
-  //         console.log(error)
-  //     }
-  // }
-  // checkBrowser();
+  function checkBrowser() {
+      try {
+          // canvas toBlob检测
+          var tempCanvas = document.createElement("canvas");
+          tempCanvas.toBlob(function () {
+              tempCanvas.remove();
+          });
+      } catch (error) {
+          document.querySelector("#browser-warning").style.display = "block";
+          console.log(error)
+      }
+  }
+  checkBrowser();
 
   /* eslint-disable */
   // yggdrasil配置按钮 拖拽

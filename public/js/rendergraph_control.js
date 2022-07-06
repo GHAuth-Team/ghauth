@@ -4,6 +4,8 @@
   const texturecontainer = document.createElement('div');
   const rendercanvas = document.querySelector('#rendergraph-image');
   const remapcanvas = document.createElement('canvas');
+  const blurcanvas = document.createElement('canvas');
+  const blurctx = blurcanvas.getContext('2d');
   let currectImage = 0;
   let canRenderDirectly = true;
   let resourcesNeedToLoad = 0;
@@ -21,6 +23,15 @@
     ctx.msImageSmoothingEnabled = false;
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(image, 0, 0, image.width, image.height, 0, 0, image.width * zoom | 0, image.height * zoom | 0);
+  }
+
+  function blurCanvas(canvas) {
+    // 将传入的 canvas 复制到 blurcanvas 上，并将其模糊
+    blurcanvas.height = canvas.height;
+    blurcanvas.width = canvas.width;
+    blurctx.clearRect(0, 0, blurcanvas.width, blurcanvas.height);
+    blurctx.filter = 'blur(2px)';
+    blurctx.drawImage(canvas, 0, 0);
   }
 
   function remap(skin, map, illum) {
@@ -76,6 +87,23 @@
       ctx.filter = '';
     }
 
+    // 绘制背景1(临时绘制，定位用)
+    ctx.drawImage(
+      images[renderlist[currectImage].name].background0001, // 背景层(可能不完整)
+      renderlist[currectImage].pos.background0001[0], // x
+      renderlist[currectImage].pos.background0001[1], // y
+    );
+
+    // 模糊背景1
+    blurCanvas(resizecanvas);
+
+    // 绘制模糊的背景1
+    ctx.drawImage(
+      blurcanvas,
+      renderlist[currectImage].pos.background0001[0], // x
+      renderlist[currectImage].pos.background0001[1], // y
+    );
+
     // 绘制背景1(衔接玩家主体)(必须)
     ctx.drawImage(
       images[renderlist[currectImage].name].background0001, // 背景层(可能不完整)
@@ -90,12 +118,24 @@
       images[renderlist[currectImage].name].layer_illum0001, // 灯光层
     );
 
-    // 绘制玩家一层皮肤
+    // 模糊第一层皮肤
+    blurCanvas(remapcanvas);
+
+    // 绘制模糊的第一层皮肤
+    ctx.drawImage(
+      blurcanvas,
+      renderlist[currectImage].pos.first[0], // x
+      renderlist[currectImage].pos.first[1], // y
+    ); 
+
+    // 绘制玩家一层皮肤，透明度为0.5
+    ctx.globalAlpha = 0.5;
     ctx.drawImage(
       remapcanvas,
       renderlist[currectImage].pos.first[0], // x
       renderlist[currectImage].pos.first[1], // y
     );
+    ctx.globalAlpha = 1;
 
     // 绘制背景2(用于抗锯齿,若提供则必须完整大小)(可选)
     if (images[renderlist[currectImage].name].background0000) {
@@ -109,12 +149,24 @@
       images[renderlist[currectImage].name].layer_illum0002, // 灯光层
     );
 
-    // 绘制玩家二层皮肤
+    // 模糊第二层皮肤
+    blurCanvas(remapcanvas);
+
+    // 绘制模糊的第二层皮肤
+    ctx.drawImage(
+      blurcanvas,
+      renderlist[currectImage].pos.second[0], // x
+      renderlist[currectImage].pos.second[1], // y
+    );
+
+    // 绘制玩家二层皮肤，透明度为0.5
+    ctx.globalAlpha = 0.5;
     ctx.drawImage(
       remapcanvas,
       renderlist[currectImage].pos.second[0], // x
       renderlist[currectImage].pos.second[1], // y
     );
+    ctx.globalAlpha = 1;
 
     // 设置版权信息
     document.querySelector('.rendergraph-canvas-container').dataset.copyright = renderlist[currectImage].copyright;

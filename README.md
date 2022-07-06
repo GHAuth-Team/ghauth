@@ -27,7 +27,7 @@ GHAuth
 ## 环境
 * MongoDB
 * Redis
-* NodeJS v12+
+* NodeJS v16+
 * yarn v2+ (请不要使用另外的包管理器 npm/cnpm/pnpm)
 
 ## 部署(辅助配置)
@@ -70,8 +70,11 @@ GHAuth
 * 支持Markdown语法
 
 ## NodeJS 版本兼容
-* 建议 NodeJS 版本 >= v12.0.0
+* 建议 NodeJS 版本 >= v16.0.0
 * 倘若系统 OpenSSL 版本 >= v3.0.0, 则要求 NodeJS 版本 >= v18.0.0
+
+## 版本差异
+GHAuth v0.7.2 版本之后(不包含 v0.7.2)，将使用 Yarn 2 进行依赖管理。
 
 ## 建议
 * 建议使用nginx等类似服务器代理程序代理public目录，减轻后端压力

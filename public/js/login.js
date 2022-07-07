@@ -76,19 +76,23 @@
     fetch('/api/genkey', { method: 'POST' })
       .then((result) => result.text())
       .then((text) => {
-        if (text.length === 86) {
+        if (text.length === 32) {
+          let oriHex = '';
+          for (let i = 0; i < text.length; i++) {
+            oriHex += text.charCodeAt(i).toString(16).padStart(2, '0');
+          }
           let secret = '';
           let iv = '';
-          for (let i = 0; i < text.length; i += 1) {
+          for (let i = 0; i < oriHex.length; i += 1) {
             if (i % 2 === 0) {
-              secret += text[i];
+              secret += oriHex[i];
             } else {
-              iv += text[i];
+              iv += oriHex[i];
             }
           }
 
-          secret = CryptoJS.enc.Hex.parse(atob(`${secret}=`));
-          iv = CryptoJS.enc.Hex.parse(atob(`${iv}=`));
+          secret = CryptoJS.enc.Hex.parse(secret);
+          iv = CryptoJS.enc.Hex.parse(iv);
           let password = `${rawPassword}dKfkZh`;
           password = CryptoJS.SHA3(password);
           password = password.toString(CryptoJS.enc.Hex);

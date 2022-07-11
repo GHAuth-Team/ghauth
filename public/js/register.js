@@ -1,4 +1,23 @@
 (() => {
+  // allow press enter to submit
+  (() => {
+    const emailEl = document.querySelector('#inputEmail');
+    const playernameEl = document.querySelector('#inputPlayerName');
+    const rawPasswordEl = document.querySelector('#inputPassword');
+    const repeatPasswordEl = document.querySelector('#inputRepeatPassword');
+    const captchaCodeEl = document.querySelector('#inputCaptcha');
+
+    const submitAction = () => {
+      document.querySelector('.btn-register').click();
+    };
+
+    emailEl.addEventListener('keypress', submitAction);
+    playernameEl.addEventListener('keypress', submitAction);
+    rawPasswordEl.addEventListener('keypress', submitAction);
+    repeatPasswordEl.addEventListener('keypress', submitAction);
+    captchaCodeEl.addEventListener('keypress', submitAction);
+  })();
+
   function refreshCaptcha() {
     document.querySelector('#img-captcha').src = `/api/captcha?t=${Date.now()}`;
   }
@@ -102,7 +121,7 @@
       .then((text) => {
         if (text.length === 32) {
           let oriHex = '';
-          for (let i = 0; i < text.length; i++) {
+          for (let i = 0; i < text.length; i += 1) {
             oriHex += text.charCodeAt(i).toString(16).padStart(2, '0');
           }
           let secret = '';

@@ -4,7 +4,8 @@
     const emailEl = document.querySelector('#inputEmail');
     const captchaEl = document.querySelector('#inputCaptcha');
 
-    const submitAction = () => {
+    const submitAction = (e) => {
+      if (e.code !== 'Enter' && e.charCode !== 13 && e.key !== 'Enter') return;
       document.querySelector('.btn-forgetpw').click();
     };
 

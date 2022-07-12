@@ -7,7 +7,8 @@
     const repeatPasswordEl = document.querySelector('#inputRepeatPassword');
     const captchaCodeEl = document.querySelector('#inputCaptcha');
 
-    const submitAction = () => {
+    const submitAction = (e) => {
+      if (e.code !== 'Enter' && e.charCode !== 13 && e.key !== 'Enter') return;
       document.querySelector('.btn-register').click();
     };
 

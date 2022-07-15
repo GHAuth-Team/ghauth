@@ -45,10 +45,15 @@
   },
   "devDependencies": {
     "eslint": "^8.19.0",
-    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-pug": "^1.2.4",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "nodemon": "^2.0.19"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   },
   "nodemonConfig": {
     "restartable": "rs",

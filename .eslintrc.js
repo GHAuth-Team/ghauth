@@ -16,19 +16,12 @@ module.exports = {
     'pug',
   ],
   extends: [
-    'airbnb-base',
+    'prettier',
   ],
   parserOptions: {
-    ecmaVersion: 12,
+    ecmaVersion: 2021,
   },
   rules: {
-    'global-require': 0,
-    'no-bitwise': 0,
-    'max-len': 0,
-    'no-console': 0,
-    'no-useless-escape': 0,
-    'no-await-in-loop': 0,
-    'no-restricted-syntax': 0,
-    'prefer-const': 0,
+    'no-unused-vars': 'warn'
   },
 };

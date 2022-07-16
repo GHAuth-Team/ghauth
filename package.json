@@ -13,7 +13,9 @@
     "monit": "pm2 monit ghauth",
     "helper": "node ./install/install.js",
     "dev": "nodemon -i ./test/",
-    "lint": "eslint ./ --fix"
+    "prepare": "husky install",
+    "lint": "eslint ./ --fix",
+    "format": "prettier . --write"
   },
   "dependencies": {
     "bytes": "^3.1.2",
@@ -50,7 +52,8 @@
     "eslint-plugin-pug": "^1.2.4",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

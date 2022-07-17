@@ -71,7 +71,7 @@ function init() {
   mainRouter(app)
 
   app.listen(config.extra.port ? config.extra.port : 3000, () => {
-    Print.success(`GHAuth 现已成功运行在 ${config.extra.port ? config.extra.port : 3000} 端口上`)
+    Print.success(`GHAuth 现已成功运行在 http://localhost:${config.extra.port ? config.extra.port : 3000}`)
   })
 }
 

@@ -47,7 +47,7 @@ function init() {
   sessionCONFIG.store = redisStore({
     host: config.extra.redis.host,
     port: config.extra.redis.port,
-    db: config.extra.redis.db
+    db: config.extra.redis.sessiondb
   })
 
   Print.info('载入中间件...')

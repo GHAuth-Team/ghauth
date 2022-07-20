@@ -5,37 +5,30 @@ const session = require('koa-session')
 const path = require('path')
 const redisStore = require('koa-redis')
 
-// const cluster = require('cluster');
 const config = require('./config')
 const logger = require('koa-logger')
 const Print = require('./utils/print')
 
+const mongoose = require('mongoose')
+
 Print.info('GHAuth 准备初始化，请稍后...')
-
-// const numCPUs = 2;
-// // const numCPUs = require('os').cpus().length;
-// (function clusterInit() {
-//   if (cluster.isMaster) {
-//     Print.info(`GHAuth主进程 ${process.pid} 正在运行`);
-//     process.title = `GHAuth主进程(${process.pid})`;
-
-//     for (let i = 0; i < numCPUs; i += 1) {
-//       cluster.fork();
-//     }
-
-//     cluster.on('exit', (worker) => {
-//       Print.info(`GHAuth工作进程 ${worker.process.pid} 已退出`);
-//     });
-//   }
-// }());
-// Print.info(`GHAuth工作进程 ${process.pid} 已启动`);
-// process.title = `GHAuth工作进程(${process.pid})`;
 
 process.on('uncaughtException', (err) => {
   Print.error(err)
 })
 
+process.on('SIGINT', async function () {
+  let err = false
+  try {
+    await mongoose.disconnect()
+  } catch (error) {
+    err = true
+  }
+  process.exit(err ? 1 : 0)
+})
+
 function init() {
+  Print.info('初始化 Koa...')
   const app = new Koa()
 
   app.keys = [config.extra.session.key]
@@ -51,7 +44,10 @@ function init() {
   })
 
   Print.info('载入中间件...')
-  app.use(logger()) // 日志记录
+  if (process.env.NODE_ENV === 'development') {
+    // 仅在开发环境下打印日志
+    app.use(logger()) // 日志记录
+  }
   app.use(bodyParser()) // 数据解析
   app.use(session(sessionCONFIG, app)) // session
   app.use(

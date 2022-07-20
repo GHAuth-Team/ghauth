@@ -1358,10 +1358,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"entities@npm:~1.1.1":
-  version: 1.1.2
-  resolution: "entities@npm:1.1.2"
-  checksum: d537b02799bdd4784ffd714d000597ed168727bddf4885da887c5a491d735739029a00794f1998abbf35f3f6aeda32ef5c15010dca1817d401903a501b6d3e05
+"entities@npm:~3.0.1":
+  version: 3.0.1
+  resolution: "entities@npm:3.0.1"
+  checksum: aaf7f12033f0939be91f5161593f853f2da55866db55ccbf72f45430b8977e2b79dbd58c53d0fdd2d00bd7d313b75b0968d09f038df88e308aa97e39f9456572
   languageName: node
   linkType: hard
 
@@ -1571,9 +1571,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.19.0":
-  version: 8.19.0
-  resolution: "eslint@npm:8.19.0"
+"eslint@npm:^8.20.0":
+  version: 8.20.0
+  resolution: "eslint@npm:8.20.0"
   dependencies:
     "@eslint/eslintrc": ^1.3.0
     "@humanwhocodes/config-array": ^0.9.2
@@ -1612,7 +1612,7 @@ __metadata:
     v8-compile-cache: ^2.0.3
   bin:
     eslint: bin/eslint.js
-  checksum: 0bc9df1a3a09dcd5a781ec728f280aa8af3ab19c2d1f14e2668b5ee5b8b1fb0e72dde5c3acf738e7f4281685fb24ec149b6154255470b06cf41de76350bca7a4
+  checksum: a31adf390d71d916925586bc8467b48f620e93dd0416bc1e897d99265af88b48d4eba3985b5ff4653ae5cc46311a360d373574002277e159bb38a4363abf9228
   languageName: node
   linkType: hard
 
@@ -2015,29 +2015,29 @@ __metadata:
   dependencies:
     colors: ^1.4.0
     crypto-js: ^4.1.1
-    eslint: ^8.19.0
+    eslint: ^8.20.0
     eslint-config-prettier: ^8.5.0
     eslint-plugin-import: ^2.26.0
     eslint-plugin-pug: ^1.2.4
     global: ^4.4.0
     husky: ^8.0.1
     inquirer: 8.0.0
-    ioredis: ^5.1.0
+    ioredis: ^5.2.1
     js-yaml: ^4.1.0
-    jstransformer-markdown-it: ^2.1.0
+    jstransformer-markdown-it: ^3.0.0
     koa: ^2.13.4
     koa-bodyparser: ^4.3.0
     koa-logger: ^3.2.1
     koa-redis: ^4.0.1
-    koa-router: ^11.0.1
+    koa-router: ^12.0.0
     koa-session: ^6.2.0
     koa-static-cache: ^5.1.4
     koa-views: ^8.0.0
     koa2-ratelimit: ^1.1.1
     lint-staged: ^13.0.3
-    mongoose: ^6.4.3
+    mongoose: ^6.4.5
     node-rsa: ^1.1.1
-    nodemailer: ^6.7.6
+    nodemailer: ^6.7.7
     nodemon: ^2.0.19
     pm2: ^5.2.0
     pngjs-nozlib: ^1.0.0
@@ -2473,9 +2473,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ioredis@npm:^5.1.0":
-  version: 5.2.0
-  resolution: "ioredis@npm:5.2.0"
+"ioredis@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "ioredis@npm:5.2.1"
   dependencies:
     "@ioredis/commands": ^1.1.1
     cluster-key-slot: ^1.1.0
@@ -2486,7 +2486,7 @@ __metadata:
     redis-errors: ^1.2.0
     redis-parser: ^3.0.0
     standard-as-callback: ^2.1.0
-  checksum: 37189fcd4bd834d66aabb28a754d97da9147a6162c16bd971647750dbb81cbe7d93f4c07a623efdc0fdcb61bca243678b864229ddbcc2b8692755d7be40a2227
+  checksum: cd744f4d8b9ca54aecd4020eb245e318818a83aeb4edf0b8d52175e60644cbfa161cb4dc35438a4b0e90db904d3f886e9be2a3d40a616705a603e63aa8c74407
   languageName: node
   linkType: hard
 
@@ -2839,12 +2839,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jstransformer-markdown-it@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "jstransformer-markdown-it@npm:2.1.0"
+"jstransformer-markdown-it@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "jstransformer-markdown-it@npm:3.0.0"
   dependencies:
-    markdown-it: ^8.0.0
-  checksum: 9ddc594728c994e134b6b02b56af5cfc58a7afb6b80e9e630c3b505a8c4aa5306f78555d2cc2f099414f5e2a15a8a323aa74e7e38031ae63054150f3b1aa2b53
+    markdown-it: ^13.0.1
+  checksum: cec806a5dcb33c3b863a7087ad33b59010bed559b49a9c75e70ede572a9af502090f37ddcdafa25943cee9007b500b7f8779b869ea48354e0c53e8076217ea23
   languageName: node
   linkType: hard
 
@@ -2934,15 +2934,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"koa-router@npm:^11.0.1":
-  version: 11.0.1
-  resolution: "koa-router@npm:11.0.1"
+"koa-router@npm:^12.0.0":
+  version: 12.0.0
+  resolution: "koa-router@npm:12.0.0"
   dependencies:
     http-errors: ^2.0.0
     koa-compose: ^4.1.0
     methods: ^1.1.2
     path-to-regexp: ^6.2.1
-  checksum: 5101bc023f8f4d8a69d637c4f804161befeecf539f785ff961a22ce6701bd49f6f4db506c62eda8f3fed5ea74a930ab55a79771ff4655a0235a8b03472809084
+  checksum: 29b02fd96972c037e805f6ce2626c971f4fd9cba04005bfedc080ab425d31b4b1cfe2ebc000b26e4a45e68215a3a3ed557f836ba486ea0d2f1e7e78fc95f8dca
   languageName: node
   linkType: hard
 
@@ -3078,12 +3078,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"linkify-it@npm:^2.0.0":
-  version: 2.2.0
-  resolution: "linkify-it@npm:2.2.0"
+"linkify-it@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "linkify-it@npm:4.0.1"
   dependencies:
     uc.micro: ^1.0.1
-  checksum: d198871d0b3f3cfdb745dae564bfd6743474f20cd0ef1057e6ca29451834749e7f3da52b59b4de44e98f31a1e5c71bdad160490d4ae54de251cbcde57e4d7837
+  checksum: 3e0a29921269c14eb7ac6f5db2da68d4854ea9acca6e9014a323f75f2dd39b197ffab57c1fbd6a906ceb021aad3ee6d7ba7d0181236dd9630ffc452b392f7f71
   languageName: node
   linkType: hard
 
@@ -3254,18 +3254,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it@npm:^8.0.0":
-  version: 8.4.2
-  resolution: "markdown-it@npm:8.4.2"
+"markdown-it@npm:^13.0.1":
+  version: 13.0.1
+  resolution: "markdown-it@npm:13.0.1"
   dependencies:
-    argparse: ^1.0.7
-    entities: ~1.1.1
-    linkify-it: ^2.0.0
+    argparse: ^2.0.1
+    entities: ~3.0.1
+    linkify-it: ^4.0.1
     mdurl: ^1.0.1
     uc.micro: ^1.0.5
   bin:
     markdown-it: bin/markdown-it.js
-  checksum: ad171466933d6ce33fcdddf32f641fc7ff238820a11397f07d45ab293e3fd6d83de14eaa59bfdc67dc4a715e73aa08bae9b2a38e44b119d7340d8ae691ca4b2d
+  checksum: faf5891d389dc433bcf21d3fbff2009beb044b42b117c92f4848899780ca1a2282a209e3ff4672db4afed726a7248304ec473e6e242a7d6498af7113d31974e7
   languageName: node
   linkType: hard
 
@@ -3490,9 +3490,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongoose@npm:^6.4.3":
-  version: 6.4.4
-  resolution: "mongoose@npm:6.4.4"
+"mongoose@npm:^6.4.5":
+  version: 6.4.5
+  resolution: "mongoose@npm:6.4.5"
   dependencies:
     bson: ^4.6.2
     kareem: 2.4.1
@@ -3501,7 +3501,7 @@ __metadata:
     mquery: 4.0.3
     ms: 2.1.3
     sift: 16.0.0
-  checksum: 9c59c01b556f8081b43fe1b07d322bbf90e6638cf4e00fe9c19b9a73ea6938420043a075acc338b474ea1a16ce12ebbf740363b5cd597d29aa1da981c17cfd2d
+  checksum: 5a6c2bb6dc84fc6cb40ddc447464d9f86b046c8ed38bb128a81883763e977b314e85a1a2028f453479f91eba89ec0a0cd1d31d839aacafe64dc45c989406644a
   languageName: node
   linkType: hard
 
@@ -3623,7 +3623,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemailer@npm:^6.7.6":
+"nodemailer@npm:^6.7.7":
   version: 6.7.7
   resolution: "nodemailer@npm:6.7.7"
   checksum: 337cee85bd040ced14b09700032b8dcbb74266a4201a4ab55683412a008cc8d8f3a13e8eef37ebee93aa11bb07f6cd02de650025211a0c0884be3d1ca839f869

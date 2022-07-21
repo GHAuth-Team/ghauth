@@ -33,7 +33,8 @@ function init() {
 
   app.keys = [config.extra.session.key]
   const sessionCONFIG = {
-    key: config.extra.session.key,
+    key: 'ghauth.sid',
+    prefix: 'ghauth:session:',
     maxAge: 86400000
   }
 

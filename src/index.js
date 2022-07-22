@@ -32,17 +32,16 @@ function init() {
   const app = new Koa()
 
   app.keys = [config.extra.session.key]
-  const sessionCONFIG = {
+  const sessionConfig = {
     key: 'ghauth.sid',
     prefix: 'ghauth:session:',
-    maxAge: 86400000
+    maxAge: 86400000,
+    store: redisStore({
+      host: config.extra.redis.host,
+      port: config.extra.redis.port,
+      db: config.extra.redis.sessiondb
+    })
   }
-
-  sessionCONFIG.store = redisStore({
-    host: config.extra.redis.host,
-    port: config.extra.redis.port,
-    db: config.extra.redis.sessiondb
-  })
 
   Print.info('载入中间件...')
   if (process.env.NODE_ENV === 'development') {
@@ -50,7 +49,7 @@ function init() {
     app.use(logger()) // 日志记录
   }
   app.use(bodyParser()) // 数据解析
-  app.use(session(sessionCONFIG, app)) // session
+  app.use(session(sessionConfig, app)) // session
   app.use(
     views(path.resolve(__dirname, 'template'), {
       extension: 'pug'

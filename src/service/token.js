@@ -1,7 +1,7 @@
 const USER = require('../db/models/user')
 const User = require('./user')
 const utils = require('../utils')
-const redis = require('../db/redis')
+const { auth: redis } = require('../db/redis')
 const config = require('../config')
 
 module.exports = {

@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer')
-const redis = require('../db/redis')
+const { auth: redis } = require('../db/redis')
 const config = require('../config')
 
 const getRandomHex = (len = 32) => {

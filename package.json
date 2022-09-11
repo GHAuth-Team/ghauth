@@ -72,6 +72,5 @@
     },
     "script": "app.js",
     "ext": "js json"
-  },
-  "packageManager": "yarn@3.2.1"
+  }
 }

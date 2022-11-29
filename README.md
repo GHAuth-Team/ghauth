@@ -43,6 +43,30 @@
 - [可选] 进入 `adminList.yml` 以添加更多管理员
 - 启动 `pnpm start`
 
+## 部署(Docker compose)
+
+> 请确保您已经安装了 Docker 和 Docker Compose，视情况而定是否使用sudo提升权限
+
+- 克隆本仓库 `git clone https://github.com/GHAuth-Team/ghauth.git`
+- 进入仓库目录`cd ghauth`
+- 编译Docker镜像并自动运行`docker compose up -d`，如果遇到镜像编译网络问题参见下方的说明
+- 运行辅助配置助手`docker exec -it gh-app pnpm helper`，您可以与下方范例填写值不同，但需要同时修改docker-compose.yml中的容器名称
+  - MongoDB 主机: `gh-db`
+  - Redis 主机: `gh-redis`
+- 销毁镜像重载配置`docker compose down && docker compose up -d`
+
+> 如果遇到这样的问题，禁用buildkit
+>
+> - `export DOCKER_BUILDKIT=0 && export COMPOSE_DOCKER_CLI_BUILD=0`
+
+```shell
+ => ERROR [internal] load metadata for docker.io/library/node:lts          0.3s
+------
+ > [internal] load metadata for docker.io/library/node:lts:
+------
+failed to solve: rpc error: code = Unknown desc = failed to solve with frontend dockerfile.v0: failed to create LLB definition: unexpected status code [manifests lts]: 403 Forbidden
+```
+
 ## 部署(手动配置)
 
 - 克隆本仓库 `git clone https://github.com/GHAuth-Team/ghauth.git`

@@ -35,7 +35,7 @@
     "koa-static-cache": "^5.1.4",
     "koa-views": "^8.0.0",
     "koa2-ratelimit": "^1.1.2",
-    "mongoose": "^6.5.3",
+    "mongoose": "^6.11.3",
     "node-rsa": "^1.1.1",
     "nodemailer": "^6.7.8",
     "pm2": "^5.2.0",
